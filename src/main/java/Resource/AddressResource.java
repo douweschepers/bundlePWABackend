@@ -78,8 +78,8 @@ public class AddressResource {
 	                               @FormParam("postalcode") String postalcode,
 	                               @FormParam("description") String description,
 	                               @FormParam("location") String location){
-	    	
-	    	//if(bs.checkIfFilled(street) ==true){
+	    	Response r =  Response.status(Response.Status.BAD_REQUEST).build();
+	    	if(bs.checkIfFilled(street)&&bs.checkNumber(number)){
 	    	RetrieveAddressData data = new RetrieveAddressData();	        
 	    	
 	        Address newAdress = new Address(street, number, country, postalcode, description, location);
@@ -87,11 +87,14 @@ public class AddressResource {
 	        if (returnAdress != null) {
 	        	data.setAddressData(newAdress);	        
 	            String a = buildJSON(returnAdress).build().toString();
-	            return Response.ok(a).build();
+	             r =  Response.ok(a).build();
 	        } else {
-	            return Response.status(Response.Status.BAD_REQUEST).build();
+	             r =  Response.status(Response.Status.BAD_REQUEST).build();
 	        }
-	    	
+	    	}else{
+	    		System.out.println("hij is leeg");
+	    	}
+	    	return r;
 	    }	
 	    
 	    @PUT
