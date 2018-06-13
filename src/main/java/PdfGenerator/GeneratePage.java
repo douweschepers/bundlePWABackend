@@ -2,6 +2,7 @@ package PdfGenerator;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Paths;
 import java.util.Date;
 
 import javax.json.JsonArray;
@@ -19,6 +20,7 @@ import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.parser.Path;
 
 
 public class GeneratePage {
@@ -34,9 +36,15 @@ public class GeneratePage {
 			object = array.getJsonObject(i);
 			
 		}
-		try{
+		try{/*
+			File nf = new File("");
 			File file = File.createTempFile("contract_" + userid, ".pdf");
-			PdfWriter.getInstance(document, new FileOutputStream("." + file.getPath()));
+			File f = new File(nf.getAbsolutePath() + "contract/" +  userid + ".pdf");
+			*/
+			String basePath = new File("").getAbsolutePath();
+
+			String path = new File("src/contracts/contract" + userid + ".pdf").getAbsolutePath();
+			PdfWriter.getInstance(document, new FileOutputStream(path));
 			
 			document.open();
 			
@@ -48,6 +56,7 @@ public class GeneratePage {
 			document.add(new Paragraph("Lastname: " + object.getJsonString("lastname").toString()));
 			document.add(new Paragraph("Phonenumber: " + object.getJsonString("phonenumber").toString()));
 			document.add(new Paragraph("Date of birth: " + object.getJsonString("dateOfBirth").toString()));
+			document.add(new Paragraph("UserID: " + object.getJsonString("useridfk").toString()));
 			document.add(Chunk.NEWLINE);
 			document.add(new Paragraph("Adres information",header));
 			document.add(new Paragraph("Country code: " + object.getJsonString("country").toString()));
