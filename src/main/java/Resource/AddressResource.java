@@ -18,7 +18,6 @@ import javax.ws.rs.core.Response;
 
 import Objects.Address;
 import Objects.User;
-import PdfGenerator.RetrieveAddressData;
 import Services.AddressService;
 import Services.ServiceProvider;
 import Validation.BasicValidation;
@@ -80,12 +79,12 @@ public class AddressResource {
 	                               @FormParam("location") String location){
 	    	Response r =  Response.status(Response.Status.BAD_REQUEST).build();
 	    	if(bs.checkIfFilled(street)&&bs.checkNumber(number)){
-	    	RetrieveAddressData data = new RetrieveAddressData();	        
+	    	
 	    	
 	        Address newAdress = new Address(street, number, country, postalcode, description, location);
 	        Address returnAdress = service.newAddress(newAdress);
 	        if (returnAdress != null) {
-	        	data.setAddressData(newAdress);	        
+	        	
 	            String a = buildJSON(returnAdress).build().toString();
 	             r =  Response.ok(a).build();
 	        } else {
