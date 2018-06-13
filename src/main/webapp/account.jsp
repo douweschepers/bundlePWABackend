@@ -141,6 +141,7 @@
 
     <jsp:include page="parts/footer.jsp" />
     <script>
+    var sessionToken = window.sessionStorage.getItem("sessionToken");
 
     function getUser() {
     	var hr = new XMLHttpRequest();
@@ -151,10 +152,11 @@
     	} else {
     		id = getParameterByName("id")
     	}
-    	
+
     	$('#edit').attr('onclick', "window.location.href='edit_account.jsp?id=" + id + "'");
-    	
+
     	hr.open("GET", "/bundlePWABackend/restservices/user/" + id, true);
+    	hr.setRequestHeader("Authorization",  "Bearer " + sessionToken);
 
     	hr.onreadystatechange = function() {
     		if (hr.readyState == 4 && hr.status == 200) {
@@ -202,7 +204,10 @@
     				hr2.send(null);
     			}
     		} else if (hr.readyState == 4) {
+    			if (hr.status == 403) {addNotification("Not Authorized")} 
+    			else {
     			addNotification('Retrieving data failed with status ' + hr.status + '. Try again later.');
+    				}
     		}
     	}
     	hr.send(null);

@@ -38,20 +38,18 @@ public class TransactionDAO extends baseDAO{
 	}
 	
 	public List<Transaction> getAllTransactions(){
-		List<Transaction> resultlist = new ArrayList<Transaction>();
 		String query = "Select * from " + tablename;
 		
 		try (Connection con = super.getConnection()) {
 			Statement stmt = con.createStatement();
 			dbResultSet = stmt.executeQuery(query);
-			resultlist = selectTransaction(dbResultSet);
 			
 			con.close();
 		}catch (SQLException e){
 			e.printStackTrace();
 		}
 		
-		return resultlist;
+		return selectTransaction(dbResultSet);
 	}
 	
 	public List<Transaction> getTransactionById(int transactionId){
@@ -78,6 +76,18 @@ public class TransactionDAO extends baseDAO{
 			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return selectTransaction(dbResultSet);
+	}
+	
+	public List<Transaction> getTransactionFromLastWeek(){
+		String query = "select * from " + tablename + " where timestamp between NOW()::DATE-EXTRACT(DOW FROM NOW())::INTEGER-7 AND NOW()::DATE-EXTRACT(DOW from NOW())::INTEGER";
+		
+		try(Connection con = super.getConnection()) {
+			PreparedStatement pstmt = con.prepareStatement(query);
+			dbResultSet = pstmt.executeQuery();
 		}catch (SQLException e){
 			e.printStackTrace();
 		}

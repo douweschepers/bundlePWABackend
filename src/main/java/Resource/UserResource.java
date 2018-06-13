@@ -2,11 +2,9 @@ package Resource;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Random;
-
+import javax.annotation.security.RolesAllowed;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -19,15 +17,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
-
 import Objects.User;
+import PdfGenerator.RetrieveData;
 import PdfGenerator.RetrieveUserData;
 import Objects.UserLoanInformation;
 import Objects.UserWithAddress;
-import Services.AddressService;
 import Services.ServiceProvider;
 import Services.UserService;
 
@@ -85,7 +80,7 @@ public class UserResource {
 //    }
 
     @GET
-//    @RolesAllowed({"beheerder","admin"})
+    @RolesAllowed({"beheerder","admin"})
     @Produces("application/json")
     public String getAccounts() {
         JsonArrayBuilder jab = Json.createArrayBuilder();
@@ -100,7 +95,7 @@ public class UserResource {
 
     @GET
     @Path("/{id}")
-//    @RolesAllowed({"beheerder","admin","user"})
+    @RolesAllowed({"admin","user"})
     @Produces("application/json")
     public String getAccountByID(@PathParam("id") int id) {
         UserWithAddress user = service.getUserByID(id);
@@ -138,8 +133,8 @@ public class UserResource {
 
     						@FormParam("dateofbirth") String dateOfBirth) throws ParseException
     {
-    	RetrieveUserData data = new RetrieveUserData();
-    					
+
+    	RetrieveData data = new RetrieveData();
 
     	java.util.Date utilDateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(dateOfBirth);
 		java.sql.Date sqlDateOfBirth = new java.sql.Date(utilDateOfBirth.getTime());
@@ -216,8 +211,8 @@ public class UserResource {
     @Path("/{id}")
 //    @RolesAllowed({"beheerder","admin"})
     public Response deleteUser (@PathParam("id") int userId) {
-        if (service.delete(userId)) {
-            if (service.delete(userId)) {
+        if (service.deleteUser(userId)) {
+            if (service.deleteUser(userId)) {
                 return Response.ok().build();
             } else {
                 return Response.status(Response.Status.CONFLICT).build();

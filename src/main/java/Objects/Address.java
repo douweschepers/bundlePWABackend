@@ -1,6 +1,6 @@
 package Objects;
 
-public class Adress {
+public class Address {
 
 	private int adressId;
 	private String street;
@@ -10,7 +10,7 @@ public class Adress {
 	private String description;
 	private String location;
 	
-	public Adress(int adressID, String street, int number, String country, String postalCode, String description, String location) {
+	public Address(int adressID, String street, int number, String country, String postalCode, String description, String location) {
 		this.adressId = adressID;
 		this.setStreet(street);
 		this.setNumber(number);
@@ -20,7 +20,7 @@ public class Adress {
 		this.setLocation(location);
 	}
 	
-	public Adress(String street, int number, String country, String postalCode, String description, String location) {
+	public Address(String street, int number, String country, String postalCode, String description, String location) {
 		this.setStreet(street);
 		this.setNumber(number);
 		this.country = country;

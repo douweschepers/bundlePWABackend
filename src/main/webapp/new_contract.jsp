@@ -9,11 +9,13 @@
 	<main>
 	<div class="welcomeBlock">
 		<h1>New Contract</h1>
+		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
 	</div>
 
 	<div class="buttonBlock"></div>
 
 	<div class="block">
+		<div class="formMargin">
 		<form id="user" onsubmit="return false">
 			<ul class="flex-outer">
 				<li><label for="first-name">First Name</label> <input
@@ -323,44 +325,43 @@
 				<li><label for="loandescription">Loan description</label> <input
 					name="loandescription" id="loandescription"
 					placeholder="Enter the loan description here"></input></li>
-				<li>
-					<div class="wrapper">
-						<label for="signature-pad">Signature</label>
-						<canvas id="signature-pad" class="signature-pad" width=400
-							height=200 style="border: 1px solid black;"></canvas>
-						<button id="save">Save</button>
-						<button id="clear" style="display: inline; clear: both;">Clear</button>
-					</div>
-
+				<li><li class="wrapper"><label for="signature-pad">Signature <button type="button" id="clear" class="buttonRound">x</button></label>
+					<canvas id="signature-pad" class="signature-pad"
+						height=200 style="border: 1px solid black; width: 100%;"></canvas>
 				</li>
 				<li>
-					<button type="submit">Submit</button>
+					<button style="width: 100%;" id="submit" type="submit">Submit</button>
 				</li>
 			</ul>
 
 		</form>
 
-
+		</div>
 	</div>
 	</main>
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
 
 	<script type="text/javascript">
+	 $('#signature-pad').attr('width', $('#signature-pad').width());
+
+		$(window).on('resize', function(){
+		      $('#signature-pad').attr('width', $('#signature-pad').width());
+		});
+
 		var signaturePad = new SignaturePad(document
 				.getElementById('signature-pad'), {
 			backgroundColor : 'rgba(255, 255, 255, 0)',
 			penColor : 'rgb(0, 0, 0)'
 		});
 
-		var saveButton = document.getElementById('save');
 		var cancelButton = document.getElementById('clear');
 
-		saveButton.addEventListener('click', function(event) {
-			var data = signaturePad.toDataURL('image/png');
-			window.open(data);
-		});
+
+		//saveButton.addEventListener('click', function(event) {
+		//	var data = signaturePad.toDataURL('image/png');
+		//	window.open(data);
+		//});
 
 		cancelButton.addEventListener('click', function(event) {
 			signaturePad.clear();
@@ -404,58 +405,26 @@
 			$("form").submit(function() {
 				var addressid;
 				var userid;
-				
+
 				$.ajax({
 					url : "/bundlePWABackend/restservices/address",
 					type : "post",
 					data : $("#address").serialize(),
 
-				success : function(response) {
-
-						if (addressid == null) {
+						success : function(response) {
 							addressid = response["adressid"];
-						}
-
-						sendUserData();
-
-					},
-					error : function(response, textStatus, errorThrown) {
-
-						console.log("textStatus: " + textStatus);
-						console.log("errorThrown: " + errorThrown);
-						console.log("status: " + response.status);
-
+							console.log(addressid);
+							sendUserData();
 					}
 				});
-				function sendPdfData(){
-					var pdfData = $('#address, #user, #loan').serializeArray();
-					pdfData.push({
-						name : "useridfk",
-						value : userid
-					});
-					$.ajax({
-						url : "/bundlePWABackend/restservices/pdf",
-						type : "post",
-						data : pdfData,
 
-						success : function(response) {
-							
-						},
-						error : function(response, textStatus, errorThrown) {
-
-							console.log("textStatus: " + textStatus);
-							console.log("errorThrown: " + errorThrown);
-							console.log("status: " + response.status);
-
-						}
-					});
-				};
 				function sendUserData() {
 
 					var formData = $("#user").serializeArray();
 					formData.push({
 						name : "usertype",
 						value : "applicant"
+
 					});
 					formData.push({
 						name : "addressidfk",
@@ -478,13 +447,14 @@
 						},
 						error : function(response, textStatus, errorThrown) {
 
+							addNotification('Contract not saved, try again later', null, 6000);
 							console.log("textStatus: " + textStatus);
 							console.log("errorThrown: " + errorThrown);
 							console.log("status: " + response.status);
 
 						}
 					});
-				};
+				}	;
 
 				function sendLoanData() {
 					var formData = $("#loan").serializeArray();
@@ -500,25 +470,58 @@
 
 						success : function(response) {
 
-							alert("Contract saved.");
+							addNotification('Contract created', "green", 6000);
 							sendPdfData();
 						},
 						error : function(response, textStatus, errorThrown) {
 
+							addNotification('Contract not saved, try again later', null, 6000);
 							console.log("textStatus: " + textStatus);
 							console.log("errorThrown: " + errorThrown);
 							console.log("status: " + response.status);
-							alert("Contract not saved.");
 
 						}
 					});
 				}
-				
+				function sendPdfData(){
+					var pdfData = $('#address, #user, #loan').serializeArray();
+					pdfData.push({
+						name : "useridfk",
+						value : userid
+					});
+					$.ajax({
+						url : "/bundlePWABackend/restservices/pdf",
+						type : "post",
+						data : pdfData,
+
+						success : function(response) {
+							
+							addNotification('Contract PDF saved', "green", 6000);
+							
+						},
+						error : function(response, textStatus, errorThrown) {
+
+							addNotification('Contract PDF not saved, contact admin', null, 6000);
+							console.log("textStatus: " + textStatus);
+							console.log("errorThrown: " + errorThrown);
+							console.log("status: " + response.status);
+
+						}
+					});
+				};
 			});
 		});
 	</script>
 
 	<jsp:include page="parts/footer.jsp" />
+
+	<div id="helpPopup" class="popup" style="display: none;">
+		<div>
+			<h2>New Contract explained</h2>
+			<button class="buttonRound" onclick="toggleHide('helpPopup', true)">X</button>
+			<p>Add text here that explains where some of the fields are used for</p>
+		</div>
+	</div>
 
 </body>
 </html>

@@ -1,16 +1,20 @@
 package Resource;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObjectBuilder;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import PdfGenerator.GeneratePage;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
+
 
 @Path("/pdf")
 public class PdfResource {
@@ -37,37 +41,27 @@ public class PdfResource {
 							 @FormParam("startdate") String startDate,
 							 @FormParam("duration") String duration,
 							 @FormParam("loandescription") String loanDescription,
-							 @FormParam("useridfk") String userIdFk){
-		JsonObjectBuilder job = Json.createObjectBuilder();
-		job.add("street", street);
-		job.add("number", number);
-		job.add("country", country);
-		job.add("postalcode", postalcode);
-		job.add("adresDescription", adresDescription);
-		job.add("location", location);
+							 @FormParam("useridfk") String userIdFk) throws IOException, DocumentException{
+		File file = File.createTempFile("contract_" + userIdFk, ".pdf");
 		
+		PdfReader reader = new PdfReader(".\\test1.2.pdf");
+		PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(new File(".\\"+file.getName()).getCanonicalFile()));
+		AcroFields form = stamper.getAcroFields();
+		form.setField("firstname",firstname );
+		form.setField("lastname", lastname);
+		form.setField("usertype", userType);
+		form.setField("phone",phonenumber );
+		form.setField("dateofbirth", dateOfBirth);
+		form.setField("adressid", addressIdFk);
+		form.setField("loantype",loanType );
+		form.setField("amount", amount);
+		form.setField("start", startDate);
+		form.setField("duration",duration );
+		form.setField("loandescription", loanDescription);
 		
-		job.add("firstname", firstname);
-		job.add("lastname", lastname);
-		job.add("phonenumber", phonenumber);
-		job.add("dateOfBirth", dateOfBirth);
-		
-		job.add("loantype", loanType);
-		job.add("amount", amount);
-		job.add("startDate", startDate);
-		job.add("duration", duration);
-		job.add("loandescription", loanDescription);
-		job.add("useridfk", userIdFk);
-		
-		
-		JsonArrayBuilder jab = Json.createArrayBuilder();
-		jab.add(job);
-		JsonArray array = jab.build();
-		System.out.println(array);
-		GeneratePage pdf = new GeneratePage(); 
-    	pdf.main(array, userIdFk);
-		//System.out.println(jab.build().toString());
-		
+		stamper.setFormFlattening(true);
+		stamper.close();
+		reader.close();
 		
 		return Response.ok().build();
 		

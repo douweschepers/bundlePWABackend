@@ -185,7 +185,7 @@ function sendContract(firstname, lastname, birthdate, phone, street,
 			country, picture, loantype, sector, amount, duration, description);
 }
 
-function addNotification(text, color) {
+function addNotification(text, color, time = 3000) {
 	backgroundColor = "#ffffff";
 	if (color != undefined && color === "green") {
 		backgroundColor = "#5dbc5d";
@@ -197,7 +197,7 @@ function addNotification(text, color) {
 			'<div class="notification hide" style="background-color:'+backgroundColor+'"><p id="notificationText">' + text
 					+ '</div></div>');
 	$('#notificationBlock .notification:last').hide().fadeIn();
-	setTimeout(removeNotification, 3000);
+	setTimeout(removeNotification, time);
 }
 function removeNotification() {
 	$('#notificationBlock .notification:last').fadeOut(1000);

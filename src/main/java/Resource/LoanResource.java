@@ -24,7 +24,6 @@ import javax.ws.rs.core.Response;
 
 import Objects.Loan;
 import Objects.User;
-import PdfGenerator.GeneratePage;
 import PdfGenerator.RetrieveLoanData;
 import Services.LoanService;
 import Services.ServiceProvider;
@@ -63,8 +62,19 @@ public class LoanResource {
 		for(Loan l : service.getAllLoans()){
 			jab.add(buildJson(l));
 		}
-		JsonArray array = jab.build();
-		return array.toString();
+		return jab.build().toString();
+	}
+	
+	@GET
+	@Path("/lastweek")
+	@Produces("application/json")
+	public String getLoansFromLastWeek(){
+		JsonArrayBuilder jab = Json.createArrayBuilder();
+		
+		for(Loan l : service.getLoansFromLastWeek()){
+			jab.add(buildJson(l));
+		}
+		return jab.build().toString();
 	}
 	
 	@GET
@@ -105,7 +115,7 @@ public class LoanResource {
 		java.util.Date utilClosingDate = new SimpleDateFormat("yyyy-MM-dd").parse("00-00-0000");
 		java.sql.Date sqlStartDate = new java.sql.Date(utilStartDate.getTime());
 		java.sql.Date sqlClosingDate = new java.sql.Date(utilClosingDate.getTime());
-		Loan newLoan = new Loan(0, loanType, Integer.parseInt(amount), status, sqlStartDate, Integer.parseInt(duration), sqlClosingDate, 0, "", description, Integer.parseInt(userIdFk));
+		Loan newLoan = new Loan(0, loanType, Integer.parseInt(amount), status, sqlStartDate, Integer.parseInt(duration), sqlClosingDate, 0, "", description.toString(), Integer.parseInt(userIdFk));
 		if (service.newLoan(newLoan)){
 			data.setLoanData(newLoan);			
 			return Response.ok().build();
@@ -148,6 +158,14 @@ public class LoanResource {
     }
 	public JsonObjectBuilder getLoanJson(Loan loan){
 		return buildJson(loan);
+	}
+	
+	@GET
+	@Path("/groupless")
+	@Produces("application/json")
+	public String getGrouplessLoans(){
+		JsonArrayBuilder jab = service.getGrouplessLoans();
+		return jab.build().toString();
 	}
 }
 	

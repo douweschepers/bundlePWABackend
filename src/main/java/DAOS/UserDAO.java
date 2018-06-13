@@ -5,11 +5,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import Objects.Adress;
 import Objects.User;
 import Objects.UserLoanInformation;
 import Objects.UserWithAddress;
@@ -18,39 +16,34 @@ public class UserDAO extends baseDAO {
 	private String tablename = "public.user";
 	private ResultSet dbResultSet = null;
 
-    private List<User> selectUsers (String query) {
+    /*private List<User> selectUsers(ResultSet dbResultSet) {
         List<User> results = new ArrayList<User>();
 
-        try (Connection con = super.getConnection()) {
-            Statement stmt = con.createStatement();
-            ResultSet dbResultSet = stmt.executeQuery(query);
-
-            while (dbResultSet.next()) {
-                int userId = dbResultSet.getInt("userid");
-                String userType = dbResultSet.getString("usertype");
-                String firstname = dbResultSet.getString("firstname");   
-                String lastname = dbResultSet.getString("lastname");   
-            	int phonenumber = dbResultSet.getInt("phonenumber");
-            	String password = dbResultSet.getString("password");
-            	String salt = dbResultSet.getString("salt");
-            	String status = dbResultSet.getString("status");
-            	Date DateOfBirth = dbResultSet.getDate("dateofbirth");
-            	int addressIdFk = dbResultSet.getInt("addressidfk");
-            	String photo = dbResultSet.getString("photo");
-            	String username = dbResultSet.getString("username");
-           
-                User newUser = new User(userId, userType, firstname, lastname, phonenumber, password, salt, status, addressIdFk, photo, DateOfBirth, username);
+            try {
+				while (dbResultSet.next()) {
+				    int userId = dbResultSet.getInt("userid");
+				    String userType = dbResultSet.getString("usertype");
+				    String firstname = dbResultSet.getString("firstname");   
+				    String lastname = dbResultSet.getString("lastname");   
+					int phonenumber = dbResultSet.getInt("phonenumber");
+					String password = dbResultSet.getString("password");
+					String salt = dbResultSet.getString("salt");
+					String status = dbResultSet.getString("status");
+					Date DateOfBirth = dbResultSet.getDate("dateofbirth");
+					int addressIdFk = dbResultSet.getInt("addressidfk");
+					String photo = dbResultSet.getString("photo");
+					String username = dbResultSet.getString("username");
+         
+				    User newUser = new User(userId, userType, firstname, lastname, phonenumber, password, salt, status, addressIdFk, photo, DateOfBirth, username);
 
 
-                results.add(newUser);
-            }
-            stmt.getConnection().close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+				    results.add(newUser);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
         return results;
-    }
+    }*/
 
     private List<UserWithAddress> selectUsersWithAddress (ResultSet dbResultSet) {
         List<UserWithAddress> results = new ArrayList<UserWithAddress>();
@@ -90,17 +83,15 @@ public class UserDAO extends baseDAO {
     	String query = 	"select u.*, a.* " +
     					"from public.user u, public.address a " +
     					"where u.addressidfk = a.addressid;";
-    	List<UserWithAddress> resultlist = new ArrayList<UserWithAddress>();
     	
     	try (Connection con = super.getConnection()) {
-    	 Statement stmt = con.createStatement();
-    	 dbResultSet = stmt.executeQuery(query);
-    	 
-    	 resultlist = selectUsersWithAddress(dbResultSet);
+    	 PreparedStatement pstmt = con.prepareStatement(query);
+    	 dbResultSet = pstmt.executeQuery();
+
     	} catch (SQLException e) {
     		e.printStackTrace();
     	}
-    	return resultlist;
+    	return selectUsersWithAddress(dbResultSet);
     }
     
 
@@ -116,26 +107,16 @@ public class UserDAO extends baseDAO {
     	 pstmt.setInt(1, userId);
     	 
     	 dbResultSet = pstmt.executeQuery();
-    	 
-    	 resultlist = selectUsersWithAddress(dbResultSet);
+    	 con.close();
     	} catch (SQLException e) {
     		e.printStackTrace();
     	}
     	
+    	resultlist = selectUsersWithAddress(dbResultSet);
         if (resultlist.size() == 0) {
             return null;
         } else {
             return resultlist.get(0);
-        }
-    }
-    
-    public int findIdByName(String name){
-    	List<User> results = selectUsers("SELECT * FROM " + tablename + " WHERE name = '" + name + "'");
-
-        if (results.size() == 0) {
-            return (Integer) null;
-        } else {
-            return results.get(0).getUserId();
         }
     }
 
@@ -165,7 +146,7 @@ public class UserDAO extends baseDAO {
         return findById(user.getUserId());
     }
 
-    public boolean delete (int userId) {
+    public boolean deleteUser(int userId) {
         boolean result = false;
 
         if (findById(userId) != null) {
@@ -186,7 +167,7 @@ public class UserDAO extends baseDAO {
         return result;
     }
 
-    public UserWithAddress save(User user) {
+    public UserWithAddress saveUser(User user) {
         String query = "INSERT INTO " + tablename + "(usertype, firstname, lastname, phonenumber, password, salt, status, dateofbirth, photo, addressidfk, username) VALUES (?,?,?,?,?,?,?,?,?,?,?) RETURNING userid";
         int result;
         try (Connection con = super.getConnection()){
@@ -219,8 +200,7 @@ public class UserDAO extends baseDAO {
     
     public String findRoleForNameAndPassword(String name, String password){
     	String role = null;    	
-    	String query = "SELECT usertype FROM "+tablename+" WHERE username = ? AND password = ?";
-    	System.out.println(query);
+    	String query = "SELECT usertype FROM " + tablename + " WHERE username = ? AND password = ?";
     	
     	try(Connection con = super.getConnection()){
     		PreparedStatement pstmt = con.prepareStatement(query);

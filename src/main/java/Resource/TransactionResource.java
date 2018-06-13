@@ -80,6 +80,17 @@ public class TransactionResource {
 		}
 	}
 	
+	@GET
+	@Path("/lastweek")
+	@Produces("application/json")
+	public String getTransactionFromLastWeek(){
+		JsonArrayBuilder jab = Json.createArrayBuilder();
+		for (Transaction t : service.getTransactionFromLastWeek()) {
+			jab.add(buildJSON(t));
+		}
+		return jab.build().toString();
+	}
+	
 	@POST
 	@Produces("application/json")
 	public Response addTransaction(	@FormParam("amount") String amount,

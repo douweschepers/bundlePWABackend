@@ -4,11 +4,15 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import Objects.Group;
 import Objects.Loan;
@@ -85,5 +89,17 @@ public class LoanGroupResource {
 		}
 		JsonArray array = jab.build();
 		return array.toString();
+	}
+	
+	@POST
+	@Path("/{groupId}/{loanId}")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response addLoanToGroup(	@PathParam("groupId") int groupId,
+									@PathParam("loanId") int loanId){
+		if(service.addLoantoGroup(groupId, loanId)){
+			return Response.ok().build();
+		} else {
+			return Response.status(Response.Status.BAD_REQUEST).build();
+		}
 	}
 }

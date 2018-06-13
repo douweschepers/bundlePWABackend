@@ -3,18 +3,18 @@ package Services;
 import java.util.List;
 
 import DAOS.AddressDAO;
-import Objects.Adress;
+import Objects.Address;
 
 public class AddressService {
 	private AddressDAO addressDAO = new AddressDAO();
 
     public AddressService() {}
 
-    public List<Adress> getAllAdresses() {
+    public List<Address> getAllAdresses() {
     	return addressDAO.findAll();
     	}
 
-    public Adress getAdressByID(int addressId) { 
+    public Address getAdressByID(int addressId) { 
     	
     	return addressDAO.findById(addressId); 
     	}
@@ -23,10 +23,10 @@ public class AddressService {
     	return addressDAO.deleteAddress(addressId); 
     	}
     
-      public Adress newAddress (Adress address) { 
+      public Address newAddress (Address address) { 
     	  return addressDAO.newAddress(address); }
 
-	public Adress updateAddress(Adress updateAddress) {
+	public Address updateAddress(Address updateAddress) {
 		return addressDAO.update(updateAddress);
 	}
 }

@@ -16,5 +16,9 @@ public class GroupService {
 	public List<Group> getGroupById(int groupId){
 		return groupDAO.getGroupById(groupId);
 	}
+	
+	public int newGroup(int loanOfficerId){
+		return groupDAO.newGroup(loanOfficerId);
+	}
 
 }

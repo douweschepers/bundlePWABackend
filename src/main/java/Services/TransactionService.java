@@ -23,4 +23,8 @@ public class TransactionService {
 	public boolean addTransaction(Transaction newTransaction){
 		return transactionDAO.addTransaction(newTransaction);
 	}
+	
+	public List<Transaction> getTransactionFromLastWeek(){
+		return transactionDAO.getTransactionFromLastWeek();
+	}
 }

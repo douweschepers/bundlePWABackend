@@ -19,25 +19,17 @@ public class UserService {
 	    public UserWithAddress getUserByID(int id) { 
 	    	return userDAO.findById(id); 
 	    	}
-	    
-	    public UserWithAddress getUserByID2(int id) { 
-	    	return userDAO.findById(id); 
-	    	}
-	    
-	    public int getIdByEmail(String name) { 
-	    	return userDAO.findIdByName(name); 
-	    	}
 
 	    public UserWithAddress update (UserWithAddress user) { 
 	    	return userDAO.update(user); 
 	    	}
 
-	    public boolean delete (int userId) { 
-	    	return userDAO.delete(userId); 
+	    public boolean deleteUser (int userId) { 
+	    	return userDAO.deleteUser(userId); 
 	    	}
 
 	    public UserWithAddress newUser (User user) { 
-	    	return userDAO.save(user); 
+	    	return userDAO.saveUser(user); 
 	    	}
 	    public List<UserLoanInformation> getUserLoanInformation(int userId){
 	    	return userDAO.getUserLoanInformation(userId);

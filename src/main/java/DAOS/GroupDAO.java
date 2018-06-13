@@ -73,5 +73,23 @@ public class GroupDAO extends baseDAO{
 		
 		return selectGroup(dbResultSet);
 	}
+
+	public int newGroup(int loanOfficerId) {
+		String query = "INSERT INTO public.group(loanofficeridfk) VALUES(?) returning id";
+		int groupId = 0;
+		
+		try(Connection con = super.getConnection()){
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, loanOfficerId);
+			dbResultSet = pstmt.executeQuery();
+			con.close();
+			if(dbResultSet.next()) {
+				groupId = dbResultSet.getInt("id");
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return groupId;
+	}
 	
 }

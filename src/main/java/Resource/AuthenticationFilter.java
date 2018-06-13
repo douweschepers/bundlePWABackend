@@ -30,8 +30,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 				 
 			 // Extract the token from the HTTP Authorization header
 			 String token = authHeader.substring("Bearer".length()).trim();
-			 System.out.print("token:  " + token);
-			 
+					 
 			 try {
 				 // Validate the token
 				 JwtParser parser = Jwts.parser().setSigningKey(AuthenticationResource.key);

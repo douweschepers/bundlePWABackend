@@ -27,4 +27,8 @@ LoanGroupDAO loanGroupDAO = new LoanGroupDAO();
 	public List<LoanGroupInformation> getAllApplicantsByLoanGroupId(int groupId){
 		return loanGroupDAO.getAllApplicantsByLoanGroupId(groupId);
 	}
+
+	public boolean addLoantoGroup(int groupId, int loanId) {
+		return loanGroupDAO.addLoanToGroup(groupId, loanId);
+	}
 }

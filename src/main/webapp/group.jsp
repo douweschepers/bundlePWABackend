@@ -12,7 +12,7 @@
 		<h1>Group</h1>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
 		<button class="buttonRound"
-			onclick="window.location.href='new_contract.jsp'">+</button>
+			onclick="window.location.href='new_group.jsp'">+</button>
 	</div>
 
 	<div class="block">

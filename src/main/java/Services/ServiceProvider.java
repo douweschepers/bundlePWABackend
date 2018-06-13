@@ -2,7 +2,6 @@ package Services;
 
 public class ServiceProvider {
     private static UserService userService = new UserService();
-    private static ContractService contractService = new ContractService();
     private static AddressService adressService = new AddressService();
     private static GroupService groupService = new GroupService();
     private static LoginService loginService = new LoginService();
@@ -17,10 +16,6 @@ public class ServiceProvider {
 
 	public static UserService getUserService() { 
     	return userService; 
-    	}
-    
-    public static ContractService getContractService() { 
-    	return contractService; 
     	}
     
     public static AddressService getAdressService() { 

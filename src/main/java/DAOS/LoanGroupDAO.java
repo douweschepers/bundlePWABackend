@@ -14,6 +14,8 @@ import Objects.LoanGroup;
 import Objects.LoanGroupInformation;
 
 public class LoanGroupDAO extends baseDAO{
+	private ResultSet dbResultSet;
+	
 	public List<LoanGroup> selectLoanGroup(String query){
 		List<LoanGroup> resultslist = new ArrayList<LoanGroup>();
 		try(Connection con = super.getConnection()){
@@ -78,7 +80,7 @@ public class LoanGroupDAO extends baseDAO{
 				PreparedStatement pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, loanOfficerId);
 
-				ResultSet dbResultSet = pstmt.executeQuery();
+				dbResultSet = pstmt.executeQuery();
 				
 				while (dbResultSet.next()) {
 					int groupId = dbResultSet.getInt("groupid");
@@ -98,6 +100,27 @@ public class LoanGroupDAO extends baseDAO{
 
 	public List<LoanGroup> getLoanGroupById(int groupId) {
 		return selectLoanGroup("Select * FROM public.grouploan where groupidfk = " + groupId);
+	}
+	
+	public boolean addLoanToGroup(int groupId, int loanId){
+		String query = "insert into grouploan(groupidfk, loanidfk) values (?,?) returning groupidfk;";
+		boolean result = false;
+		
+		try(Connection con = super.getConnection()) {
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, groupId);
+			pstmt.setInt(2, loanId);
+
+			dbResultSet = pstmt.executeQuery();
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		if (dbResultSet != null){
+			result = true;
+		}
+		
+		return result;
+		
 	}
 
 }

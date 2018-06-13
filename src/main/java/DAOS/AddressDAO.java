@@ -8,20 +8,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import Objects.Adress;
-import Objects.Contract;
+import Objects.Address;
 
 public class AddressDAO extends baseDAO {
 
 	private String tablename = "public.address";
+	private ResultSet dbResultSet = null;
 
-    private List<Adress> selectAdresss (String query) {
-        List<Adress> results = new ArrayList<Adress>();
+    private List<Address> selectAddress(ResultSet dbResultSet) {
+        List<Address> results = new ArrayList<Address>();
 
-        try (Connection con = super.getConnection()) {
-            Statement stmt = con.createStatement();
-            ResultSet dbResultSet = stmt.executeQuery(query);
-
+        try{
             while (dbResultSet.next()) {
                 int id = dbResultSet.getInt("addressid");
                 String street = dbResultSet.getString("street");
@@ -31,7 +28,7 @@ public class AddressDAO extends baseDAO {
             	String description = dbResultSet.getString("description");
             	String location = dbResultSet.getString("location");
            
-                Adress newAdress = new Adress(id, street, number, country, postalcode, description, location);
+                Address newAdress = new Address(id, street, number, country, postalcode, description, location);
 
                 results.add(newAdress);
             }
@@ -42,13 +39,30 @@ public class AddressDAO extends baseDAO {
         return results;
     }
 
-    public List<Adress> findAll() { 
-    	return selectAdresss("SELECT * From " + tablename); 
+    public List<Address> findAll() { 
+    	String query = "SELECT * From " + tablename;
+    	
+    	try (Connection con = super.getConnection()) {
+       	 PreparedStatement pstmt = con.prepareStatement(query);
+       	 dbResultSet = pstmt.executeQuery();
+
+       	} catch (SQLException e) {
+       		e.printStackTrace();
     	}
+    	return selectAddress(dbResultSet);
+    }
 
-    public Adress findById(int id) {
-        List<Adress> results = selectAdresss("SELECT * FROM " + tablename + " WHERE addressid = " + id + "");
+    public Address findById(int addressId) {
+        String query = "SELECT * FROM " + tablename + " WHERE addressid = ?";
+        try (Connection con = super.getConnection()) {
+          	 PreparedStatement pstmt = con.prepareStatement(query);
+          	 pstmt.setInt(1, addressId);
+          	 dbResultSet = pstmt.executeQuery();
 
+          	} catch (SQLException e) {
+          		e.printStackTrace();
+       	}
+       	List<Address> results = selectAddress(dbResultSet);
         if (results.size() == 0) {
             return null;
         } else {
@@ -56,14 +70,23 @@ public class AddressDAO extends baseDAO {
         }
     }
     
-    public List<Adress> findAdressesByUserIDFK(int id) {
-        List<Adress> results = selectAdresss("SELECT * FROM "+tablename+" WHERE useridfk = '" + id + "'");
-        return results;
+    public List<Address> findAdressesByUserIDFK(int userId) {
+        String query = "SELECT * FROM "+tablename+" WHERE useridfk = ?";
+        
+        try (Connection con = super.getConnection()) {
+          	 PreparedStatement pstmt = con.prepareStatement(query);
+          	 pstmt.setInt(1, userId);
+          	 dbResultSet = pstmt.executeQuery();
+
+          	} catch (SQLException e) {
+          		e.printStackTrace();
+       	}
+       	return selectAddress(dbResultSet);
     }
     
-    public Adress newAddress(Adress address) {
+    public Address newAddress(Address address) {
         String query = "INSERT INTO " + tablename + " (street, number, country, postalcode, description, location) VALUES (?,?,?,?,?,?) RETURNING addressid";
-        int result;
+        
         try (Connection con = super.getConnection()){
             PreparedStatement pstmt = con.prepareStatement(query);
             
@@ -77,7 +100,7 @@ public class AddressDAO extends baseDAO {
             ResultSet dbResultSet = pstmt.executeQuery();
             if(dbResultSet.next()) {
             	
-                result =  dbResultSet.getInt("addressid");
+                int result =  dbResultSet.getInt("addressid");
                 address.setAdressId(result);
                 
             }
@@ -88,7 +111,7 @@ public class AddressDAO extends baseDAO {
         return findById(address.getAdressId());
     }
 
-	public Adress update(Adress address) {
+	public Address update(Address address) {
 		String query = "UPDATE " + tablename + " SET street = ?, number = ?, country = ?, postalcode = ?,"
         		+ " description = ?, location=? WHERE addressid = ?;";
 		try (Connection con = super.getConnection()){
