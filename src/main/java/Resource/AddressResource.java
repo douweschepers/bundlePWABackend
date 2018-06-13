@@ -1,7 +1,5 @@
 package Resource;
 
-import java.util.Random;
-
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -17,7 +15,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import Objects.Address;
-import Objects.User;
 import PdfGenerator.RetrieveAddressData;
 import Services.AddressService;
 import Services.ServiceProvider;
@@ -79,10 +76,10 @@ public class AddressResource {
 
 	    	RetrieveAddressData data = new RetrieveAddressData();	        
 	    	
-	        Address newAdress = new Address(street, number, country, postalcode, description, location);
-	        Address returnAdress = service.newAddress(newAdress);
+	        Address newAddress = new Address(street, number, country, postalcode, description, location);
+	        Address returnAdress = service.newAddress(newAddress);
 	        if (returnAdress != null) {
-	        	data.setAdresData(newAdress);	        
+	        	data.setAddressData(newAddress);	        
 	            String a = buildJSON(returnAdress).build().toString();
 	            return Response.ok(a).build();
 	        } else {

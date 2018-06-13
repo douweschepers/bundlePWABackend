@@ -1,15 +1,15 @@
 package PdfGenerator;
 
-import Objects.Adress;
+import Objects.Address;
 import Objects.Loan;
 import Objects.User;
 
 public class RetrieveAddressData {
-	private Adress adress;
-	public void setAdresData(Adress adressData){
+	private Address adress;
+	public void setAddressData(Address adressData){
 		adress = adressData;
 	}
-	public Adress getAdressData(){
+	public Address getAdressData(){
 		return adress;
 	}
 

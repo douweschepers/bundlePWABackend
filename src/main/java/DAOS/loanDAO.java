@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class loanDAO extends baseDAO {
 		
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			dbResultSet = pstmt.executeQuery(query);
+			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
 		}catch (SQLException e){
@@ -80,7 +79,7 @@ public class loanDAO extends baseDAO {
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, loanId);
-			dbResultSet = pstmt.executeQuery(query);
+			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
 		}catch (SQLException e){
@@ -99,7 +98,7 @@ public class loanDAO extends baseDAO {
     	
     	try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			dbResultSet = pstmt.executeQuery(query);
+			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
 		}catch (SQLException e){
@@ -152,7 +151,7 @@ public class loanDAO extends baseDAO {
 	        pstmt.setInt(6, changedLoan.getLoanId());
 
             pstmt.executeUpdate();
-            
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

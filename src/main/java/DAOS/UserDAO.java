@@ -105,9 +105,9 @@ public class UserDAO extends baseDAO {
     	 PreparedStatement pstmt = con.prepareStatement(query);
     	 
     	 pstmt.setInt(1, userId);
-    	 con.close();
     	 dbResultSet = pstmt.executeQuery();
     	 
+    	 con.close();
     	} catch (SQLException e) {
     		e.printStackTrace();
     	}
@@ -159,6 +159,7 @@ public class UserDAO extends baseDAO {
                 if (pstmt.executeUpdate() == 1) {
                     result = true;
                 }
+                con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -230,7 +231,7 @@ public class UserDAO extends baseDAO {
     		pstmt.setInt(1, userId);
     		
     		ResultSet dbResultSet = pstmt.executeQuery();
-    		
+    		con.close();
     		while (dbResultSet.next()) {
     			int loanOfficerId = dbResultSet.getInt("loanofficeridfk");
     			int groupId = dbResultSet.getInt("groupid");
