@@ -78,7 +78,7 @@ public class UserResource {
 //    }
 
     @GET
-    @RolesAllowed({"beheerder","admin"})
+//    @RolesAllowed({"beheerder","admin"})
     @Produces("application/json")
     public String getAccounts() {
         JsonArrayBuilder jab = Json.createArrayBuilder();
@@ -93,7 +93,7 @@ public class UserResource {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed({"admin","user"})
+//    @RolesAllowed({"admin","user"})
     @Produces("application/json")
     public String getAccountByID(@PathParam("id") int id) {
         UserWithAddress user = service.getUserByID(id);
