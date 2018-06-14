@@ -20,14 +20,22 @@
        		<div class="loader"></div>
        	</div>
 		<div id="GroupTable">
+			<ul class="flex-outer filterList">
+				<li><input type="text"
+					id="searchInput" placeholder="Type here to filter"></li>
+			</ul>
 			<table id='contractstable' class='contracts_table'>
-				<tr class="desktop">
-					<th>Name</th>
-					<th>Amount</th>
-					<th>Progress</th>
-					<th>Time Remaining</th>
-					<th>Status</th>
-				</tr>
+				<thead>
+					<tr class="desktop">
+						<th>Name</th>
+						<th>Amount</th>
+						<th>Progress</th>
+						<th>Time Remaining</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+				<tbody id="fbody">
+				</tbody>
 			</table>
 		</div>
 	</div>
@@ -53,6 +61,49 @@
 	</main>
 
 	<script>
+	$("#searchInput").keyup(function() {
+		// Split the current value of the filter textbox
+		var data = this.value.split(" ");
+		// Get the table rows
+		var rows = $("#fbody").find("tr");
+		if (this.value == "") {
+			rows.show();
+			return;
+		}
+
+		// Hide all the rows initially
+		rows.hide();
+
+		// Filter the rows; check each term in data
+		rows.filter(function(i, v) {
+			for (var d = 0; d < data.length; ++d) {
+				if ($(this).is(":contains('" + data[d] + "')")) {
+					return true;
+				}
+			}
+			return false;
+		})
+		// Show the rows that match.
+		.show();
+	}).focus(function() { // style the filter box
+		this.value = "";
+		$(this).css({
+			"color" : "black"
+		});
+		$(this).unbind('focus');
+	}).css({
+		"color" : "#C0C0C0"
+	});
+
+	// make contains case insensitive globally
+	// (if you prefer, create a new Contains or containsCI function)
+	$.expr[":"].contains = $.expr
+			.createPseudo(function(arg) {
+				return function(elem) {
+					return $(elem).text().toUpperCase().indexOf(
+							arg.toUpperCase()) >= 0;
+				};
+			});
 		function getGroup() {
 			var hr = new XMLHttpRequest();
 			if(getParameterByName("id") === null) {
@@ -70,9 +121,7 @@
 						var datalength = data.length;
 
 						for (var i = 0; i < datalength; i++) {
-							console.log(data[i].loaninformation);
 							var id = data[i].loaninformation[0].useridfk.toString();
-							console.log(id);
 
 							var amount = data[i].loaninformation[0].amount;
 							var paidamount = data[i].loaninformation[0].paidamount;
@@ -102,15 +151,12 @@
 
 							success : function(response) {
 
-								console.log(response + "binnenste loop");
-								console.log(response[0]);
 								var data2 = response;
 								var name = data2[0].firstName + " "
 										+ data2[0].lastName;
-								console.log(id + name);
 
 								var table = document
-										.getElementById('contractstable');
+										.getElementById('fbody');
 								var tr = document.createElement('tr');
 								tr.innerHTML = '<td class="name" id="name" data-label="Name">'
 										+ name

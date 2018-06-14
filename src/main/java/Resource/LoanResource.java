@@ -24,7 +24,6 @@ import javax.ws.rs.core.Response;
 
 import Objects.Loan;
 import Objects.User;
-import PdfGenerator.RetrieveLoanData;
 import Services.LoanService;
 import Services.ServiceProvider;
 
@@ -102,7 +101,6 @@ public class LoanResource {
 							@FormParam("useridfk") String userIdFk) throws ParseException{
 
 
-		RetrieveLoanData data = new RetrieveLoanData();
 		//LoanService service = LoanServiceProvider.getLoanService();
 
 
@@ -116,8 +114,7 @@ public class LoanResource {
 		java.sql.Date sqlStartDate = new java.sql.Date(utilStartDate.getTime());
 		java.sql.Date sqlClosingDate = new java.sql.Date(utilClosingDate.getTime());
 		Loan newLoan = new Loan(0, loanType, Integer.parseInt(amount), status, sqlStartDate, Integer.parseInt(duration), sqlClosingDate, 0, "", description.toString(), Integer.parseInt(userIdFk));
-		if (service.newLoan(newLoan)){
-			data.setLoanData(newLoan);			
+		if (service.newLoan(newLoan)){		
 			return Response.ok().build();
 		}else{
 			return Response.status(Response.Status.FOUND).build();

@@ -18,13 +18,14 @@ import javax.ws.rs.core.Response;
 
 import Objects.Address;
 import Objects.User;
-import PdfGenerator.RetrieveAddressData;
 import Services.AddressService;
 import Services.ServiceProvider;
+import Validation.BasicValidation;
 
 @Path("/address")
 public class AddressResource {
     private AddressService service = ServiceProvider.getAdressService();
+    BasicValidation bs = new BasicValidation();
 
 	    private JsonObjectBuilder buildJSON(Address a) {
 	        JsonObjectBuilder job = Json.createObjectBuilder();
@@ -76,18 +77,23 @@ public class AddressResource {
 	                               @FormParam("postalcode") String postalcode,
 	                               @FormParam("description") String description,
 	                               @FormParam("location") String location){
-
-	    	RetrieveAddressData data = new RetrieveAddressData();	        
+	    	Response r =  Response.status(Response.Status.BAD_REQUEST).build();
+	    	if(bs.checkIfFilled(street)&&bs.checkNumber(number)){
+	    	
 	    	
 	        Address newAdress = new Address(street, number, country, postalcode, description, location);
 	        Address returnAdress = service.newAddress(newAdress);
 	        if (returnAdress != null) {
-	        	data.setAddressData(newAdress);	        
+	        	
 	            String a = buildJSON(returnAdress).build().toString();
-	            return Response.ok(a).build();
+	             r =  Response.ok(a).build();
 	        } else {
-	            return Response.status(Response.Status.BAD_REQUEST).build();
+	             r =  Response.status(Response.Status.BAD_REQUEST).build();
 	        }
+	    	}else{
+	    		System.out.println("hij is leeg");
+	    	}
+	    	return r;
 	    }	
 	    
 	    @PUT
