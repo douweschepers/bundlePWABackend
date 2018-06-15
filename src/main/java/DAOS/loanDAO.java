@@ -95,7 +95,7 @@ public class loanDAO extends baseDAO {
 		
 	}
     public List<Loan> getAllLoansFromLastWeek(){
-    	String query = "select * from " + tablename + " where startdate between NOW()::DATE-EXTRACT(DOW FROM NOW())::INTEGER-7 AND NOW()::DATE";
+    	String query = "select * from " + tablename + " where startdate between NOW()::DATE-EXTRACT(DOW FROM NOW())::INTEGER-7 AND NOW()::DATE order by startdate asc";
     	
     	try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);

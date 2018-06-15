@@ -212,6 +212,8 @@
 
                 var data = result;
 
+                
+
                 data.forEach(function (object) {
                     var startdate = object.startdate;
 
