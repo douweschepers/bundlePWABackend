@@ -152,9 +152,9 @@
     	} else {
     		id = getParameterByName("id")
     	}
-    	
+
     	$('#edit').attr('onclick', "window.location.href='edit_account.jsp?id=" + id + "'");
-    	
+
     	hr.open("GET", "/bundlePWABackend/restservices/user/" + id, true);
     	hr.setRequestHeader("Authorization",  "Bearer " + sessionToken);
 

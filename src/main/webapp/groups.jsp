@@ -18,8 +18,9 @@
 		<div id="mainLoader" class="loaderBlock">
 			<div class="loader"></div>
 		</div>
-
+		
 		<div id="groupsdiv" class="block">
+			
 		</div>
 	</div>
 	</main>
