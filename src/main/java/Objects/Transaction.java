@@ -9,17 +9,14 @@ public class Transaction {
 	private String receiver;
 	private Date timeStamp;
 	private int loanIdFk;
-	private int airtimeIdFk;
 	
-	public Transaction(int transactionId, int amount, String sender, String receiver, Date timeStamp, int loanIdFk,
-			int airtimeIdFk) {
+	public Transaction(int transactionId, int amount, String sender, String receiver, Date timeStamp, int loanIdFk) {
 		this.setTransactionId(transactionId);
 		this.setAmount(amount);
 		this.setSender(sender);
 		this.setReceiver(receiver);
 		this.setTimeStamp(timeStamp);
 		this.setLoanIdFk(loanIdFk);
-		this.setAirtimeIdFk(airtimeIdFk);
 	}
 	
 	public int getTransactionId() {
@@ -57,12 +54,5 @@ public class Transaction {
 	}
 	public void setLoanIdFk(int loanIdFk) {
 		this.loanIdFk = loanIdFk;
-	}
-	public int getAirtimeIdFk() {
-		return airtimeIdFk;
-	}
-	public void setAirtimeIdFk(int airtimeIdFk) {
-		this.airtimeIdFk = airtimeIdFk;
-	}
-	
+	}	
 }
