@@ -19,7 +19,6 @@
 
         <div class="block">
 
-            <!-- <canvas id="chart_1"></canvas> -->
             <div class="container clearfix">
                 <div class="third widget doughnut">
                     <h3>Loans per country</h3>
@@ -277,7 +276,6 @@
                         default:
                             break;
                     }
-
                 });
                 console.log(Loans);
 

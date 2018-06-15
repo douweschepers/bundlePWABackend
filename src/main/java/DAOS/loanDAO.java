@@ -80,7 +80,7 @@ public class loanDAO extends baseDAO {
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, loanId);
-			dbResultSet = pstmt.executeQuery(query);
+			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
 		}catch (SQLException e){
