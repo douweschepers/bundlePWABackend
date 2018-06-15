@@ -41,8 +41,8 @@ public class TransactionDAO extends baseDAO{
 		String query = "Select * from " + tablename;
 		
 		try (Connection con = super.getConnection()) {
-			Statement stmt = con.createStatement();
-			dbResultSet = stmt.executeQuery(query);
+			PreparedStatement pstmt = con.prepareStatement(query);
+			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
 		}catch (SQLException e){
@@ -58,6 +58,7 @@ public class TransactionDAO extends baseDAO{
 		try(Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, transactionId);
+			
 			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
@@ -73,6 +74,7 @@ public class TransactionDAO extends baseDAO{
 		try(Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, loanId);
+			
 			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
@@ -88,6 +90,7 @@ public class TransactionDAO extends baseDAO{
 		try(Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			dbResultSet = pstmt.executeQuery();
+			con.close();
 		}catch (SQLException e){
 			e.printStackTrace();
 		}
