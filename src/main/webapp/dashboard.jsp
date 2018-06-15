@@ -82,7 +82,7 @@
                 }, 100); // the timeout should run after 100 milliseconds
             }
         });
-        $(window).on('resize', size);
+        $(window).on('resize');
         function redraw(animation) {
             var options = {};
             if (!animation) {
@@ -95,7 +95,6 @@
             // the rest of our chart drawing will happen here
             // ....
         }
-        size();
 
     </script>
     <script src="js/Chart.min.js"></script>
@@ -193,13 +192,9 @@
     </script>
     <script>
         var sessionToken = window.sessionStorage.getItem("sessionToken");
-
-
         var Loans = {};
 
-
         $.ajax({
-
 
             url: "/bundlePWABackend/restservices/loan/lastweek",
             type: "get",
@@ -212,13 +207,9 @@
 
                 var data = result;
 
-                
-
                 data.forEach(function (object) {
                     var startdate = object.startdate;
-
                     var date = new Date(startdate);
-
                     var currentDate = new Date(Date.now());
 
                     var difference = currentDate.getDate() - date.getDate();
@@ -289,9 +280,9 @@
 
                 });
                 console.log(Loans);
-                
+
                 var data = {
-                    labels:  Object.keys(Loans),
+                    labels: Object.keys(Loans),
                     datasets: [
                         {
                             label: "New Loans",
@@ -302,7 +293,7 @@
                             pointStrokeColor: "#12736d",
                             data: Object.values(Loans)
                         },
-                        
+
                     ]
                 }
                 var canvas = document.getElementById("loans");
