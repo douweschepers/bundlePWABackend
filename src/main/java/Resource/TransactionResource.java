@@ -32,7 +32,6 @@ public class TransactionResource {
 		job.add("receiver", transaction.getReceiver());
 		job.add("timestamp", transaction.getTimeStamp().toString());
 		job.add("loanidfk", transaction.getLoanIdFk());
-		job.add("airtimeidfk", transaction.getAirtimeIdFk());
 		
 		return job;
 	}
@@ -97,12 +96,11 @@ public class TransactionResource {
 									@FormParam("sender") String sender,
 									@FormParam("receiver") String receiver,
 									@FormParam("timestamp") String timeStamp,
-									@FormParam("loanidfk") String loanIdFk,
-									@FormParam("airtimeidfk") String airtimeIdFk) throws ParseException {
+									@FormParam("loanidfk") String loanIdFk) throws ParseException {
 		java.util.Date utilTimeStamp = new SimpleDateFormat("yyyy-MM-dd").parse(timeStamp);
 		java.sql.Date sqlTimeStamp = new java.sql.Date(utilTimeStamp.getTime());
 		
-		Transaction newTransaction = new Transaction(0, Integer.parseInt(amount), sender, receiver, sqlTimeStamp, Integer.parseInt(loanIdFk), Integer.parseInt(airtimeIdFk));
+		Transaction newTransaction = new Transaction(0, Integer.parseInt(amount), sender, receiver, sqlTimeStamp, Integer.parseInt(loanIdFk));
 		
 		if (service.addTransaction(newTransaction)) {
 			return Response.ok().build();

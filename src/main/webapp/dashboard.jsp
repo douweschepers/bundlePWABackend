@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <jsp:include page="parts/head.jsp" />
@@ -277,7 +277,6 @@
                             break;
                     }
                 });
-                console.log(Loans);
 
                 var data = {
                     labels: Object.keys(Loans),

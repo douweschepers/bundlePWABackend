@@ -26,9 +26,8 @@ public class TransactionDAO extends baseDAO{
 				String receiver = dbResultSet.getString("receiver");
 				Date timeStamp = dbResultSet.getDate("timestamp");
 				int loanIdFk = dbResultSet.getInt("loanidfk");
-				int airtimeIdFk = dbResultSet.getInt("airtimeidfk");
 						
-				Transaction transaction = new Transaction(transactionId, amount, sender, receiver, timeStamp, loanIdFk, airtimeIdFk);
+				Transaction transaction = new Transaction(transactionId, amount, sender, receiver, timeStamp, loanIdFk);
 				resultlist.add(transaction);
 			}
 		}catch(SQLException e){
@@ -95,7 +94,7 @@ public class TransactionDAO extends baseDAO{
 	}
 	
 	public boolean addTransaction(Transaction transaction) {
-		String query = "Insert Into " + tablename + "(amount, sender, receiver, timestamp, loanidfk, airtimeidfk) Values(?,?,?,?,?,?)";
+		String query = "Insert Into " + tablename + "(amount, sender, receiver, timestamp, loanidfk) Values(?,?,?,?,?)";
 		boolean result = false;
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
@@ -105,7 +104,6 @@ public class TransactionDAO extends baseDAO{
 			pstmt.setString(3, transaction.getReceiver());
 			pstmt.setDate(4, transaction.getTimeStamp());
 			pstmt.setInt(5, transaction.getLoanIdFk());
-			pstmt.setInt(6, transaction.getAirtimeIdFk());
 
 			if (pstmt.executeUpdate() == 1) {
 				result = true;
