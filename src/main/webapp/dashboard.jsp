@@ -151,44 +151,7 @@
         }
 
     </script>
-    <script>
-        var data = {
-            labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-            datasets: [
-                {
-                    label: "Outgoing Transactions",
-                    backgroundCollor: "#083b38",
-                    borderColor: "#083b38",
-                    strokeColor: "#12736d",
-                    pointColor: "#12736d",
-                    pointStrokeColor: "#12736d",
-                    data: [23321, 5221, 3322, 8882, 4432, 3242, 2344]
-                },
-                {
-                    label: "Incomming Transactions",
-                    fillColor: "rgba(219,186,52,0.4)",
-                    borderColor: "#12736d",
-                    strokeColor: "#12736d",
-                    pointColor: "rgba(220,220,220,1)",
-                    pointStrokeColor: "#fff",
-                    data: [22320, 38349, 54543, 23453, 34323, 34432, 50000]
-                },
-            ]
-        }
-        var canvas = document.getElementById("transactions");
-        var ctx = canvas.getContext("2d");
-        var lineChart = new Chart(ctx, {
-            type: 'line',
-            data: data,
-            options: {
-                scales: {
-                    yAxes: [{
-                        stacked: true
-                    }]
-                }
-            }
-        });
-    </script>
+
     <script>
         var sessionToken = window.sessionStorage.getItem("sessionToken");
         var Loans = {};
@@ -201,7 +164,7 @@
                 xhr.setRequestHeader("Authorization", "Bearer " + sessionToken);
             },
             success: function (result) {
-                addNotification("Authorized, Statistics loaded!", "green");
+                addNotification("Authorized, weekly loans loaded!", "green");
                 $('#mainLoader').fadeOut('fast');
 
                 var data = result;
@@ -315,6 +278,132 @@
             }
         });
 
+    </script>
+
+    <script>
+        var sessionToken = window.sessionStorage.getItem("sessionToken");
+        var Transactions = {};
+
+        $.ajax({
+
+            url: "/bundlePWABackend/restservices/transaction/lastweek",
+            type: "get",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + sessionToken);
+            },
+            success: function (result) {
+                addNotification("Authorized, weekly transactions loaded!", "green");
+                $('#mainLoader').fadeOut('fast');
+
+                var data = result;
+                data.forEach(function (object) {
+                    var startdate = object.timestamp;
+                    var date = new Date(startdate);
+                    var currentDate = new Date(Date.now());
+
+                    var difference = currentDate.getDate() - date.getDate();
+
+                    switch (difference) {
+                        case 1:
+                            if (Transactions[startdate] >= 1) {
+                                Transactions[startdate] += 1;
+                            } else {
+                                Transactions[startdate] = 1;
+                            }
+                            break;
+                        case 2:
+                            if (Transactions[startdate] >= 1) {
+                                Transactions[startdate] += 1;
+                            } else {
+                                Transactions[startdate] = 1;
+                            }
+                            break;
+                        case 3:
+                            if (Transactions[startdate] >= 1) {
+                                Transactions[startdate] += 1;
+                            } else {
+                                Transactions[startdate] = 1;
+                            }
+                            break;
+                        case 4:
+
+                            if (Transactions[startdate] >= 1) {
+                                Transactions[startdate] += 1;
+                            } else {
+                                Transactions[startdate] = 1;
+                            }
+
+                            break;
+                        case 5:
+                            if (Transactions[startdate] >= 1) {
+                                Transactions[startdate] += 1;
+                            } else {
+                                Transactions[startdate] = 1;
+                            }
+                            break;
+                        case 6:
+                            if (Transactions[startdate] >= 1) {
+                                Transactions[startdate] += 1;
+                            } else {
+                                Transactions[startdate] = 1;
+                            }
+                            break;
+                        case 7:
+                            if (Transactions[startdate] >= 1) {
+                                Transactions[startdate] += 1;
+                            } else {
+                                Transactions[startdate] = 1;
+                            }
+                            break;
+                        case 0:
+                            if (Transactions[startdate] >= 1) {
+                                Transactions[startdate] += 1;
+                            } else {
+                                Transactions[startdate] = 1;
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                });
+
+                var data = {
+                    labels: Object.keys(Transactions),
+                    datasets: [
+                        {
+                            label: "Incomming Transactions",
+                            backgroundCollor: "#083b38",
+                            borderColor: "#083b38",
+                            strokeColor: "#12736d",
+                            pointColor: "#12736d",
+                            pointStrokeColor: "#12736d",
+                            data: Object.values(Transactions)
+                        },
+
+                    ]
+                }
+                var canvas = document.getElementById("transactions");
+                var ctx = canvas.getContext("2d");
+                var lineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
+                });
+            },
+            error: function (response, textStatus, errorThrown) {
+                addNotification("Unauthorized, loan not loaded!")
+                console.log("textStatus: " + textStatus);
+                console.log("errorThrown: " + errorThrown);
+                console.log("status: " + response.status);
+            }
+        });
     </script>
     <jsp:include page="parts/footer.jsp" />
 
