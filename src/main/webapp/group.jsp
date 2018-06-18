@@ -220,7 +220,7 @@
 			}
 function AddUser(){
 	var pdfData;
-	id = getCookie("groupid");
+	id = getParameterByName("id");
 	loanid=document.getElementById("users-dropdown").value;
 	$.ajax({
 		url : "/bundlePWABackend/restservices/loangroup/"+id+"/"+loanid,
@@ -230,6 +230,7 @@ function AddUser(){
 		success : function(response) {
 
 			addNotification('Group member added.', "green", 6000);
+			location.reload();
 
 		},
 		error : function(response, textStatus, errorThrown) {
@@ -241,7 +242,7 @@ function AddUser(){
 
 		}
 	});
-	location.reload();
+
 }
 	</script>
 </body>
