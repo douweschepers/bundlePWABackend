@@ -98,6 +98,7 @@ public class TransactionDAO extends baseDAO{
 	
 	public boolean addTransaction(Transaction transaction) {
 		String query = "Insert Into " + tablename + "(amount, sender, receiver, timestamp, loanidfk) Values(?,?,?,?,?)";
+		String query2 = "Update public.loan set paidamount = paidamount + ? where loanid = ?";
 		boolean result = false;
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
@@ -109,6 +110,9 @@ public class TransactionDAO extends baseDAO{
 			pstmt.setDate(4, transaction.getTimeStamp());
 			pstmt.setInt(5, transaction.getLoanIdFk());
 
+			pstmt2.setInt(1, transaction.getAmount());
+			pstmt2.setInt(2, transaction.getLoanIdFk());
+			
 			if (pstmt.executeUpdate() == 1 && pstmt2.executeUpdate() == 1) {
 				result = true;
 			}
