@@ -64,6 +64,13 @@ public class AddressResource {
 	        return Response.status(Response.Status.NOT_FOUND).toString();
 	    }
 	    
+	    @GET
+	    @Produces("application/json")
+	    @Path("/loanspercountry")
+	    public String getLoansByCountry(){
+	    	return service.getLoansByCountry().build().toString();
+	    }
+
 	    @POST
 	    @Produces("application/json")
 	    public Response addAddress(
@@ -119,4 +126,5 @@ public class AddressResource {
 	    		return Response.status(Response.Status.BAD_REQUEST).build();
 	    	}
 	    }
+	    
 }
