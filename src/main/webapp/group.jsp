@@ -3,7 +3,7 @@
 
 <jsp:include page="parts/head.jsp" />
 
-<body onload="getGroup();">
+<body onload="getGroup();getUsers();">
 
 	<jsp:include page="parts/navigation.jsp" />
 
@@ -12,7 +12,7 @@
 		<h1>Group</h1>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
 		<button class="buttonRound"
-			onclick="window.location.href='new_group.jsp'">+</button>
+			onclick="toggleHide('AddMember', false)">+</button>
 	</div>
 
 	<div class="block">
@@ -57,6 +57,17 @@
 				amet, blandit laoreet interdum sem pellentesque. Sit turpis ligula
 				non, iaculis viverra.</p>
 		</div>
+	</div>
+	<div id="AddMember" class="popup"  style="display: none;">
+		<div>
+			<h2>Add group members</h2>
+			<button class="buttonRound" onclick="toggleHide('AddMember', true)">X</button>
+
+					<select id="users-dropdown" name="users">
+			</select>
+		</div>
+		<button class="buttonRound" onclick="AddUser();">Save</button>
+
 	</div>
 	</main>
 
@@ -190,7 +201,48 @@
 
 			}
 			}
+			function getUsers(){
+			let dropdown = $('#users-dropdown');
 
+			dropdown.empty();
+
+			dropdown.append('<option selected="true" disabled>Choose user</option>');
+			dropdown.prop('selectedIndex', 0);
+
+
+
+			// Populate dropdown with list of provinces
+			$.getJSON('http://localhost:4711/bundlePWABackend/restservices/loan/groupless', function (data) {
+				$.each(data, function (key, entry) {
+					dropdown.append($('<option></option>').attr('value', entry.loanid).text(entry.name));
+				})
+			});
+			}
+function AddUser(){
+	var pdfData;
+	id = getCookie("groupid");
+	loanid=document.getElementById("users-dropdown").value;
+	$.ajax({
+		url : "/bundlePWABackend/restservices/loangroup/"+id+"/"+loanid,
+		type : "post",
+		data : pdfData,
+
+		success : function(response) {
+
+			addNotification('Group member added.', "green", 6000);
+
+		},
+		error : function(response, textStatus, errorThrown) {
+
+			addNotification('Error while adding member, contact admin', null, 6000);
+			console.log("textStatus: " + textStatus);
+			console.log("errorThrown: " + errorThrown);
+			console.log("status: " + response.status);
+
+		}
+	});
+	location.reload();
+}
 	</script>
 </body>
 </html>
