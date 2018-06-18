@@ -3,7 +3,7 @@
 
 <jsp:include page="parts/head.jsp" />
 
-<body onload="loadingText('...')">
+<body onload="loadingText('...'); logOut()">
     
     <jsp:include page="parts/navigation.jsp" />
 	

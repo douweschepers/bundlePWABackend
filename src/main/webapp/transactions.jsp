@@ -44,6 +44,10 @@
 
 	<jsp:include page="parts/footer.jsp" />
 	<script> 
+	if(role == null) {
+    	window.location.replace('login.jsp');
+    }
+	
 	$("#searchInput").keyup(function() {
 		// Split the current value of the filter textbox
 		var data = this.value.split(" ");
@@ -98,7 +102,6 @@
 				xhr.setRequestHeader("Authorization",  "Bearer " + sessionToken);
 			},
 			success: function(result) {
-				addNotification("Authorized, Transactions loaded!", "green");
 				$('#mainLoader').fadeOut('fast');
 				var data = result;
 				var table = document.getElementById('fbody');
@@ -128,7 +131,7 @@
 
 	<div id="helpPopup" class="popup" style="display: none;">
 		<div>
-			<h2>Contracts explained</h2>
+			<h2>Transactions explained</h2>
 			<button class="buttonRound" onclick="toggleHide('helpPopup', true)">X</button>
 			<p>
 				Lorem ipsum dolor sit amet, pretium leo sed, ac leo aenean tellus, orci amet maxime amet sed nunc pharetra, scelerisque tristique pretium morbi scelerisque mollis sed, vivamus pede irure ac lacus. Diam ante sit amet, blandit laoreet interdum sem pellentesque. Sit turpis ligula non, iaculis viverra.

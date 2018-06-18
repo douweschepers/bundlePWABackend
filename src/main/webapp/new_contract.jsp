@@ -343,6 +343,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
 
 	<script type="text/javascript">
+	if(role == null) {
+    	window.location.replace('login.jsp');
+    }
+	
 	 $('#signature-pad').attr('width', $('#signature-pad').width());
 
 		$(window).on('resize', function(){

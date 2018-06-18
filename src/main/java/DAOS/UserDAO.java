@@ -261,7 +261,7 @@ public class UserDAO extends baseDAO {
     			int groupId = dbResultSet.getInt("groupid");
     			int loanId = dbResultSet.getInt("loanid");
     			
-    			UserLoanInformation userLoanInformation = new UserLoanInformation(loanOfficerId, groupId, loanId);
+    			UserLoanInformation userLoanInformation = new UserLoanInformation(loanOfficerId, loanId, groupId);
     			result.add(userLoanInformation);
     		}
     	}catch (SQLException e){

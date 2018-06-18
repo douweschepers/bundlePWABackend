@@ -316,6 +316,9 @@
             </form>
         </div>
     </main>
+    <script>	if(role == null) {
+    	window.location.replace('login.jsp');
+    }</script>
 	
     <jsp:include page="parts/footer.jsp" />
 

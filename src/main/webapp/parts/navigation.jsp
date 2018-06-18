@@ -21,15 +21,14 @@
 		
 		<li role="officer" class="noHover hide"><a href=""><h2 class="navTitle" >Officer Pages</h2></a></li>
 		<li role="officer" class="hide" ><a href="groups.jsp">Groups</a></li>
-		<li role="officer" class="hide" ><a  href="contracts.jsp">Contracts</a></li>
+		<li role="officer" class="hide" ><a  href="loans.jsp">Loans</a></li>
 		
 		<li role="admin" class="noHover hide"><a href=""><h2 class="navTitle" >Admin Pages</h2></a></li>
 		<li role="admin" class="hide" ><a href="dashboard.jsp">Dashboard</a></li>
 		<li role="admin" class="hide" ><a href="groups.jsp">Groups</a></li>
-		<li role="admin" class="hide" ><a  href="contracts.jsp">Contracts</a></li>
+		<li role="admin" class="hide" ><a href="accounts.jsp">Accounts</a></li>
+		<li role="admin" class="hide" ><a  href="loans.jsp">Loans</a></li>
 		<li role="admin" class="hide" ><a  href="transactions.jsp">Transactions</a></li>
-
-		<li role="admin" class="hide" ><a href="allaccounts.jsp">Accounts</a></li>
 	</ul>
 
 	<footer>
@@ -37,7 +36,6 @@
 	</footer>
 
 	<script>
-	
 		var role = window.sessionStorage.getItem("userType");
 		
 		var loggedInOut;

@@ -10,8 +10,6 @@
 	<main>
         <div class="welcomeBlock">
             <h1>Edit Loan</h1>
-            <h1 id="title"></h1>
-
         </div>
 
         <div class="buttonBlock">
@@ -32,15 +30,12 @@
                     <li>
                         <label for="loan-status">Loan Status</label>
                         <select name="loan-status" id="loan-status">
-                            <option value="ACTIVE">Active</option>
-                            <option value="DEFAULTED">Defaulted</option>
-                            <option value="TERMINATED">Terminated</option>
+                            <option value="active">Active</option>
+                            <option value="pending">Pending</option>
+                            <option value="defaulted">Defaulted</option>
                         </select>
                     </li>
-                    <li>
-                        <label for="paidamount" id="paidamountlbl">Paid Amount</label>
-                        <input name="paidamount" id="paidamount" placeholder="Enter the loan-amount here"></input>
-                    </li>
+                    <input class="hide" name="paidamount" id="paidamount" placeholder="Enter the loan-amount here"></input>
                     <li>
                         <label for="duration">Duration</label>
                         <input type="number" name="duration" id="duration" min="1" max="36" placeholder="Enter the loan-duration here"></input>
@@ -62,6 +57,11 @@
     </main>
 
     <script type="text/javascript">
+		if(role == null) {
+	    	window.location.replace('login.jsp');
+	    }
+		
+		//if (getParameterByName('id') == null)
         //retrieve data to fill form
         $(document).ready(function() {
             $.ajax({
@@ -71,9 +71,7 @@
 
                 success : function(response) {
 
-                        console.log(response);
-                        $("#title").text(response["loanId"]);
-                        $("#paidamountlbl").text("Paid amount (" + response["amount"] + " total)");
+                        $("#paidamount").val(response["amount"]);
                         $("#loan-status").val(response["status"]);
                         $("#loan-type").val(response["loantype"]);
                         $("#paidamount").val(response["paidamount"]);
@@ -81,14 +79,9 @@
                         $("#closing-date").val(response["closingdate"]);
                         $("#description").val(response["description"]);
 
-
                 },
                 error : function(response, textStatus, errorThrown) {
-                    console.log("Failed.");
-                    console.log("textStatus: " + textStatus);
-                    console.log("errorThrown: " + errorThrown);
-                    console.log("status: " + response.status);
-
+                	addNotification("Failed to load data");
                 }
             });
 
@@ -100,19 +93,10 @@
 					data : $("form").serialize(),
 
 					success : function(response) {
-
-						alert("Loan updated succesfully.");
-            window.location.replace("contracts.jsp");
-
+						addNotification("Loan updated succesfully", "green");
 					},
 					error : function(response, textStatus, errorThrown) {
-
-						alert("Loan could not be updated.")
-
-						console.log("textStatus: " + textStatus);
-						console.log("errorThrown: " + errorThrown);
-						console.log("status: " + response.status);
-
+						addNotification("Loan could not be updated.");
 					}
 				});
         });

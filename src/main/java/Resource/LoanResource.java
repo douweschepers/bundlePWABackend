@@ -107,7 +107,7 @@ public class LoanResource {
 		LoanService service = ServiceProvider.getLoanService();
 
 		
-		String status = "Pending";
+		String status = "pending";
 		Date utilStartDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
 		Date utilClosingDate = new Date();
 		Calendar myCal = Calendar.getInstance();

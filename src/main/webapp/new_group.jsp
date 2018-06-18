@@ -31,6 +31,9 @@
 	</div>
 </div>
 <script type="text/javascript">
+if(role == null) {
+	window.location.replace('login.jsp');
+}
 function getUsers(){
 let dropdown = $('#users-dropdown');
 

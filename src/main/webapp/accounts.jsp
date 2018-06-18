@@ -9,7 +9,7 @@
 
 	<main>
 	<div class="welcomeBlock">
-		<h1>All Accounts</h1>
+		<h1>Accounts</h1>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
 		<button class="buttonRound"
 			onclick="window.location.href='new_contract.jsp'">+</button>
@@ -57,8 +57,6 @@
 									+ sessionToken);
 						},
 						success : function(result) {
-							addNotification("Authorized, Accounts loaded!",
-									"green");
 							$('#mainLoader').fadeOut('fast');
 							var data = result;
 							var table = document.getElementById('fbody');
