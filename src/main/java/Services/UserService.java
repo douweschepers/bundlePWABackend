@@ -34,4 +34,8 @@ public class UserService {
 	    public List<UserLoanInformation> getUserLoanInformation(int userId){
 	    	return userDAO.getUserLoanInformation(userId);
 	    }
+	    
+	    public int getGroupByUserId(int userId){
+	    	return userDAO.getGroupByUserId(userId);
+	    }
 }

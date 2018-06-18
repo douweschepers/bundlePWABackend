@@ -2,8 +2,10 @@ package Resource;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+
 
 import javax.annotation.security.RolesAllowed;
 import javax.json.Json;
@@ -107,10 +109,17 @@ public class LoanResource {
 		
 		String status = "Pending";
 		Date utilStartDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
-		Date utilClosingDate = new SimpleDateFormat("yyyy-MM-dd").parse(utilStartDate.toString());
+		Date utilClosingDate = new Date();
+		Calendar myCal = Calendar.getInstance();
+		
+		myCal.setTime(utilStartDate);
+		myCal.add(Calendar.MONTH, Integer.parseInt(duration));
+		utilClosingDate = myCal.getTime();
 		java.sql.Date sqlStartDate = new java.sql.Date(utilStartDate.getTime());
 		java.sql.Date sqlClosingDate = new java.sql.Date(utilClosingDate.getTime());
+		
 		Loan newLoan = new Loan(0, loanType, Integer.parseInt(amount), status, sqlStartDate, Integer.parseInt(duration), sqlClosingDate, 0, "", description.toString(), Integer.parseInt(userIdFk));
+
 		if (service.newLoan(newLoan)){		
 			return Response.ok().build();
 		}else{
