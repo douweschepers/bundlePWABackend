@@ -101,7 +101,7 @@ public class TransactionResource {
 		java.sql.Date sqlTimeStamp = new java.sql.Date(utilTimeStamp.getTime());
 		
 		Transaction newTransaction = new Transaction(0, Integer.parseInt(amount), sender, receiver, sqlTimeStamp, Integer.parseInt(loanIdFk));
-		
+		System.out.println("post");
 		if (service.addTransaction(newTransaction)) {
 			return Response.ok().build();
 		} else {
