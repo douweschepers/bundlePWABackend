@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,7 +151,7 @@ public class loanDAO extends baseDAO {
 	        pstmt.setInt(6, changedLoan.getLoanId());
 
             pstmt.executeUpdate();
-            
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

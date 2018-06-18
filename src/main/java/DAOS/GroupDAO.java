@@ -36,8 +36,8 @@ public class GroupDAO extends baseDAO{
 		List<Group> resultslist = new ArrayList<Group>();
 		
 		try (Connection con = super.getConnection()) {
-			Statement stmt = con.createStatement();
-			dbResultSet = stmt.executeQuery(query);
+			PreparedStatement pstmt = con.prepareStatement(query);
+			dbResultSet = pstmt.executeQuery();
 			
 			while (dbResultSet.next()) {
 				int groupId = dbResultSet.getInt("id");
