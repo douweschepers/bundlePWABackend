@@ -421,11 +421,7 @@
 				function sendUserData() {
 
 					var formData = $("#user").serializeArray();
-					formData.push({
-						name : "usertype",
-						value : "applicant"
-
-					});
+					
 					formData.push({
 						name : "addressidfk",
 						value : addressid

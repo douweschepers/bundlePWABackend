@@ -26,11 +26,12 @@ import Objects.Loan;
 import Objects.User;
 import Services.LoanService;
 import Services.ServiceProvider;
+import Validation.BasicValidation;
 
 @Path("/loan")
 public class LoanResource {
 	private LoanService service = ServiceProvider.getLoanService();
-	
+	BasicValidation bs = new BasicValidation();
 	JsonObjectBuilder buildJson(Loan loan) {
 		JsonObjectBuilder job = Json.createObjectBuilder();
 		
@@ -99,10 +100,8 @@ public class LoanResource {
 							@FormParam("duration") String duration,
 							@FormParam("loandescription") String description,
 							@FormParam("useridfk") String userIdFk) throws ParseException{
-
-
-		//LoanService service = LoanServiceProvider.getLoanService();
-
+		Response r =Response.status(Response.Status.FOUND).build();
+		if(bs.checkIfFilledString(amount) && !bs.isLetters(amount)){
 
 		LoanService service = ServiceProvider.getLoanService();
 
@@ -115,10 +114,14 @@ public class LoanResource {
 		java.sql.Date sqlClosingDate = new java.sql.Date(utilClosingDate.getTime());
 		Loan newLoan = new Loan(0, loanType, Integer.parseInt(amount), status, sqlStartDate, Integer.parseInt(duration), sqlClosingDate, 0, "", description.toString(), Integer.parseInt(userIdFk));
 		if (service.newLoan(newLoan)){		
-			return Response.ok().build();
+			r =  Response.ok().build();
 		}else{
-			return Response.status(Response.Status.FOUND).build();
+			r =  Response.status(Response.Status.FOUND).build();
 		}
+		}else{
+			System.out.println("loan velden niet goed");
+		}
+		return r;
 	}
 	
 	@PUT
