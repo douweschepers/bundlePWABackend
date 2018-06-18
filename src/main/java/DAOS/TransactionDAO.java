@@ -98,7 +98,7 @@ public class TransactionDAO extends baseDAO{
 	
 	public boolean addTransaction(Transaction transaction) {
 		String query = "Insert Into " + tablename + "(amount, sender, receiver, timestamp, loanidfk) Values(?,?,?,?,?)";
-		String query2 = "Update public.loan set paidamount = paidamount + ? where useridfk = ?";
+		String query2 = "Update public.loan set paidamount = paidamount + ? where loanid = ?";
 		boolean result = false;
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);

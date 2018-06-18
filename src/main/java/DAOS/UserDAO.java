@@ -89,6 +89,7 @@ public class UserDAO extends baseDAO {
     	 PreparedStatement pstmt = con.prepareStatement(query);
     	 dbResultSet = pstmt.executeQuery();
 
+    	 con.close();
     	} catch (SQLException e) {
     		e.printStackTrace();
     	}
@@ -133,6 +134,7 @@ public class UserDAO extends baseDAO {
     		pstmt.setInt(1, userid);
     		
     		dbResultSet = pstmt.executeQuery();
+    		con.close();
     		
     		while(dbResultSet.next()){
     			groupId = dbResultSet.getInt("groupidfk");
@@ -163,6 +165,7 @@ public class UserDAO extends baseDAO {
             pstmt.setInt(10, user.getUserId());
 
             pstmt.executeUpdate();
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -211,6 +214,7 @@ public class UserDAO extends baseDAO {
             pstmt.setString(11, user.getUsername());
 
             ResultSet dbResultSet = pstmt.executeQuery();
+            con.close();
             if(dbResultSet.next()) {
 
                result =  dbResultSet.getInt("userid");
@@ -232,7 +236,7 @@ public class UserDAO extends baseDAO {
     		pstmt.setString(1, name);
     		pstmt.setString(2, password);
     		ResultSet rs = pstmt.executeQuery();
-    		
+    		con.close();
     		if(rs.next()){
     			role = rs.getString("usertype");
     			System.out.println(role);
