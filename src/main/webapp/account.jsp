@@ -11,7 +11,7 @@
         <div class="welcomeBlock">
             <h1>Account</h1>
             <button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
-			<button class="buttonRound" id="edit">&#9998;</button>
+			<button class="buttonRound hide" id="edit">&#9998;</button>
         </div>
 
         <div class="block">
@@ -33,7 +33,7 @@
 				<div>
 					<label for="username"> <b>Username</b>
 					</label>
-					<h3 id="username" class="call1" loading="true">Loading...</h3>
+					<h3 id="userName" class="call1" loading="true">Loading...</h3>
 				</div>
 
 				<div>
@@ -142,6 +142,15 @@
     <jsp:include page="parts/footer.jsp" />
     <script>
     var sessionToken = window.sessionStorage.getItem("sessionToken");
+    var usertype = window.sessionStorage.getItem("userType");
+
+    if(usertype == "applicant") {
+    	if(getCookie("userid") == getParameterByName("id") || getParameterByName("id") == null) {
+    		$('#edit').removeClass('hide');
+    	}
+    } else if(usertype == null) {
+    	window.location.replace('login.jsp');
+    }
 
     function getUser() {
     	var hr = new XMLHttpRequest();
@@ -165,7 +174,7 @@
     			var addressData = userData[0].addressInformation[0];
     			var loanData = userData[0].loaninformation[0];
 
-    			$('#username').text(checkValue(userData[0].username));
+    			$('#userName').text(checkValue(userData[0].username));
     			$('#name').text(checkValue(userData[0].firstName + " " + userData[0].lastName));
     			$('#phone').text(checkValue(userData[0].phonenumber));
     			$('#birthdate').text(checkValue(userData[0].dateofbirth));

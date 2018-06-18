@@ -11,8 +11,7 @@
 	<div class="welcomeBlock">
 		<h1>Group</h1>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
-		<button class="buttonRound"
-			onclick="window.location.href='new_group.jsp'">+</button>
+		<button class="buttonRound hide" id="newGroup" onclick="window.location.href='new_group.jsp'">+</button>
 	</div>
 
 	<div class="block">
@@ -61,6 +60,16 @@
 	</main>
 
 	<script>
+    var usertype = window.sessionStorage.getItem("userType");
+    var hideEdit = 'hide';
+
+    if(usertype != "applicant") {
+   		$('#newGroup').removeClass('hide');
+   		hideEdit = '';
+    } else if(usertype == null) {
+    	window.location.replace('login.jsp');
+    }
+    
 	$("#searchInput").keyup(function() {
 		// Split the current value of the filter textbox
 		var data = this.value.split(" ");
@@ -174,7 +183,7 @@
 										+ status
 										+ '</td>'
 										+ "<td class='tdHide'>  <button class='small' onclick='toViewLoan("+ loanid + ");'>View</button></td> "
-										+ "<td class='tdHide'>  <button class='small' onclick='toEditLoan("
+										+ "<td class='tdHide "+hideEdit+"'>  <button class='small' onclick='toEditLoan("
 										+ loanid + ");'>Edit</button> </td>";
 								table.appendChild(tr);
 								return true;

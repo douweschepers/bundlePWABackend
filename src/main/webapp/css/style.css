@@ -1060,9 +1060,6 @@ progress::-moz-progress-bar {
 
 }
 
-/* For landscape mode on phones */
-@media (max-height: 620px){
-	header footer {
-		position: relative;
-	}
+header footer {
+	position: relative;
 }
