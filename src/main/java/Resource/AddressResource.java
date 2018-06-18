@@ -90,7 +90,7 @@ public class AddressResource {
 	        Address newAddress = new Address(street, number, country, postalcode, description, location);
 	        Address returnAdress = service.newAddress(newAddress);
 	        if (returnAdress != null) {
-	        	data.setAddressData(newAddress);	        
+//	        	data.setAddressData(newAddress);	        
 	            String a = buildJSON(returnAdress).build().toString();
 	             r =  Response.ok(a).build();
 	        } else {
