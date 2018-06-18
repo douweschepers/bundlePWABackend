@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <jsp:include page="parts/head.jsp" />
@@ -50,14 +50,14 @@
     <script>
         (function draw() {
             var t;
-            
+
             function size(animate) {
-                
+
                 clearTimeout(t);
-                
+
                 t = setTimeout(function () {
                     $("canvas").each(function (i, el) {
-                        
+
                         $(el).attr({
                             "width": $(el).parent().width(),
                             "height": $(el).parent().outerHeight()
@@ -73,7 +73,7 @@
                 }, 100);
             }
         });
-        
+
         $(window).on('resize');
         function redraw(animation) {
             var options = {};
@@ -83,21 +83,46 @@
                 options.animation = true;
             }
             draw();
-            
+
         }
 
     </script>
     <script src="js/Chart.min.js"></script>
+   
     <script>
+        var sessionToken = window.sessionStorage.getItem("sessionToken");
+        var Countries = {};
 
-        var ctx = document.getElementById("hours");
+        $.ajax({
+
+            url: "/bundlePWABackend/restservices/address/loanspercountry",
+            type: "get",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + sessionToken);
+            },
+            success: function (result) {
+                addNotification("Authorized, Loans / Country loaded!", "green");
+                $('#mainLoader').fadeOut('fast');
+
+                var data = result;
+
+                data.forEach(function (object) {
+                    var country = object.country;
+                    var numberOfContracts = object.amount;
+                    
+                    Countries[country] = numberOfContracts;
+
+                    
+                });
+
+                var ctx = document.getElementById("hours");
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["Ghana", "Rwanda", "Libya", "Nigeria", "Zimbabwe", "Congo"],
+                labels: Object.keys(Countries),
                 datasets: [{
                     label: '# of Loans',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: Object.values(Countries),
                     backgroundColor: "#12736d",
                     borderColor: "white",
                     borderWidth: 1
@@ -113,33 +138,14 @@
                 }
             }
         });
-
-
-    </script>
-    <script>
-        var data = {
-            labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-            datasets: [
-                {
-                    label: "Closed Loans",
-                    backgroundCollor: "#083b38",
-                    borderColor: "#083b38",
-                    strokeColor: "#12736d",
-                    pointColor: "#12736d",
-                    pointStrokeColor: "#12736d",
-                    data: [65, 54, 30, 81, 56, 55, 40]
-                },
-                {
-                    label: "Added Loans",
-                    fillColor: "rgba(219,186,52,0.4)",
-                    borderColor: "#12736d",
-                    strokeColor: "#12736d",
-                    pointColor: "rgba(220,220,220,1)",
-                    pointStrokeColor: "#fff",
-                    data: [20, 60, 42, 58, 31, 21, 50]
-                },
-            ]
-        }
+            },
+            error: function (response, textStatus, errorThrown) {
+                addNotification("Unauthorized, Countries not loaded!")
+                console.log("textStatus: " + textStatus);
+                console.log("errorThrown: " + errorThrown);
+                console.log("status: " + response.status);
+            }
+        });
 
     </script>
 
