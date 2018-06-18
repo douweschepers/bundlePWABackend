@@ -82,7 +82,6 @@ public class UserResource {
     @Produces("application/json")
     public String getAccounts() {
         JsonArrayBuilder jab = Json.createArrayBuilder();
-
         for (UserWithAddress u : service.getAllUsers()) {
             jab.add(buildJSON(u));
         }
