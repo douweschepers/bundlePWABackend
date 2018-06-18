@@ -102,9 +102,6 @@ public class LoanResource {
 							@FormParam("useridfk") String userIdFk) throws ParseException{
 
 
-		//LoanService service = LoanServiceProvider.getLoanService();
-
-
 		LoanService service = ServiceProvider.getLoanService();
 
 		
@@ -153,6 +150,7 @@ public class LoanResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+	
 	public JsonObjectBuilder getLoanJson(Loan loan){
 		return buildJson(loan);
 	}
