@@ -212,7 +212,7 @@
 
 
 			// Populate dropdown with list of provinces
-			$.getJSON('http://localhost:4711/bundlePWABackend/restservices/loan/groupless', function (data) {
+			$.getJSON('/bundlePWABackend/restservices/loan/groupless', function (data) {
 				$.each(data, function (key, entry) {
 					dropdown.append($('<option></option>').attr('value', entry.loanid).text(entry.name));
 				})
