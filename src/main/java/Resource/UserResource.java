@@ -119,7 +119,13 @@ public class UserResource {
         }
         return Response.status(Response.Status.NOT_FOUND).toString();
     }
-
+    
+    @GET
+    @Path("/getgroupid/{id}")
+    public int getGroupByUserId(@PathParam("id") int userId){
+    	return service.getGroupByUserId(userId);
+    }
+    
     @POST
     @Produces("application/json")
     public Response addUser(@FormParam("usertype") String userType,

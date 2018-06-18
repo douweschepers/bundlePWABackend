@@ -79,6 +79,7 @@ public class UserDAO extends baseDAO {
 
         return results;
     }
+    
     public List<UserWithAddress> findAllUsers() {
     	String query = 	"select u.*, a.* " +
     					"from public.user u, public.address a " +
@@ -118,6 +119,29 @@ public class UserDAO extends baseDAO {
         } else {
             return resultlist.get(0);
         }
+    }
+    
+    public int getGroupByUserId(int userid){
+    	int groupId = 0;
+    	String query = 	"select g.groupidfk " + 
+    					"from public.grouploan g, public.loan l " +
+    					"where g.loanidfk = l.loanid and l.useridfk = ?;";
+    	
+    	try (Connection con = super.getConnection()) {
+    		PreparedStatement pstmt = con.prepareStatement(query);
+    		
+    		pstmt.setInt(1, userid);
+    		
+    		dbResultSet = pstmt.executeQuery();
+    		
+    		while(dbResultSet.next()){
+    			groupId = dbResultSet.getInt("groupidfk");
+    		}
+    	} catch(SQLException e){
+    		e.printStackTrace();
+    	}
+    	
+    	return groupId;
     }
 
     public UserWithAddress update(UserWithAddress user) {
