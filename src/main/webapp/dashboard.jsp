@@ -23,7 +23,7 @@
                 <div class="third widget doughnut">
                     <h3>Loans per country</h3>
                     <div class="canvas-container">
-                        <canvas id="hours"></canvas>
+                        <canvas id="loans_per_country"></canvas>
                     </div>
                 </div>
                 <div class="third widget line">
@@ -115,7 +115,7 @@
                     
                 });
 
-                var ctx = document.getElementById("hours");
+                var ctx = document.getElementById("loans_per_country");
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
