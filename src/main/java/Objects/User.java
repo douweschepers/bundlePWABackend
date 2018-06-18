@@ -15,9 +15,10 @@ public class User {
 	private Date dateOfBirth;
 	private String photo;
 	private String username;
+	private int grouploanid;
 	
 	public User(int userId, String userType, String firstName, String lastName, int phonenumber, String password, String salt, String status,
-			int adresIDFK, String photo, Date dateOfBirth, String userName) {
+			int addressIdFk, String photo, Date dateOfBirth, String userName) {
 
 		this.userId = userId;
 		this.userType = userType;
@@ -27,14 +28,14 @@ public class User {
 		this.password = password;
 		this.salt = salt;
 		this.setStatus(status);
-		this.addressIdFk = adresIDFK;
+		this.addressIdFk = addressIdFk;
 		this.setPhoto(photo);
 		this.dateOfBirth = dateOfBirth;
 		this.setUserName(userName);
 	}
 	
 	public User(String userType, String firstName, String lastName, int phonenumber, String password, String salt, String status,
-			int adresIDFK, String photo, Date dateOfBirth, String userName) {
+			int addressIdFk, String photo, Date dateOfBirth, String userName) {
 
 		this.userType = userType;
 		this.firstName = firstName;
@@ -43,7 +44,7 @@ public class User {
 		this.password = password;
 		this.salt = salt;
 		this.setStatus(status);
-		this.addressIdFk = adresIDFK;
+		this.addressIdFk = addressIdFk;
 		this.setPhoto(photo);
 		this.dateOfBirth = dateOfBirth;
 		this.setUserName(userName);
@@ -163,5 +164,13 @@ public class User {
 		}else{
 			this.username = "";
 		}
+	}
+
+	public int getGrouploanid() {
+		return grouploanid;
+	}
+
+	public void setGrouploanid(int grouploanid) {
+		this.grouploanid = grouploanid;
 	}
 }

@@ -25,9 +25,11 @@
 		
 		<li role="admin" class="noHover hide"><a href=""><h2 class="navTitle" >Admin Pages</h2></a></li>
 		<li role="admin" class="hide" ><a href="dashboard.jsp">Dashboard</a></li>
-		<li role="admin" class="hide" ><a href="groups.jsp">All Groups</a></li>
-		<li role="admin" class="hide" ><a  href="contracts.jsp">All Contracts</a></li>
-		<li role="admin" class="hide" ><a href="allaccounts.jsp">All Accounts</a></li>
+		<li role="admin" class="hide" ><a href="groups.jsp">Groups</a></li>
+		<li role="admin" class="hide" ><a  href="contracts.jsp">Contracts</a></li>
+		<li role="admin" class="hide" ><a  href="transactions.jsp">Transactions</a></li>
+
+		<li role="admin" class="hide" ><a href="allaccounts.jsp">Accounts</a></li>
 	</ul>
 
 	<footer>

@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,7 +151,7 @@ public class loanDAO extends baseDAO {
 	        pstmt.setInt(6, changedLoan.getLoanId());
 
             pstmt.executeUpdate();
-            
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -161,7 +160,7 @@ public class loanDAO extends baseDAO {
     }
 	
 	public JsonArrayBuilder getGrouplessLoans(){
-		String query = "SELECT l.useridfk,	u.firstname || ' ' || u.lastname as name FROM public.user u, public.loan l LEFT JOIN grouploan gl on l.loanid = gl.loanidfk where gl.loanidfk is NULL;";
+		String query = "SELECT l.loanid, u.firstname || ' ' || u.lastname as name FROM public.user u, public.loan l LEFT JOIN grouploan gl on l.loanid = gl.loanidfk where gl.loanidfk is NULL and l.useridfk = u.userid;";
 		JsonArrayBuilder jab = Json.createArrayBuilder();
 		
 		try (Connection con = super.getConnection()) {
@@ -176,7 +175,7 @@ public class loanDAO extends baseDAO {
 		try {
 			while(dbResultSet.next()){
 				JsonObjectBuilder job = Json.createObjectBuilder();
-				job.add("userid", dbResultSet.getInt("useridfk"));
+				job.add("loanid", dbResultSet.getInt("loanid"));
 				job.add("name", dbResultSet.getString("name"));
 				jab.add(job);
 			}

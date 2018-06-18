@@ -2,6 +2,8 @@ package Services;
 
 import java.util.List;
 
+import javax.json.JsonArrayBuilder;
+
 import DAOS.AddressDAO;
 import Objects.Address;
 
@@ -28,5 +30,9 @@ public class AddressService {
 
 	public Address updateAddress(Address updateAddress) {
 		return addressDAO.update(updateAddress);
+	}
+	
+	public JsonArrayBuilder getLoansByCountry(){
+		return addressDAO.getLoansByCountry();
 	}
 }
