@@ -89,6 +89,9 @@
     </script>
     <script src="js/Chart.min.js"></script>
     <script>
+	if(role == null) {
+    	window.location.replace('login.jsp');
+    }
 
         var ctx = document.getElementById("hours");
         var myChart = new Chart(ctx, {
@@ -155,7 +158,6 @@
                 xhr.setRequestHeader("Authorization", "Bearer " + sessionToken);
             },
             success: function (result) {
-                addNotification("Authorized, weekly loans loaded!", "green");
                 $('#mainLoader').fadeOut('fast');
 
                 var data = result;
@@ -283,7 +285,6 @@
                 xhr.setRequestHeader("Authorization", "Bearer " + sessionToken);
             },
             success: function (result) {
-                addNotification("Authorized, weekly transactions loaded!", "green");
                 $('#mainLoader').fadeOut('fast');
 
                 var data = result;

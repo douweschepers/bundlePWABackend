@@ -73,10 +73,8 @@
 	<script>
     var usertype = window.sessionStorage.getItem("userType");
     var hideEdit = 'hide';
-    
-    console.log(usertype);
 
-    if(usertype != "applicant") {
+    if(usertype != null &&usertype != "applicant") {
    		$('#newGroup').removeClass('hide');
    		hideEdit = '';
     } else if(usertype == null) {
@@ -128,10 +126,9 @@
 			});
 		function getGroup() {
 			var hr = new XMLHttpRequest();
+			var id;
 			if(getParameterByName("id") === null) {
-				id = getCookie("groupid");
-				$('#mainLoader').fadeOut('fast');
-				addNotification("No group specified, try again from the groups page...");
+				id = getUserGroupId();
 			} else {
 				id = getParameterByName("id");
 				hr.open("GET", "/bundlePWABackend/restservices/loangroup/" +id ,
@@ -161,6 +158,44 @@
 				}
 				hr.send(null);
 
+			}
+		}
+			
+			function getGroup2(id) {
+				if(id == 0){
+					addNotification("User has no group");
+					$('#mainLoader').fadeOut('fast');
+				} else {
+				var hr = new XMLHttpRequest();
+
+					hr.open("GET", "/bundlePWABackend/restservices/loangroup/" +id ,
+							true);
+
+					hr.onreadystatechange = function() {
+						if (hr.readyState == 4 && hr.status == 200) {
+							var data = JSON.parse(hr.responseText);
+							var datalength = data.length;
+
+							for (var i = 0; i < datalength; i++) {
+								var id = data[i].loaninformation[0].useridfk.toString();
+
+								var amount = data[i].loaninformation[0].amount;
+								var paidamount = data[i].loaninformation[0].paidamount;
+								var duration = data[i].loaninformation[0].duration;
+								var status = data[i].loaninformation[0].status;
+								var loanid = data[i].loaninformation[0].loanId;
+								done = createCode(id, name, amount, paidamount, duration, status, loanid);
+
+							}
+							$('#mainLoader').fadeOut('fast');
+						} else if (hr.readyState == 4) {
+							addNotification('Retrieving data failed with status '
+									+ hr.status + '. Try again later.');
+						}
+					}
+					hr.send(null);
+
+				}
 			}
 
 			function createCode(id, name, amount, paidamount, duration, status,
@@ -211,7 +246,6 @@
 						});
 
 			}
-			}
 			function getUsers(){
 			let dropdown = $('#users-dropdown');
 
@@ -253,8 +287,27 @@ function AddUser(){
 
 		}
 	});
-
 }
+	
+	function getUserGroupId() {
+		var hr = new XMLHttpRequest();
+
+		id = getCookie("userid");
+		hr.open("GET", "/bundlePWABackend/restservices/user/getgroupid/" +id ,
+				true);
+
+		hr.onreadystatechange = function() {
+			if (hr.readyState == 4 && hr.status == 200) {
+				getGroup2(hr.responseText);
+			} else if (hr.readyState == 4) {
+				addNotification('Retrieving data failed with status '
+						+ hr.status + '. Try again later.');
+				getGroup2(0);
+			}
+		}
+		hr.send(null);
+
+	}
 	</script>
 </body>
 </html>

@@ -62,6 +62,9 @@
     </main>
 
     <script type="text/javascript">
+	if(role == null) {
+    	window.location.replace('login.jsp');
+    }
         //retrieve data to fill form
         $(document).ready(function() {
             $.ajax({

@@ -52,6 +52,9 @@
 
 
     <script type="text/javascript">
+	if(role == null) {
+    	window.location.replace('login.jsp');
+    }
         $(document).ready(function () {
             $("form").submit(function () {
 

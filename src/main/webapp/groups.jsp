@@ -46,6 +46,13 @@
 	<jsp:include page="parts/footer.jsp" />
 
 	<script>
+	if(role == null) {
+    	window.location.replace('login.jsp');
+    }
+	
+		if(getParameterByName("newGroup")){
+			addNotification("Empty group created", "green");
+		}
 		function getGroups() {
 
 			var hr = new XMLHttpRequest();
@@ -104,16 +111,14 @@
 		url : "/bundlePWABackend/restservices/group/" + loanofficerid,
 		type : "post",
 
-
 		success : function(response) {
 
-			alert("Group created.");
-			window.location.replace("groups.jsp");
+			window.location.replace("groups.jsp?newGroup=true");
 
 		},
 		error : function(response, textStatus, errorThrown) {
 
-			alert("Loan could not be updated.")
+			addNotification("Loan could not be updated.")
 
 			console.log("textStatus: " + textStatus);
 			console.log("errorThrown: " + errorThrown);

@@ -11,7 +11,7 @@
 	<div class="welcomeBlock">
 		<h1>Loan</h1>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
-		<button class="buttonRound" onclick="window.location.href='edit_loan.jsp'">&#9998;</button>
+		<button id="edit" class="buttonRound hide" onclick="window.location.href='edit_loan.jsp'">&#9998;</button>
 	</div>
 	
 	<div class="block">
@@ -129,6 +129,17 @@
 
 	<jsp:include page="parts/footer.jsp" />
 	<script>
+	
+    var usertype = window.sessionStorage.getItem("userType");
+    var hideEdit = 'hide';
+
+    if(usertype != null &&usertype != "applicant") {
+   		$('#edit').removeClass('hide');
+   		hideEdit = '';
+    } else if(usertype == null) {
+    	window.location.replace('login.jsp');
+    }
+    
 	function getTransaction() {
 		var hr = new XMLHttpRequest();
     	var id = getParameterByName("id");
@@ -148,7 +159,7 @@
 							+ '<td id ="amount" data-label="Amount">'
 							+ object[i].amount + '</td>'
 							+ '<td id = "receiver" data-label="receiver">'
-							+ object[i].receiver + " months" + '</td>'
+							+ object[i].receiver + '</td>'
 							+ '<td id = "timestamp" data-label="timestamp">'
 							+ object[i].timestamp + '</td>';
 					table.appendChild(tr);
@@ -209,6 +220,7 @@
     			var loanData = userData[0].loaninformation[0];
 
     			$('#name').text(checkValue(userData[0].firstName + " " + userData[0].lastName));
+    			$('#accountButton').attr("onclick", "window.location.href='account.jsp?id="+ userData[0].userid +"'");
     			$('#group').text(checkValue(loanData.groupid));
     			$('#groupButton').attr("onclick", 'window.location.href="group.jsp?id=' + loanData.groupid + '"');
     			$('#status').text(UCFirst(checkValue(userData[0].status)));	

@@ -344,6 +344,9 @@
     </main>
 
     <script type="text/javascript">
+	if(role == null) {
+    	window.location.replace('login.jsp');
+    }
         var addressidfk;
         //retrieve data to fill form
         $(document).ready(function () {

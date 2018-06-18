@@ -7,7 +7,7 @@ self.addEventListener('install', function(evt) {
 
 self.addEventListener('fetch', function(evt) {
   console.log('The service worker is serving the asset.');
-  evt.respondWith(fromNetwork(evt.request, 5000).catch(function () {
+  evt.respondWith(fromNetwork(evt.request, 10000).catch(function () {
 	    return fromCache(evt.request);
 	  }));
 	});
@@ -18,13 +18,14 @@ function precache() {
         	'index.jsp',
         	'login.jsp',
         	'account.jsp',
-        	'contract.jsp',
-        	'contracts.jsp',
-        	'allaccounts.jsp',
+        	'loans.jsp',
+        	'accounts.jsp',
         	'new_contract.jsp',
         	'new_group.jsp',
         	'group.jsp',
         	'groups.jsp',
+        	'transactions.jsp',
+        	'new_transactions.jsp',
         	'loan.jsp',
         	'edit_account.jsp',
         	'edit_loan.jsp',

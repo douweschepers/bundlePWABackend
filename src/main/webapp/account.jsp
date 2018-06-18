@@ -141,16 +141,16 @@
 
     <jsp:include page="parts/footer.jsp" />
     <script>
+	if(role == null) {
+    	window.location.replace('login.jsp');
+    }
+	
     var sessionToken = window.sessionStorage.getItem("sessionToken");
     var usertype = window.sessionStorage.getItem("userType");
 
-    if(usertype == "applicant") {
-    	if(getCookie("userid") == getParameterByName("id") || getParameterByName("id") == null) {
-    		$('#edit').removeClass('hide');
-    	}
-    } else if(usertype == null) {
-    	window.location.replace('login.jsp');
-    }
+   	if(getCookie("userid") == getParameterByName("id") || getParameterByName("id") == null || role == "officer" || role == "admin") {
+   		$('#edit').removeClass('hide');
+   	}
 
     function getUser() {
     	var hr = new XMLHttpRequest();
