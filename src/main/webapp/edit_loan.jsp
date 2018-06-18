@@ -4,7 +4,7 @@
 <jsp:include page="parts/head.jsp" />
 
 <body >
-    
+
     <jsp:include page="parts/navigation.jsp" />
 
 	<main>
@@ -13,14 +13,14 @@
             <h1 id="title"></h1>
 
         </div>
-        
+
         <div class="buttonBlock">
         </div>
-        
+
         <div class="block">
             <form onsubmit="return false">
                 <ul class="flex-outer">
-                    
+
                     <li>
                         <label for="loan-type">Loan Type</label>
                         <select name="loan-type" id="loan-type">
@@ -102,6 +102,7 @@
 					success : function(response) {
 
 						alert("Loan updated succesfully.");
+            window.location.replace("contracts.jsp");
 
 					},
 					error : function(response, textStatus, errorThrown) {

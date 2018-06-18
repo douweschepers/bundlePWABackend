@@ -40,7 +40,6 @@ function eraseCookie(name) {
 
 function logOut() {
 	eraseCookie("username");
-	eraseCookie("password");
 	eraseCookie("userid");
 }
 
@@ -72,7 +71,6 @@ function validateLogin() {
 						$('#loginbutton').attr('loading', 'false');
 						$('#loginbutton').text('Succes');
 						setCookie('username', username, 1);
-						setCookie('password', pass, 1);
 						console.log(response[0]['session'])
 						window.sessionStorage.setItem('sessionToken', response[0]['session']);
 						window.sessionStorage.setItem('userType', response[0]['usertype']);
