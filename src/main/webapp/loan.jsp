@@ -11,7 +11,7 @@
 	<div class="welcomeBlock">
 		<h1>Loan</h1>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
-		<button id="edit" class="buttonRound hide" onclick="window.location.href='edit_loan.jsp'">&#9998;</button>
+		<button id="edit" class="buttonRound hide">&#9998;</button>
 	</div>
 	
 	<div class="block">
@@ -188,6 +188,7 @@
     			var loanData = JSON.parse(hr.responseText);
 
     			$('#loanstatus').text(UCFirst(checkValue(loanData.status)));
+    			$('#edit').attr("onclick", "window.location.href='edit_loan.jsp?id="+ id +"'");
     			$('#amount').text(checkValue(loanData.amount, 0) + " $");
     			$('#remaining').text(checkValue(loanData.paidamount, 0) + " $");
     			$('#remainingBar').attr("max", loanData.amount);

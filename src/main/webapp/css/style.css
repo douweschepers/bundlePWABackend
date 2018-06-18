@@ -258,10 +258,6 @@ header li a {
 	text-align: -webkit-center;
 	text-align: -moz-center;
 }
-
-.hide {
-	display: none;
-}
 .mobile {
 	display: none;
 }
@@ -1062,4 +1058,9 @@ progress::-moz-progress-bar {
 
 header footer {
 	position: relative;
+}
+
+
+.hide {
+	display: none;
 }

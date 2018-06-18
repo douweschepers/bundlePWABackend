@@ -25,7 +25,7 @@ function precache() {
         	'group.jsp',
         	'groups.jsp',
         	'transactions.jsp',
-        	'new_transactions.jsp',
+        	'new_transaction.jsp',
         	'loan.jsp',
         	'edit_account.jsp',
         	'edit_loan.jsp',
