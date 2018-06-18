@@ -11,7 +11,7 @@
 	<div class="welcomeBlock">
 		<h1>Groups</h1>
 		<button class="buttonRound"  onclick="toggleHide('helpPopup', false)">?</button>
-		<button class="buttonRound">+</button>
+		<button class="buttonRound" onclick="createGroup()">+</button>
 	</div>
 
 	<div class="block">
@@ -20,6 +20,7 @@
 		</div>
 
 		<div id="groupsdiv" class="block">
+
 		</div>
 	</div>
 	</main>
@@ -70,7 +71,7 @@
 						for (var y = 0; y < innerlength; y++) {
 							totalAmount += data[i].groupinformation[y].amount;
 							totalPaid += data[i].groupinformation[y].paidamount;
-							
+
 							groupdiv += [
 									'<div> <label for="name"> <b>',
 									data[i].groupinformation[y].firstname + " " + data[i].groupinformation[y].lastname,
@@ -82,7 +83,7 @@
 						$("#totall"+ groupid).attr("max", totalAmount);
 						$("#totall"+ groupid).attr("value", totalPaid);
 					}
-					
+
 					if(datalength == 0){
 						addNotification("No groups found");
 					}
@@ -94,6 +95,33 @@
 			}
 
 			hr.send(null);
+		}
+
+		function createGroup(){
+			var hr = new XMLHttpRequest();
+			var loanofficerid = getCookie("userid");
+			$.ajax({
+		url : "/bundlePWABackend/restservices/group/" + loanofficerid,
+		type : "post",
+
+
+		success : function(response) {
+
+			alert("Group created.");
+			window.location.replace("groups.jsp");
+
+		},
+		error : function(response, textStatus, errorThrown) {
+
+			alert("Loan could not be updated.")
+
+			console.log("textStatus: " + textStatus);
+			console.log("errorThrown: " + errorThrown);
+			console.log("status: " + response.status);
+
+		}
+	});
+
 		}
 	</script>
 

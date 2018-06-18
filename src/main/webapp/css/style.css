@@ -47,6 +47,12 @@ p {
 	font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+.navTitle {
+	color: white;
+    font-weight: bold;
+    font-size: 24px;
+}	
+
 .logo {
 	display: block;
 	text-align: center;
@@ -54,7 +60,7 @@ p {
 
 .logo img {
 	width: 160px;
-	padding: 50px 0px;
+	padding: 45px 0px;
 }
 
 header {
@@ -139,7 +145,7 @@ header .menu-btn {
 }
 
 header .menu-btn:checked ~ .menu {
-	max-height: 400px;;
+	max-height: 750px;;
 }
 
 header .menu-btn:checked ~ .menu-icon .navicon {
@@ -728,6 +734,14 @@ progress::-moz-progress-bar {
 	padding: 15px 0px;
 }
 
+.noHover a:hover {
+	background-color: #12736d;
+}
+
+.username {
+	margin: 0px;
+}
+
 /* Bigger than 1150 px tablet*/
 @media (max-width: 1150px) {
 	header {
@@ -875,6 +889,10 @@ progress::-moz-progress-bar {
 	.logo {
 		position: relative;
 		float: left;
+	}
+	
+	header li a {
+		padding: 15px 30px;
 	}
 
 	.logo img {

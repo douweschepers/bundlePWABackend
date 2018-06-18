@@ -50,7 +50,7 @@ public class loanDAO extends baseDAO {
 		
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			dbResultSet = pstmt.executeQuery(query);
+			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
 		}catch (SQLException e){
@@ -80,7 +80,7 @@ public class loanDAO extends baseDAO {
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, loanId);
-			dbResultSet = pstmt.executeQuery(query);
+			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
 		}catch (SQLException e){
@@ -95,11 +95,11 @@ public class loanDAO extends baseDAO {
 		
 	}
     public List<Loan> getAllLoansFromLastWeek(){
-    	String query = "select * from " + tablename + " where startdate between NOW()::DATE-EXTRACT(DOW FROM NOW())::INTEGER-7 AND NOW()::DATE-EXTRACT(DOW from NOW())::INTEGER";
+    	String query = "select * from " + tablename + " where startdate between NOW()::DATE-EXTRACT(DOW FROM NOW())::INTEGER-7 AND NOW()::DATE order by startdate asc";
     	
     	try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			dbResultSet = pstmt.executeQuery(query);
+			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
 		}catch (SQLException e){
