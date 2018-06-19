@@ -27,7 +27,7 @@
                             <option value="LT">Long-term</option>
                         </select>
                     </li>
-                    <li>
+                    <li id="loanSatusItem" class="hide">
                         <label for="loan-status">Loan Status</label>
                         <select name="loan-status" id="loan-status">
                             <option value="active">Active</option>
@@ -60,6 +60,10 @@
 		if(role == null) {
 	    	window.location.replace('login.jsp');
 	    }
+		
+		if(role == "admin") {
+			$('#loanSatusItem').removeClass('hide');
+		}
 		
 		//if (getParameterByName('id') == null)
         //retrieve data to fill form
