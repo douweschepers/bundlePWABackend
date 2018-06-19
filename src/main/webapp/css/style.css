@@ -220,27 +220,6 @@ header li a {
     margin: 0px auto 0px auto;
     padding: 0px 25px 0px 375px;
 }
-
-/* Charts styling begin */
-.container {
-    width: 200px;
-    margin: 0 auto;
-}
-.canvas-container {
-    min-height: 300px;
-    max-height: 600px;
-    position: relative;
-}
-.widget {
-    position: relative;
-    margin-bottom: 80px;
-    background: #efefef;
-    padding: 12px;
-    margin-bottom: 30px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
 /* charts styling end */
 .block, .textBlock, .blockHalf {
 	position: relative;
@@ -287,6 +266,10 @@ header li a {
 	color: white;
 	margin: 0px;
 }
+
+	.dashboardBlock {
+		margin-bottom: 50px;
+	}
 
 footer{
 	position: absolute;
@@ -605,6 +588,30 @@ tr:hover {
     background-color: #fffbfb;
 }
 
+.dashboard {
+	padding: 15px 25px 25px 25px !important;
+    width: calc(50% - 72px);
+    margin: 20px 0px 0px 20px;
+    border: 0.5px solid #e6e6e6;
+    background-color: #efefef;
+}
+
+.dashboard {
+	padding: 15px 25px 25px 25px !important;
+    width: calc(50% - 72px);
+    margin: 20px 0px 0px 20px;
+    border: 0.5px solid #e6e6e6;
+    background-color: #efefef;
+}
+
+.dashboardfull {
+	padding: 15px 25px 25px 25px !important;
+    width: calc(100% - 72px);
+    margin: 20px 0px 0px 20px;
+    border: 0.5px solid #e6e6e6;
+    background-color: #efefef;
+}
+
 progress {
 	width: calc(100% - 10px);
     color: #efb956;
@@ -853,7 +860,11 @@ progress::-moz-progress-bar {
 	    width: calc(50% - 45px);
 	    padding: 10px;
 	}
-
+	
+	.dashboard, .dashboardfull {
+	    width: calc(100% - 50px);
+	    margin-left: 0px;
+	}
 
 	.blockUnderHalf {
 		padding: 0px;
@@ -922,6 +933,11 @@ progress::-moz-progress-bar {
 	.blockHalf {
 	    padding: 0px 15px;
     	width: calc(100% - 30px)
+	}
+	
+	.dashboard, .dashboardfull {
+		width: calc(100% - 50px);
+    	margin-left: 0px;
 	}
 
 	#container {
