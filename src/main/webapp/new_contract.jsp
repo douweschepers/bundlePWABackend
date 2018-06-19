@@ -35,6 +35,13 @@
 			</ul>
 			<br>
 		</form>
+		<form id="uploadFile" >
+				<ul class="flex-outer">
+		       <li><label>Image Link:</label>
+		               <input style="margin-bottom: 15px" type="file" id="file" name="file">
+		              <input class="hide" id="submitFile" type="submit" name="submit" value="Submit" ></li>
+		       </ul>		        
+		</form>
 		<form id="address" onsubmit="return false">
 
 			<ul class="flex-outer" id="addressFO">
@@ -334,15 +341,7 @@
 				</li>
 			</ul>
 
-		</form>
-		<form id="uploadFile" >
-				<ul class="flex-outer">
-		       <li><label>Image Link:</label>
-		               <input type="file" id="file" name="file">
-		              <input id="submitFile" type="submit" name="submit" value="Submit" ></li>
-		       </ul>		        
-		</form>
-		
+		</form>	
 
 		</div>
 	</div>

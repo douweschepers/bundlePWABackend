@@ -46,7 +46,7 @@ public class FileUploadHandler extends HttpServlet {
             for (Part part : request.getParts()) {
             String fileName = extractFileName(part);
             part.write(savePath + File.separator + fileName);
-        }*/
+        }*/ 
     }
     // file name of the upload file is included in content-disposition header like this:
     //form-data; name="dataFile"; filename="PHOTO.JPG"
