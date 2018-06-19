@@ -433,6 +433,10 @@
 				function sendUserData() {
 
 					var formData = $("#user").serializeArray();
+					var res = document.getElementById("file").value.split("\\");
+					formData.push({name : "photo",
+						value : res[2]
+						});
 					formData.push({
 						name : "usertype",
 						value : "applicant"
@@ -466,6 +470,7 @@
 
 						}
 					});
+					document.getElementById("submitFile").click();
 				}	;
 
 				function sendLoanData() {
@@ -524,19 +529,14 @@
 			});
 			$("#submitFile").click(function (event) {
 
-		        //stop submit the form, we will post it manually.
 		        event.preventDefault();
-
-		        // Get form
 		        var form = $('#uploadFile')[0];
-
-				// Create an FormData object 
 		        var data = new FormData(form);
 
-				// If you want to add an extra field for the FormData
-		        data.append("CustomField", "This is some extra data, testing");
 
-				// disabled the submit button
+		        data.append("PhoneNumber", document.getElementById("phone").value);
+
+
 		        $("#submitFile").prop("disabled", true);
 
 		        $.ajax({
