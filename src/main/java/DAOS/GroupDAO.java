@@ -92,4 +92,28 @@ public class GroupDAO extends baseDAO{
 		return groupId;
 	}
 	
+	public boolean deleteGroup(int groupId){
+		String query = "delete from public.grouploan where groupidfk = ?";
+		String query2 = "delete from public.group where id = ?";
+		boolean result = false;
+		try(Connection con = super.getConnection()){
+			PreparedStatement pstmt = con.prepareStatement(query);
+			PreparedStatement pstmt2 = con.prepareStatement(query2);
+			
+			pstmt.setInt(1, groupId);
+			pstmt2.setInt(1, groupId);
+			
+			pstmt.executeUpdate();
+			
+			if (pstmt2.executeUpdate() == 1){
+				result = true;
+			}
+			
+			con.close();
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 }
