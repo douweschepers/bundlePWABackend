@@ -335,6 +335,14 @@
 			</ul>
 
 		</form>
+		<form id="uploadFile" >
+				<ul class="flex-outer">
+		       <li><label>Image Link:</label>
+		               <input type="file" id="file" name="file">
+		              <input id="submitFile" type="submit" name="submit" value="Submit" ></li>
+		       </ul>		        
+		</form>
+		
 
 		</div>
 	</div>
@@ -514,6 +522,47 @@
 					});
 				};
 			});
+			$("#submitFile").click(function (event) {
+
+		        //stop submit the form, we will post it manually.
+		        event.preventDefault();
+
+		        // Get form
+		        var form = $('#uploadFile')[0];
+
+				// Create an FormData object 
+		        var data = new FormData(form);
+
+				// If you want to add an extra field for the FormData
+		        data.append("CustomField", "This is some extra data, testing");
+
+				// disabled the submit button
+		        $("#submitFile").prop("disabled", true);
+
+		        $.ajax({
+		            type: "POST",
+		            enctype: 'multipart/form-data',
+		            url: "FileUploadServlet",
+		            data: data,
+		            processData: false,
+		            contentType: false,
+		            cache: false,
+		            timeout: 600000,
+		            success: function (data) {
+
+		            	addNotification('Photo saved', "green", 6000);
+
+		            },
+		            error: function (e) {
+
+		            	addNotification('Photo not saved, contact admin', null, 6000);
+						console.log("textStatus: " + textStatus);
+						console.log("errorThrown: " + errorThrown);
+						console.log("status: " + response.status);
+		            }
+		        });
+
+		    });
 		});
 	</script>
 
