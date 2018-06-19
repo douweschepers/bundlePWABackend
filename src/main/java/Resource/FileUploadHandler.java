@@ -28,6 +28,7 @@ public class FileUploadHandler extends HttpServlet {
 	        response.setContentType("text/html;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 	        String path = "C:/Users/Cedric Voncken/workspace/bundlePWABackend/src/main/webapp/img";
+	        String phone = request.getParameter("PhoneNumber");
             String savePath = path + File.separator + SAVE_DIR;
 
                 File fileSaveDir=new File(savePath);
@@ -39,7 +40,7 @@ public class FileUploadHandler extends HttpServlet {
             Part part=request.getPart("file");
             String fileName=extractFileName(part);
             /*if you may have more than one files with same name then you can calculate some random characters and append that characters in fileName so that it will  make your each image name identical.*/
-            part.write(savePath + File.separator + fileName);
+            part.write(savePath + File.separator + phone + fileName);
            /* 
             //You need this loop if you submitted more than one file
             for (Part part : request.getParts()) {
