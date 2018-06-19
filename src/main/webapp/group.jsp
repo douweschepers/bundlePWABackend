@@ -10,6 +10,7 @@
 	<main>
 	<div class="welcomeBlock">
 		<h1>Group</h1>
+			<button class="buttonRound" onclick="toggleHide('DeleteGroup', false)">X</button>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
 		<button class="buttonRound hide" id="newGroup"
 			onclick="toggleHide('AddMember', false)">+</button>
@@ -56,6 +57,19 @@
 				scelerisque mollis sed, vivamus pede irure ac lacus. Diam ante sit
 				amet, blandit laoreet interdum sem pellentesque. Sit turpis ligula
 				non, iaculis viverra.</p>
+		</div>
+	</div>
+	<div id="DeleteGroup" class="popup" style="display: none;">
+		<div>
+			<h2>Delete Group</h2>
+			<button class="buttonRound" onclick="toggleHide('DeleteGroup', true)">X</button>
+			<ul class="flex-outer" style="margin-top: 130px">
+
+			<p>Are you sure you would like to delete this group? </p>
+
+
+			</ul>
+			<button style="margin-top: 40px;width: 100%;" onclick="deleteGroup();">Confirm</button>
 		</div>
 	</div>
 	<div id="AddMember" class="popup" style="display: none;">
@@ -140,7 +154,7 @@
 					if (hr.readyState == 4 && hr.status == 200) {
 						var data = JSON.parse(hr.responseText);
 						var datalength = data.length;
-						
+
 						if(data[0] == null){
 							var table = document.getElementById('fbody');
 							var tr = document.createElement('tr');
@@ -186,7 +200,7 @@
 					if (hr.readyState == 4 && hr.status == 200) {
 						var data = JSON.parse(hr.responseText);
 						var datalength = data.length;
-						
+
 						if(data[0] == null){
 							var table = document.getElementById('fbody');
 							var tr = document.createElement('tr');
@@ -330,6 +344,32 @@
 				}
 			}
 			hr.send(null);
+
+		}
+		function deleteGroup(){
+						id = getParameterByName("id");
+						$.ajax({
+							url : "/bundlePWABackend/restservices/group/" + id ,
+							type : "DELETE",
+
+
+							success : function(response) {
+
+								addNotification('Group deleted.', "green", 6000);
+								location.replace("groups.jsp")
+
+							},
+							error : function(response, textStatus, errorThrown) {
+
+								addNotification('Error while deleting group, contact admin',
+										null, 6000);
+								console.log("textStatus: " + textStatus);
+								console.log("errorThrown: " + errorThrown);
+								console.log("status: " + response.status);
+
+							}
+						});
+
 
 		}
 	</script>
