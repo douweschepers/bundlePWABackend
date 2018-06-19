@@ -179,7 +179,7 @@
 
     			if(checkValue(userData[0].photo, 'no') !== 'no') {
     				$('#pfbutton').removeClass('hide');
-    				$('#pfbutton').attr('onclick', "loadImage('"+userData[0].photo+"', '.pf', '#pfbutton');");
+    				$('#pfbutton').attr('onclick', "loadImage('img/user/"+userData[0].photo+"', '.pf', '#pfbutton');");
     			}
 
     			if (userData[0].userType == "applicant") {

@@ -335,6 +335,13 @@
 			</ul>
 
 		</form>
+		<form id="uploadFile" action="FileUploadServlet" method="post" enctype="multipart/form-data">
+				<ul class="flex-outer">
+		       <li><label>Image Link:</label>
+		               <input type="file" id="file" name="file">
+		              <input id="submitFile" type="submit" name="submit" value="Submit" ></li>
+		       </ul>		        
+		</form>
 
 		</div>
 	</div>
@@ -366,7 +373,7 @@
 		cancelButton.addEventListener('click', function(event) {
 			signaturePad.clear();
 		});
-
+		
 		var locationInput = document.getElementById("location");
 		function getLocation() {
 			if (navigator.geolocation) {
@@ -400,8 +407,9 @@
 
 		getLocation();
 	</script>
-	<script type="text/javascript">
+	<script type="text/javascript">	
 		$(document).ready(function() {
+			
 			$("form").submit(function() {
 				var addressid;
 				var userid;
@@ -421,6 +429,10 @@
 				function sendUserData() {
 
 					var formData = $("#user").serializeArray();
+					var res = document.getElementById("file").value.split("\\");
+					formData.push({name : "photo",
+						value : res[2]
+						});
 					formData.push({
 						name : "usertype",
 						value : "applicant"
@@ -508,6 +520,7 @@
 
 						}
 					});
+					document.getElementById("submitFile").click();
 				};
 			});
 		});
