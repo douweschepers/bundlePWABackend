@@ -15,7 +15,7 @@
         <div class="block">
             <form id="user" onsubmit="return false">
                 <ul class="flex-outer">
-                    <li>
+                    <li id='usertypeSelect' class="hide">
                         <label for="usertype">User type</label>
                         <select name="usertype" id="usertype">
                             <option value="applicant">Loan Applicant</option>
@@ -23,7 +23,7 @@
                             <option value="admin">Admin</option>
                         </select>
                     </li>
-                    <li>
+                    <li id='useractiveSelect' class="hide">
                         <label for="status">Account status</label>
                         <select name="status" id="status">
                             <option value="active">Active</option>
@@ -32,7 +32,7 @@
                     </li>
                     <li>
                         <label for="username">Username</label>
-                        <input name="username" type="text" id="username" placeholder="Enter your username here">
+                        <input name="username" type="text" id="userName" placeholder="Enter your username here">
                     </li>
                     <li>
                         <label for="first-name">First Name</label>
@@ -332,7 +332,7 @@
                         </select>
                     </li>
                     <li>
-                        <button type="submit">Submit</button>
+                        <button style="width: 100%;" type="submit">Submit</button>
                     </li>
                 </ul>
                 <br>
@@ -347,6 +347,14 @@
 	if(role == null) {
     	window.location.replace('login.jsp');
     }
+	
+	if (role == "admin") {
+		$('#usertypeSelect').removeClass('hide');
+	}
+	
+	if (role != "applicant") {
+		$('#useractiveSelect').removeClass('hide');
+	}
         var addressidfk;
         //retrieve data to fill form
         $(document).ready(function () {
@@ -357,8 +365,7 @@
 
                 success: function (response) {
 
-                    console.log(response);
-                    $("#username").val(response["0"].username);
+                    $("#userName").val(response["0"].username);
                     $("#first-name").val(response["0"].firstName);
                     $("#usertype").val(response["0"].userType);
                     $("#status").val(response["0"].status);
@@ -375,10 +382,6 @@
 
                 },
                 error: function (response, textStatus, errorThrown) {
-                    console.log("Failed.");
-                    console.log("textStatus: " + textStatus);
-                    console.log("errorThrown: " + errorThrown);
-                    console.log("status: " + response.status);
 
                 }
             });

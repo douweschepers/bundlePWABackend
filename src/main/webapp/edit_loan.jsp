@@ -49,7 +49,7 @@
                         <input id="description" name="description" placeholder="Enter the loan-description here"></input>
                     </li>
                     <li>
-                        <button type="submit">Submit</button>
+                        <button style="width: 100%;" type="submit">Submit</button>
                     </li>
                 </ul>
             </form>
