@@ -38,65 +38,6 @@ function eraseCookie(name) {
 	document.cookie = name + '=; Max-Age=-99999999;path=/;';
 }
 
-function logOut() {
-	eraseCookie("username");
-	eraseCookie("userid");
-	sessionStorage.clear();
-	localStorage.clear();
-}
-
-function validateLogin() {
-	$('#loginbutton').attr('loading', 'true');
-	var pass = document.getElementById('pass').value;
-	var username = document.getElementById('username').value;
-
-	if (username == '') {
-		$('#loginbutton').attr('loading', 'false');
-		$('#loginbutton').text('Try again');
-		addNotification('Username can not be empty');
-	} else if (pass == '') {
-		$('#loginbutton').attr('loading', 'false');
-		$('#loginbutton').text('Try again');
-		addNotification('Password can not be empty');
-	} else {
-		var logRequest;
-		try {
-			logRequest = new XMLHttpRequest();
-			logRequest.open('GET', "/bundlePWABackend/restservices/login", true);
-			logRequest.setRequestHeader("username", username);
-			logRequest.setRequestHeader("password", pass);
-			logRequest.send(null);
-			logRequest.onload = function() {
-				if (logRequest.readyState === logRequest.DONE && logRequest.status === 200) {
-					var response = JSON.parse(logRequest.response);
-					if (response[0]['userid'] !== undefined) {
-						$('#loginbutton').attr('loading', 'false');
-						$('#loginbutton').text('Succes');
-						setCookie('username', username, 1);
-						window.sessionStorage.setItem('sessionToken', response[0]['session']);
-						window.sessionStorage.setItem('userType', response[0]['usertype']);
-						setCookie('userid', response[0]['userid']);
-						addNotification("Login successful", "green");
-						window.location.replace("index.jsp");
-					} else {
-						$('#loginbutton').attr('loading', 'false');
-						$('#loginbutton').text('Try again');
-						addNotification(response[0]['error']);
-					}
-				} else {
-					$('#loginbutton').attr('loading', 'false');
-					$('#loginbutton').text('Try again');
-					addNotification('Retrieving data failed with status '
-							+ logRequest.status + '. Try again later.');
-				}
-			}
-
-		} catch (exception) {
-			alert("Request failed");
-		}
-	}
-}
-
 function checkCookie() {
 	console.log(getCookie('loanofficerid'));
 }
@@ -184,6 +125,14 @@ function sendContract(firstname, lastname, birthdate, phone, street,
 			country, picture, loantype, sector, amount, duration, description);
 }
 
+function logOut() {
+	eraseCookie("username");
+	eraseCookie("userid");
+	sessionStorage.clear();
+	localStorage.clear();
+	window.location.replace("account.jsp");
+}
+
 function addNotification(text, color, time = 3000) {
 	backgroundColor = "#ffffff";
 	if (color != undefined && color === "green") {
@@ -193,7 +142,7 @@ function addNotification(text, color, time = 3000) {
 	}
 
 	$('#notificationBlock').fadeIn().append(
-			'<div class="notification hide" style="background-color:'+backgroundColor+'"><p id="notificationText">' + text
+			'<div class="notification" style="background-color:'+backgroundColor+'"><p id="notificationText">' + text
 					+ '</div></div>');
 	$('#notificationBlock .notification:last').hide().fadeIn();
 	setTimeout(removeNotification, time);

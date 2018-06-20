@@ -142,7 +142,7 @@
     <jsp:include page="parts/footer.jsp" />
     <script>
 	if(role == null) {
-    	window.location.replace('login.jsp');
+    	window.location.replace('index.jsp');
     }
 	
     var sessionToken = window.sessionStorage.getItem("sessionToken");
@@ -224,9 +224,9 @@
 
     <div id="helpPopup" class="popup" style="display: none;">
 		<div>
-			<h2>Account explained</h2>
+			<h2>Account info</h2>
 			<button class="buttonRound" onclick="toggleHide('helpPopup', true)">X</button>
-			<p>This page will give you a overview of all your account details.</p>
+			<p>This is where you can fill-in, view and change individual information about customers who apply for a loan or already have a loan. It is important that the information you enter here is correct and inline with the customers data. After you filled in the page you are able to save it. When you come across a place where your device connects to the internet, your system will automatically start uploading the data to the server. If something stops working, please contact +125 5139230.</p>
 		</div>
 	</div>
 

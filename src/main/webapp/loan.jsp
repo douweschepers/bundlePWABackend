@@ -137,7 +137,7 @@
    		$('#edit').removeClass('hide');
    		hideEdit = '';
     } else if(usertype == null) {
-    	window.location.replace('login.jsp');
+    	window.location.replace('index.jsp');
     }
     
 	function getTransaction() {

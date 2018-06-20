@@ -47,7 +47,7 @@
 
 	<script>
 	if(role == null) {
-    	window.location.replace('login.jsp');
+    	window.location.replace('index.jsp');
     }
 	
 		if(getParameterByName("newGroup")){

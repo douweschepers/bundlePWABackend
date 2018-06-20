@@ -13,7 +13,7 @@
 		<li role="loggedIn" class="noHover hide"><a href=""><h2 id="username" class="navTitle username">Username</h2></a></li>
 		<li role="loggedIn" class="hide" ><a href="account.jsp">My Account</a></li>
 		<li role="loggedOut" class="hide" ><a href="index.jsp">Login</a></li>
-		<li role="loggedIn" class="hide" ><span onclick = javascript:logOut();> <a href="login.jsp">Logout</a></span></li>
+		<li role="loggedIn" style="cursor: pointer;" class="hide" ><span onclick = javascript:logOut();> <a>Logout</a></span></li>
 		
 		<li role="applicant" class="noHover hide"><a href=""><h2 class="navTitle" >Applicant Pages</h2></a></li>
 		<li role="applicant" class="hide" ><a href="group.jsp">Group</a></li>
@@ -59,16 +59,6 @@
 		});
 		
 		$(function() {
-			if (getCookie("username") == null && getCookie("password") == null) {
-
-				document.getElementById('menu').innerHTML = '  <li> <a href="index.jsp">Home</a></li>   <li id ="login"><a  href="login.jsp">Login</a></li>';
-
-				if (window.location.pathname == "/bundlePWABackend/loans.jsp"
-						|| window.location.pathname == "/bundlePWABackend/contracts.jsp") {
-					window.location.replace("login.jsp");
-				}
-
-			}
 
 			// Give navigation bar active page a color
 			var current = location.pathname;

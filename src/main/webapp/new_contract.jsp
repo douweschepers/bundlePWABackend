@@ -351,7 +351,7 @@
 
 	<script type="text/javascript">
 	if(role == null) {
-    	window.location.replace('login.jsp');
+    	window.location.replace('index.jsp');
     }
 	
 	 $('#signature-pad').attr('width', $('#signature-pad').width());

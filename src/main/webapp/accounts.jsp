@@ -45,6 +45,9 @@
 
 	<jsp:include page="parts/footer.jsp" />
 	<script type="text/javascript">
+	if (role == null) {
+		window.location.replace('index.jsp');
+	}
 		function getAccounts() {
 			var sessionToken = window.sessionStorage.getItem("sessionToken");
 

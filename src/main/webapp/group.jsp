@@ -45,18 +45,9 @@
 
 	<div id="helpPopup" class="popup" style="display: none;">
 		<div>
-			<h2>Group explained</h2>
+			<h2>Group info</h2>
 			<button class="buttonRound" onclick="toggleHide('helpPopup', true)">X</button>
-			<p>Lorem ipsum dolor sit amet, pretium leo sed, ac leo aenean
-				tellus, orci amet maxime amet sed nunc pharetra, scelerisque
-				tristique pretium morbi scelerisque mollis sed, vivamus pede irure
-				ac lacus. Diam ante sit amet, blandit laoreet interdum sem
-				pellentesque. Sit turpis ligula non, iaculis viverra. Lorem ipsum
-				dolor sit amet, pretium leo sed, ac leo aenean tellus, orci amet
-				maxime amet sed nunc pharetra, scelerisque tristique pretium morbi
-				scelerisque mollis sed, vivamus pede irure ac lacus. Diam ante sit
-				amet, blandit laoreet interdum sem pellentesque. Sit turpis ligula
-				non, iaculis viverra.</p>
+			<p>This is where you can view and change group information about customers who have a loan. After filling in the individual account you are able to view them here together with the group they are in. You are also able to view the progress of the loan and their contract. When new data about a group is available on the server, your device will automatically load this once you connect to the internet. If something stops working, please contact +125 5139230.</p>
 		</div>
 	</div>
 	<div id="DeleteGroup" class="popup" style="display: none;">
@@ -94,7 +85,7 @@
 			$('#newGroup').removeClass('hide');
 			hideEdit = '';
 		} else if (usertype == null) {
-			window.location.replace('login.jsp');
+			window.location.replace('index.jsp');
 		}
 
 		$("#searchInput").keyup(function() {

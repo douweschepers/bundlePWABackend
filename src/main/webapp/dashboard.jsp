@@ -95,7 +95,7 @@
 
 	<script>
 		if (role == null) {
-			window.location.replace('login.jsp');
+			window.location.replace('index.jsp');
 		}
 		var sessionToken = window.sessionStorage.getItem("sessionToken");
 		var Countries = {};
