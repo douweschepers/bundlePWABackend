@@ -11,9 +11,8 @@
 	</label>
 	<ul class="menu" id="menu">
 		<li role="loggedIn" class="noHover hide"><a href=""><h2 id="username" class="navTitle username">Username</h2></a></li>
-		<li role="all" class="hide" ><a href="index.jsp">Home</a></li>
 		<li role="loggedIn" class="hide" ><a href="account.jsp">My Account</a></li>
-		<li role="loggedOut" class="hide" ><a href="login.jsp">Login</a></li>
+		<li role="loggedOut" class="hide" ><a href="index.jsp">Login</a></li>
 		<li role="loggedIn" class="hide" ><span onclick = javascript:logOut();> <a href="login.jsp">Logout</a></span></li>
 		
 		<li role="applicant" class="noHover hide"><a href=""><h2 class="navTitle" >Applicant Pages</h2></a></li>

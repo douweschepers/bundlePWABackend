@@ -16,7 +16,6 @@ function precache() {
 	  return caches.open(version).then(function (cache) {
 	    return cache.addAll([
         	'index.jsp',
-        	'login.jsp',
         	'account.jsp',
         	'loans.jsp',
         	'accounts.jsp',
