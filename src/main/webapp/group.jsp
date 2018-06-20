@@ -12,8 +12,7 @@
 		<h1>Group</h1>
 			<button class="buttonRound" onclick="toggleHide('DeleteGroup', false)">X</button>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
-		<button class="buttonRound hide" id="newGroup"
-			onclick="toggleHide('AddMember', false)">+</button>
+		<button class="buttonRound hide" id="newGroup" onclick="toggleHide('AddMember', false)">+</button>
 	</div>
 
 	<div class="block">
@@ -43,7 +42,7 @@
 
 	<jsp:include page="parts/footer.jsp" />
 
-	<div id="helpPopup" class="popup" style="display: none;">
+	<div id="helpPopup" class="popup" style="display: none; height: 225px;">
 		<div>
 			<h2>Group info</h2>
 			<button class="buttonRound" onclick="toggleHide('helpPopup', true)">X</button>
@@ -55,10 +54,6 @@
 			<h2>Delete Group</h2>
 			<button class="buttonRound" onclick="toggleHide('DeleteGroup', true)">X</button>
 			<ul class="flex-outer" style="margin-top: 130px">
-
-			<p>Are you sure you would like to delete this group? </p>
-
-
 			</ul>
 			<button style="margin-top: 40px;width: 100%;" onclick="deleteGroup();">Confirm</button>
 		</div>

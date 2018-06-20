@@ -94,7 +94,7 @@
 	<script src="js/Chart.min.js"></script>
 
 	<script>
-		if (role == null) {
+		if (role == null || role != "admin") {
 			window.location.replace('index.jsp');
 		}
 		var sessionToken = window.sessionStorage.getItem("sessionToken");

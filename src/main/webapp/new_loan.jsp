@@ -8,7 +8,7 @@
 
 	<main>
 	<div class="welcomeBlock">
-		<h1>New Contract</h1>
+		<h1>New Loan</h1>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
 	</div>
 
@@ -350,7 +350,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
 
 	<script type="text/javascript">
-	if(role == null) {
+	if(role == null || role != "officer") {
     	window.location.replace('index.jsp');
     }
 	
@@ -462,7 +462,7 @@
 						},
 						error : function(response, textStatus, errorThrown) {
 
-							addNotification('Contract not saved, try again later', null, 6000);
+							addNotification('Loan not saved, try again later', null, 6000);
 							console.log("textStatus: " + textStatus);
 							console.log("errorThrown: " + errorThrown);
 							console.log("status: " + response.status);
@@ -486,12 +486,12 @@
 
 						success : function(response) {
 
-							addNotification('Contract created', "green", 6000);
+							addNotification('Loan created', "green", 6000);
 							sendPdfData();
 						},
 						error : function(response, textStatus, errorThrown) {
 
-							addNotification('Contract not saved, try again later', null, 6000);
+							addNotification('Loan not saved, try again later', null, 6000);
 							console.log("textStatus: " + textStatus);
 							console.log("errorThrown: " + errorThrown);
 							console.log("status: " + response.status);
@@ -568,7 +568,7 @@
 
 	<div id="helpPopup" class="popup" style="display: none;">
 		<div>
-			<h2>New Contract explained</h2>
+			<h2>New Loan explained</h2>
 			<button class="buttonRound" onclick="toggleHide('helpPopup', true)">X</button>
 			<p>Add text here that explains where some of the fields are used for</p>
 		</div>

@@ -20,6 +20,7 @@
 		
 		<li role="officer" class="noHover hide"><a href=""><h2 class="navTitle" >Officer Pages</h2></a></li>
 		<li role="officer" class="hide" ><a href="groups.jsp">Groups</a></li>
+		<li role="officer" class="hide" ><a href="accounts.jsp">Accounts</a></li>
 		<li role="officer" class="hide" ><a  href="loans.jsp">Loans</a></li>
 		
 		<li role="admin" class="noHover hide"><a href=""><h2 class="navTitle" >Admin Pages</h2></a></li>

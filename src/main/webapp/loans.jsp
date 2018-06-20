@@ -11,7 +11,7 @@
 	<div class="welcomeBlock">
 		<h1>Loans</h1>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
-		<button id="newcontract" class="buttonRound hide" onclick="window.location.href='new_contract.jsp'">+</button>
+		<button id="newcontract" class="buttonRound hide" onclick="window.location.href='new_loan.jsp'">+</button>
 	</div>
 
 	<div class="block">
@@ -45,7 +45,7 @@
 
 	<jsp:include page="parts/footer.jsp" />
 	<script> 
-	if(role == null) {
+	if(role == null || role == "applicant") {
     	window.location.replace('index.jsp');
     }
 	

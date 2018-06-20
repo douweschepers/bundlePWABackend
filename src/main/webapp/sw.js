@@ -1,4 +1,4 @@
-var version = 'v2.1';
+var version = 'v2.2';
 
 self.addEventListener('install', function(evt) {
 	  console.log('The service worker is being installed.');
@@ -19,7 +19,7 @@ function precache() {
         	'account.jsp',
         	'loans.jsp',
         	'accounts.jsp',
-        	'new_contract.jsp',
+        	'new_loan.jsp',
         	'new_group.jsp',
         	'group.jsp',
         	'groups.jsp',
@@ -28,7 +28,6 @@ function precache() {
         	'loan.jsp',
         	'edit_account.jsp',
         	'edit_loan.jsp',
-        	'edit_contract.jsp',
         	'dashboard.jsp',
         	'group.jsp'
 	    ]);

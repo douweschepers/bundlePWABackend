@@ -49,7 +49,7 @@
 
 
     <script type="text/javascript">
-	if(role == null) {
+	if(role == null || role == "applicant") {
     	window.location.replace('index.jsp');
     }
 

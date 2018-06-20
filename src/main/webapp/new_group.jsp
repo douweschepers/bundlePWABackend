@@ -31,7 +31,7 @@
 	</div>
 </div>
 <script type="text/javascript">
-if(role == null) {
+if(role == null || role != "officer") {
 	window.location.replace('index.jsp');
 }
 function getUsers(){

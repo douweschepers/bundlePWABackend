@@ -11,8 +11,8 @@
 	<div class="welcomeBlock">
 		<h1>Accounts</h1>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
-		<button class="buttonRound"
-			onclick="window.location.href='new_contract.jsp'">+</button>
+		<button id="newcontract" class="buttonRound hide"
+			onclick="window.location.href='new_loan.jsp'">+</button>
 	</div>
 
 	<div class="block">
@@ -48,6 +48,9 @@
 	if (role == null) {
 		window.location.replace('index.jsp');
 	}
+	if(role == 'officer') {
+    	$('#newcontract').removeClass("hide");
+    }
 		function getAccounts() {
 			var sessionToken = window.sessionStorage.getItem("sessionToken");
 

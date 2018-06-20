@@ -46,7 +46,7 @@
 	<jsp:include page="parts/footer.jsp" />
 
 	<script>
-	if(role == null) {
+	if(role == null || role == "applicant") {
     	window.location.replace('index.jsp');
     }
 	
