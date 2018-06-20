@@ -32,7 +32,7 @@
 </div>
 <script type="text/javascript">
 if(role == null || role != "officer") {
-	window.location.replace('index.jsp');
+	window.location.href = 'index.jsp';
 }
 function getUsers(){
 let dropdown = $('#users-dropdown');

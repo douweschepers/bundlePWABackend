@@ -56,11 +56,11 @@ function checkValue(value, error = "Not supplied"){
 }
 
 function toEditLoan(loanid) {
-	window.location.replace("edit_loan.jsp?id=" + loanid);
+	window.location.href = "edit_loan.jsp?id=" + loanid;
 }
 
 function toViewLoan(loanId) {
-	window.location.replace("loan.jsp?id=" + loanId);
+	window.location.href = "loan.jsp?id=" + loanId;
 }
 
 
@@ -83,17 +83,17 @@ function getParameterByName(name, url) {
 
 function toEditContract(loanid) {
 
-	window.location.replace("edit_contract.jsp?id=" + loanid);
+	window.location.href = "edit_contract.jsp?id=" + loanid;
 
 }
 
 function toViewContract() {
 	var loanid = document.getElementById('loanid');
-	window.location.replace("contract.jsp");
+	window.location.href = "contract.jsp";
 }
 
 function toEdit() {
-	window.location.replace("edit_contract.jsp");
+	window.location.href = "edit_contract.jsp";
 }
 function newContract() {
 	var firstname = document.getElementById('firstname').value;
@@ -130,7 +130,7 @@ function logOut() {
 	eraseCookie("userid");
 	sessionStorage.clear();
 	localStorage.clear();
-	window.location.replace("account.jsp");
+	window.location.href = "account.jsp";
 }
 
 function addNotification(text, color, time = 3000) {

@@ -140,7 +140,7 @@
    		$('#newtrans').removeClass('hide')
    		hideEdit = '';
     } else if(usertype == null) {
-    	window.location.replace('index.jsp');
+    	window.location.href = 'index.jsp';
     }
     
 	function getTransaction() {

@@ -351,7 +351,7 @@
 
 	<script type="text/javascript">
 	if(role == null || role != "officer") {
-    	window.location.replace('index.jsp');
+    	window.location.href = 'index.jsp';
     }
 	
 	 $('#signature-pad').attr('width', $('#signature-pad').width());
@@ -367,12 +367,6 @@
 		});
 
 		var cancelButton = document.getElementById('clear');
-
-
-		//saveButton.addEventListener('click', function(event) {
-		//	var data = signaturePad.toDataURL('image/png');
-		//	window.open(data);
-		//});
 
 		cancelButton.addEventListener('click', function(event) {
 			signaturePad.clear();

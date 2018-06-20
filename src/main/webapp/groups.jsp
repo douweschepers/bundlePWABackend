@@ -47,7 +47,7 @@
 
 	<script>
 	if(role == null || role == "applicant") {
-    	window.location.replace('index.jsp');
+    	window.location.href = 'index.jsp';
     }
 	
 		if(getParameterByName("newGroup")){
@@ -113,16 +113,12 @@
 
 		success : function(response) {
 
-			window.location.replace("groups.jsp?newGroup=true");
+			window.location.href = "groups.jsp?newGroup=true";
 
 		},
 		error : function(response, textStatus, errorThrown) {
 
 			addNotification("Loan could not be updated.")
-
-			console.log("textStatus: " + textStatus);
-			console.log("errorThrown: " + errorThrown);
-			console.log("status: " + response.status);
 
 		}
 	});

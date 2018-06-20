@@ -46,7 +46,7 @@
 	<jsp:include page="parts/footer.jsp" />
 	<script type="text/javascript">
 	if (role == null) {
-		window.location.replace('index.jsp');
+		window.location.href = 'index.jsp';
 	}
 	if(role == 'officer') {
     	$('#newcontract').removeClass("hide");

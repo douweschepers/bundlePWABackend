@@ -95,7 +95,7 @@
 
 	<script>
 		if (role == null || role != "admin") {
-			window.location.replace('index.jsp');
+			window.location.href = 'index.jsp';
 		}
 		var sessionToken = window.sessionStorage.getItem("sessionToken");
 		var Countries = {};

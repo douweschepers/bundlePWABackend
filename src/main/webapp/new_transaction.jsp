@@ -50,7 +50,7 @@
 
     <script type="text/javascript">
 	if(role == null || role == "applicant") {
-    	window.location.replace('index.jsp');
+    	window.location.href = 'index.jsp';
     }
 
         var loanId = getParameterByName("id");

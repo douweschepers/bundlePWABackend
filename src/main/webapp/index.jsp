@@ -39,7 +39,7 @@
     
     <script>
     if(role != null) {
-    	window.location.replace('account.jsp');
+    	window.location.href = 'account.jsp';
     }
     
     function validateLogin() {
@@ -75,7 +75,7 @@
     						window.sessionStorage.setItem('userType', response[0]['usertype']);
     						setCookie('userid', response[0]['userid']);
     						addNotification("Login successful", "green");
-    						window.location.replace("account.jsp");
+    						window.location.href = "account.jsp";
     					} else {
     						$('#loginbutton').attr('loading', 'false');
     						$('#loginbutton').text('Try again');

@@ -345,7 +345,7 @@
 
     <script type="text/javascript">
 	if(role == null) {
-    	window.location.replace('index.jsp');
+    	window.location.href = 'index.jsp';
     }
 	
 	if (role == "admin") {

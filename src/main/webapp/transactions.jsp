@@ -45,7 +45,7 @@
 	<jsp:include page="parts/footer.jsp" />
 	<script> 
 	if(role == null || role != "admin") {
-    	window.location.replace('index.jsp');
+    	window.location.href = 'index.jsp';
     }
 	
 	$("#searchInput").keyup(function() {

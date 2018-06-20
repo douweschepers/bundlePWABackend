@@ -142,7 +142,7 @@
     <jsp:include page="parts/footer.jsp" />
     <script>
 	if(role == null) {
-    	window.location.replace('index.jsp');
+    	window.location.href = 'index.jsp';
     }
 	
     var sessionToken = window.sessionStorage.getItem("sessionToken");
