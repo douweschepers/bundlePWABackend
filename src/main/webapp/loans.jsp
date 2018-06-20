@@ -11,7 +11,7 @@
 	<div class="welcomeBlock">
 		<h1>Loans</h1>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
-		<button class="buttonRound" onclick="window.location.href='new_contract.jsp'">+</button>
+		<button id="newcontract" class="buttonRound hide" onclick="window.location.href='new_contract.jsp'">+</button>
 	</div>
 
 	<div class="block">
@@ -47,6 +47,10 @@
 	<script> 
 	if(role == null) {
     	window.location.replace('index.jsp');
+    }
+	
+	if(role == 'officer') {
+    	$('#newcontract').removeClass("hide");
     }
 	$("#searchInput").keyup(function() {
 		// Split the current value of the filter textbox

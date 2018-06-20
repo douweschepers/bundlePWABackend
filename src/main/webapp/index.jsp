@@ -56,7 +56,6 @@
     		$('#loginbutton').text('Try again');
     		addNotification('Password can not be empty');
     	} else {
-    		console.log("1");
     		var logRequest;
     		try {
     			logRequest = new XMLHttpRequest();
