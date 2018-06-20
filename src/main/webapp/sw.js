@@ -1,13 +1,11 @@
-var version = 'v2.2';
+var version = 'v3';
 
 self.addEventListener('install', function(evt) {
-	  console.log('The service worker is being installed.');
 	  evt.waitUntil(precache());
 });
 
 self.addEventListener('fetch', function(evt) {
-  console.log('The service worker is serving the asset.');
-  evt.respondWith(fromNetwork(evt.request, 10000).catch(function () {
+	evt.respondWith(fromNetwork(evt.request, 10000).catch(function () {
 	    return fromCache(evt.request);
 	  }));
 	});
@@ -36,11 +34,14 @@ function precache() {
 
 function fromNetwork(request, timeout) {
 	  return new Promise(function (fulfill, reject) {
-		  
 		  var timeoutId = setTimeout(reject, timeout);
 		  fetch(request).then(function (response) {
+			  var cacheCopy = response.clone();
 		      clearTimeout(timeoutId);
 		      fulfill(response);
+		      caches.open(version).then(function(cache) {
+				    cache.put(request, cacheCopy);
+				  }); 
 		  }, reject);
 	  });
 	}
