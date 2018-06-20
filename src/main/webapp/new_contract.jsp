@@ -315,11 +315,11 @@
 						<option value="MT">Mid-term</option>
 						<option value="LT">Long-term</option>
 				</select></li>
-				<li><label for="amount">Amount</label> <input name="amount"
+				<li><label for="amount">Amount ($)</label> <input name="amount"
 					id="amount" placeholder="Enter the loan-amount here"></input></li>
 				<li><label for="startdate">Start date</label> <input
 					name="startdate" type="date" id="start-date"></li>
-				<li><label for="duration">Duration</label> <input
+				<li><label for="duration">Duration (months)</label> <input
 					name="duration" type="number" id="duration" min="1" max="36"
 					placeholder="Enter the loan-duration here"></input></li>
 				<li><label for="loandescription">Loan description</label> <input
@@ -335,6 +335,14 @@
 			</ul>
 
 		</form>
+		<form id="uploadFile" >
+				<ul class="flex-outer">
+		       <li><label>Image Link:</label>
+		               <input type="file" id="file" name="file">
+		              <input id="submitFile" type="submit" name="submit" value="Submit" ></li>
+		       </ul>		        
+		</form>
+		
 
 		</div>
 	</div>
@@ -425,6 +433,10 @@
 				function sendUserData() {
 
 					var formData = $("#user").serializeArray();
+					var res = document.getElementById("file").value.split("\\");
+					formData.push({name : "photo",
+						value : res[2]
+						});
 					formData.push({
 						name : "usertype",
 						value : "applicant"
@@ -458,6 +470,7 @@
 
 						}
 					});
+					document.getElementById("submitFile").click();
 				}	;
 
 				function sendLoanData() {
@@ -514,6 +527,41 @@
 					});
 				};
 			});
+			$("#submitFile").click(function (event) {
+
+		        event.preventDefault();
+		        var form = $('#uploadFile')[0];
+		        var data = new FormData(form);
+
+
+		        data.append("PhoneNumber", document.getElementById("phone").value);
+
+
+		        $("#submitFile").prop("disabled", true);
+
+		        $.ajax({
+		            type: "POST",
+		            enctype: 'multipart/form-data',
+		            url: "FileUploadServlet",
+		            data: data,
+		            processData: false,
+		            contentType: false,
+		            cache: false,
+		            timeout: 600000,
+		            success: function (data) {
+		            	console.log("Photo saved");
+
+		            },
+		            error: function (e) {
+
+		            	addNotification('Photo not saved, contact admin', null, 6000);
+						console.log("textStatus: " + e.textStatus);
+						console.log("errorThrown: " + e.errorThrown);
+						console.log("status: " + response.status);
+		            }
+		        });
+
+		    });
 		});
 	</script>
 
