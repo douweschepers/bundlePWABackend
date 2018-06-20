@@ -13,7 +13,7 @@
 		<li role="loggedIn" class="noHover hide"><a href=""><h2 id="username" class="navTitle username">Username</h2></a></li>
 		<li role="loggedIn" class="hide" ><a href="account.jsp">My Account</a></li>
 		<li role="loggedOut" class="hide" ><a href="index.jsp">Login</a></li>
-		<li role="loggedIn" style="cursor: pointer;" class="hide" ><span onclick = javascript:logOut();> <a>Logout</a></span></li>
+		<li role="loggedIn" style="cursor: pointer;" class="hide" ><span onclick = javascript:logOut();> <a  ignore="true">Logout</a></span></li>
 		
 		<li role="applicant" class="noHover hide"><a href=""><h2 class="navTitle" >Applicant Pages</h2></a></li>
 		<li role="applicant" class="hide" ><a href="group.jsp">Group</a></li>
@@ -63,10 +63,11 @@
 			// Give navigation bar active page a color
 			var current = location.pathname;
 			current = current.replace('/bundlePWABackend/', '');
+			
 			$('.menu li a').each(function() {
 				var $this = $(this);
 				// if the current path is like this link, make it active
-				if (current != '') {
+				if (current != '' && $this.attr('ignore') != 'true') {
 					if ($this.attr('href').indexOf(current) !== -1) {
 						$this.addClass('active');
 					}

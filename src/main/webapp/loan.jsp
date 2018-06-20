@@ -12,6 +12,8 @@
 		<h1>Loan</h1>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
 		<button id="edit" class="buttonRound hide">&#9998;</button>
+		<button class="buttonRound"
+			onclick="window.location.href='new_transaction.jsp?id='+getParameterByName('id')">+</button>
 	</div>
 	
 	<div class="block">
