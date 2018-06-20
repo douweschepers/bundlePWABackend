@@ -67,13 +67,13 @@
 										tr.innerHTML = '<td class="id hide" id="loanid" data-label="ID">'
 												+ object.userid
 												+ '</td>'
-												+ '<td id ="firstname" data-label="Amount">'
+												+ '<td id ="firstname" data-label="First name">'
 												+ object.firstName
 												+ '</td>'
-												+ '<td id = "lastname" data-label="Duration">'
+												+ '<td id = "lastname" data-label="Last name">'
 												+ object.lastName
 												+ '</td>'
-												+ '<td id = "usertype" data-label="End Date">'
+												+ '<td id = "usertype" data-label="Usertype">'
 												+ object.userType
 												+ '</td>'
 												+ '<td id="status" data-label="Status">'

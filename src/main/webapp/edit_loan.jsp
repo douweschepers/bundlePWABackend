@@ -33,6 +33,7 @@
                             <option value="active">Active</option>
                             <option value="pending">Pending</option>
                             <option value="defaulted">Defaulted</option>
+                            <option value="denied">Denied</option>
                         </select>
                     </li>
                     <input class="hide" name="paidamount" id="paidamount" placeholder="Enter the loan-amount here"></input>
