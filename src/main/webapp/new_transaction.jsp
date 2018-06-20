@@ -26,10 +26,7 @@
                             <label for="timestamp">Timestamp</label>
                             <input name="timestamp" type="date" id="timestamp">
                         </li>
-                        <li>
-                            <label for="loanidfk">Loan Id</label>
-                            <input name="loanidfk" type="number" id="loanidfk" placeholder="Enter the loanId here"></input>
-                        </li>
+                        
                         <li>
                             <label for="sender">Sender</label>
                             <input name="sender" id="sender" placeholder="Enter the sender here"></input>
@@ -52,17 +49,24 @@
 
 
     <script type="text/javascript">
-	if(role == null) {
-    	window.location.replace('login.jsp');
-    }
+        if (role == null) {
+            window.location.replace('login.jsp');
+        }
+
+        var loanId = getParameterByName("id");
+
         $(document).ready(function () {
             $("form").submit(function () {
-
+                var formData = $("#transaction").serializeArray();
+                formData.push({
+                    name: "loanidfk",
+                    value: loanId
+                });
 
                 $.ajax({
                     url: "/bundlePWABackend/restservices/transaction",
                     type: "post",
-                    data: $("#transaction").serialize(),
+                    data: formData,
 
                     success: function (response) {
                         addNotification('Transaction saved', "green", 6000);
