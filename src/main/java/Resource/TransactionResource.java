@@ -8,6 +8,7 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -106,12 +107,16 @@ public class TransactionResource {
 		int remaining = ls.getRemaining(Integer.parseInt(loanIdFk));
 		
 		Transaction newTransaction = new Transaction(0, Integer.parseInt(amount), sender, receiver, sqlTimeStamp, Integer.parseInt(loanIdFk));
-		System.out.println("post");
-		if ((remaining  - Integer.parseInt(amount)>= 0 ) &&service.addTransaction(newTransaction)) {
-			return Response.ok().build();
+		remaining -= newTransaction.getAmount();
+		boolean enoughPaid = remaining <= 0;
+		if (remaining >= 0 ){
+				if (service.addTransaction(newTransaction, enoughPaid)) {
+					return Response.ok().build();
+				} else{
+					return Response.status(Response.Status.BAD_REQUEST).build();
+				}
 		} else {
-			System.out.println("amount to much");
-			return Response.status(Response.Status.BAD_REQUEST).build();
+			return Response.status(Response.Status.BAD_REQUEST).type("text/plain").entity("amount is greater than loan").build();
 		}
 				
 	}

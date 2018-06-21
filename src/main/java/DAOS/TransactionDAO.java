@@ -96,9 +96,12 @@ public class TransactionDAO extends baseDAO{
 		return selectTransaction(dbResultSet);
 	}
 	
-	public boolean addTransaction(Transaction transaction) {
+	public boolean addTransaction(Transaction transaction, boolean paidEnough) {
 		String query = "Insert Into " + tablename + "(amount, sender, receiver, timestamp, loanidfk) Values(?,?,?,?,?)";
 		String query2 = "Update public.loan set paidamount = paidamount + ? where loanid = ?";
+		if (paidEnough){
+			query2 = "Update public.loan set paidamount = paidamount + ? , status = 'closed' where loanid = ?";
+		}
 		boolean result = false;
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
