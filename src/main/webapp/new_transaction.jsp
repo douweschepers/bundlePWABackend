@@ -26,7 +26,7 @@
                             <label for="timestamp">Timestamp</label>
                             <input name="timestamp" type="date" id="timestamp">
                         </li>
-                        
+
                         <li>
                             <label for="sender">Sender</label>
                             <input name="sender" id="sender" placeholder="Enter the sender here"></input>
@@ -49,40 +49,52 @@
 
 
     <script type="text/javascript">
-	if(role == null || role == "applicant") {
-    	window.location.href = 'index.jsp';
-    }
+        if (role == null || role == "applicant") {
+            window.location.href = 'index.jsp';
+        }
 
         var loanId = getParameterByName("id");
+        var remainingAmount = parseInt(getParameterByName("remainingAmount"));
 
+        console.log(remainingAmount);
         $(document).ready(function () {
             $("form").submit(function () {
-                var formData = $("#transaction").serializeArray();
-                formData.push({
-                    name: "loanidfk",
-                    value: loanId
-                });
+                var transactionAmount = parseInt(document.getElementById('amount').value);
+                console.log(transactionAmount);
 
-                $.ajax({
-                    url: "/bundlePWABackend/restservices/transaction",
-                    type: "post",
-                    data: formData,
+                if (transactionAmount <= remainingAmount) {
+                    var formData = $("#transaction").serializeArray();
+                    formData.push({
+                        name: "loanidfk",
+                        value: loanId
+                    });
 
-                    success: function (response) {
-                        addNotification('Transaction saved', "green", 6000);
 
-                        console.log(response);
-                    },
-                    error: function (response, textStatus, errorThrown) {
+                    $.ajax({
+                        url: "/bundlePWABackend/restservices/transaction",
+                        type: "post",
+                        data: formData,
 
-                        addNotification('Transaction not saved, contact admin', null, 6000);
-                        console.log("textStatus: " + textStatus);
-                        console.log("errorThrown: " + errorThrown);
-                        console.log("status: " + response.status);
+                        success: function (response) {
+                            addNotification('Transaction saved', "green", 6000);
 
-                    }
-                });
+                            console.log(response);
+                        },
+                        error: function (response, textStatus, errorThrown) {
+
+                            addNotification('Transaction not saved, contact admin', null, 6000);
+                            console.log("textStatus: " + textStatus);
+                            console.log("errorThrown: " + errorThrown);
+                            console.log("status: " + response.status);
+
+                        }
+                    });
+                } else {
+                    addNotification('Transaction not saved, transaction amount bigger then loan amount. Contact admin', null, 6000);
+
+                }
             });
+
         });
     </script>
 
