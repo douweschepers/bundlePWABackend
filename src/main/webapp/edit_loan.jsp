@@ -99,7 +99,7 @@
 
 					success : function(response) {
 						addNotification("Loan updated succesfully", "green");
-              window.location.href="loan.jsp";
+              window.location.href="loan.jsp?id="+id;
 					},
 					error : function(response, textStatus, errorThrown) {
 						addNotification("Loan could not be updated.");

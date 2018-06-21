@@ -70,8 +70,8 @@
 
                     success: function (response) {
                         addNotification('Transaction saved', "green", 6000);
-                          window.location.href="loan.jsp";
-                        
+                          window.location.href="loan.jsp?id="+id;
+
                     },
                     error: function (response, textStatus, errorThrown) {
 
