@@ -110,6 +110,7 @@ public class TransactionResource {
 		if ((remaining  - Integer.parseInt(amount)>= 0 ) &&service.addTransaction(newTransaction)) {
 			return Response.ok().build();
 		} else {
+			System.out.println("amount to much");
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 				
