@@ -10,8 +10,8 @@
 	<main>
 	<div class="welcomeBlock">
 		<h1>Group</h1>
-			<button class="buttonRound" onclick="toggleHide('DeleteGroup', false)">X</button>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
+		<button class="buttonRound hide" id="deleteGroup" onclick="toggleHide('DeleteGroup', false)">X</button>
 		<button class="buttonRound hide" id="newGroup" onclick="toggleHide('AddMember', false)">+</button>
 	</div>
 
@@ -42,7 +42,7 @@
 
 	<jsp:include page="parts/footer.jsp" />
 
-	<div id="helpPopup" class="popup" style="display: none; height: 225px;">
+	<div id="helpPopup" class="popup" style="display: none;">
 		<div>
 			<h2>Group info</h2>
 			<button class="buttonRound" onclick="toggleHide('helpPopup', true)">X</button>
@@ -78,6 +78,7 @@
 
 		if (usertype != null && usertype != "applicant") {
 			$('#newGroup').removeClass('hide');
+			$('#deleteGroup').removeClass('hide');
 			hideEdit = '';
 		} else if (usertype == null) {
 			window.location.href = 'index.jsp';
