@@ -29,6 +29,7 @@ import Validation.BasicValidation;
 public class UserResource {
     private UserService service = ServiceProvider.getUserService();
     BasicValidation bs = new BasicValidation();
+
     
     private JsonObjectBuilder buildJSON(UserWithAddress user) {
         JsonObjectBuilder job = Json.createObjectBuilder();

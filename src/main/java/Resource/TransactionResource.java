@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -16,13 +17,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import Objects.Transaction;
+import Services.LoanService;
 import Services.ServiceProvider;
 import Services.TransactionService;
 
 @Path("/transaction")
 public class TransactionResource {
 	private TransactionService service = ServiceProvider.getTransactionService();
-	
+    
+    
 	private JsonObjectBuilder buildJSON(Transaction transaction) {
 		JsonObjectBuilder job = Json.createObjectBuilder();
 		
@@ -99,10 +102,12 @@ public class TransactionResource {
 									@FormParam("loanidfk") String loanIdFk) throws ParseException {
 		java.util.Date utilTimeStamp = new SimpleDateFormat("yyyy-MM-dd").parse(timeStamp);
 		java.sql.Date sqlTimeStamp = new java.sql.Date(utilTimeStamp.getTime());
+		LoanService ls = new LoanService();
+		int remaining = ls.getRemaining(Integer.parseInt(loanIdFk));
 		
 		Transaction newTransaction = new Transaction(0, Integer.parseInt(amount), sender, receiver, sqlTimeStamp, Integer.parseInt(loanIdFk));
 		System.out.println("post");
-		if (service.addTransaction(newTransaction)) {
+		if ((remaining  - Integer.parseInt(amount)>= 0 ) &&service.addTransaction(newTransaction)) {
 			return Response.ok().build();
 		} else {
 			return Response.status(Response.Status.BAD_REQUEST).build();
