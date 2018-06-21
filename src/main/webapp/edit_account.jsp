@@ -347,11 +347,11 @@
 	if(role == null) {
     	window.location.href = 'index.jsp';
     }
-	
+
 	if (role == "admin") {
 		$('#usertypeSelect').removeClass('hide');
 	}
-	
+
 	if (role != "applicant") {
 		$('#useractiveSelect').removeClass('hide');
 	}
@@ -420,6 +420,7 @@
                     success: function (response) {
 
                         addNotification('Account updated succesfully', 'green');
+                        window.location.href="account.jsp?id="+getParameterByName('id');
 
                     },
                     error: function (response, textStatus, errorThrown) {

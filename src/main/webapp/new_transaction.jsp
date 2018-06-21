@@ -23,11 +23,6 @@
                             <input name="amount" id="amount" placeholder="Enter the transaction-amount here"></input>
                         </li>
                         <li>
-                            <label for="timestamp">Timestamp</label>
-                            <input name="timestamp" type="date" id="timestamp">
-                        </li>
-                        
-                        <li>
                             <label for="sender">Sender</label>
                             <input name="sender" id="sender" placeholder="Enter the sender here"></input>
                         </li>
@@ -58,10 +53,19 @@
         $(document).ready(function () {
             $("form").submit(function () {
                 var formData = $("#transaction").serializeArray();
+                var date = new Date();
+
+                var datestring = date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2);
+                console.log(datestring);
                 formData.push({
-                    name: "loanidfk",
-                    value: loanId
+                    name: "timestamp",
+                    value:  datestring,
                 });
+                formData.push({
+                  name: "loanidfk",
+                  value: loanId,
+                });
+
 
                 $.ajax({
                     url: "/bundlePWABackend/restservices/transaction",
@@ -70,8 +74,8 @@
 
                     success: function (response) {
                         addNotification('Transaction saved', "green", 6000);
+                          window.location.href="loan.jsp?id="+loanId;
 
-                        console.log(response);
                     },
                     error: function (response, textStatus, errorThrown) {
 
