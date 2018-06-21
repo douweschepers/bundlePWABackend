@@ -40,7 +40,7 @@
 		       <li><label>Image Link:</label>
 		               <input style="margin-bottom: 15px" type="file" id="file" name="file">
 		              <input class="hide" id="submitFile" type="submit" name="submit" value="Submit" ></li>
-		       </ul>		        
+		       </ul>
 		</form>
 		<form id="address" onsubmit="return false">
 
@@ -341,7 +341,7 @@
 				</li>
 			</ul>
 
-		</form>	
+		</form>
 
 		</div>
 	</div>
@@ -353,7 +353,7 @@
 	if(role == null || role != "officer") {
     	window.location.href = 'index.jsp';
     }
-	
+
 	 $('#signature-pad').attr('width', $('#signature-pad').width());
 
 		$(window).on('resize', function(){
@@ -427,8 +427,10 @@
 
 					var formData = $("#user").serializeArray();
 					var res = document.getElementById("file").value.split("\\");
+					var datatype = document.getElementById("file").value.split(".")[1];
+					var lephone = document.getElementById("phone").value.toString();
 					formData.push({name : "photo",
-						value : res[2]
+						value : lephone+"."+datatype
 						});
 					formData.push({
 						name : "usertype",
@@ -468,9 +470,14 @@
 
 				function sendLoanData() {
 					var formData = $("#loan").serializeArray();
+					var string = "contract_"+userid+".pdf";
 					formData.push({
 						name : "useridfk",
 						value : userid
+					});
+					formData.push({
+						name : "pdf",
+						value : string
 					});
 
 					$.ajax({
@@ -505,9 +512,9 @@
 						data : pdfData,
 
 						success : function(response) {
-							
+
 							addNotification('Contract PDF saved', "green", 6000);
-							
+
 						},
 						error : function(response, textStatus, errorThrown) {
 
@@ -525,9 +532,10 @@
 		        event.preventDefault();
 		        var form = $('#uploadFile')[0];
 		        var data = new FormData(form);
+						var datatype = document.getElementById("file").value.split(".")[1];
+						var lephone = document.getElementById("phone").value.toString();
 
-
-		        data.append("PhoneNumber", document.getElementById("phone").value);
+		        data.append("PhoneNumber", lephone+"."+datatype);
 
 
 		        $("#submitFile").prop("disabled", true);

@@ -51,7 +51,7 @@ p {
 	color: white;
     font-weight: bold;
     font-size: 24px;
-}	
+}
 
 .logo {
 	display: block;
@@ -350,7 +350,7 @@ footer{
 	margin: 30px 0px 100px 0px;
 }
 
-button {
+button,#contract2 {
 	background-color: #0f4c48;
 	border: none;
 	color: white;
@@ -390,7 +390,7 @@ label .buttonRound {
    	margin: -6px 10px 0px 15px;
 }
 
-.small{
+.small,#contract2{
 	min-width: 75px;
 	padding: 15px 30px;;
 	display: inline;
@@ -750,7 +750,7 @@ progress::-moz-progress-bar {
 	header {
 		width: 250px;
 	}
-	
+
 	.connection {
 		left: 125px;
 	}
@@ -860,7 +860,7 @@ progress::-moz-progress-bar {
 	    width: calc(50% - 45px);
 	    padding: 10px;
 	}
-	
+
 	.dashboard, .dashboardfull {
 	    width: calc(100% - 50px);
 	    margin-left: 0px;
@@ -875,8 +875,8 @@ progress::-moz-progress-bar {
 	.notification p{
 		padding: 5px 0px;
 	}
-	
-		
+
+
 	.filterList {
 		margin: 0px 0px 25px 0px;
 	}
@@ -897,7 +897,7 @@ progress::-moz-progress-bar {
 		position: relative;
 		float: left;
 	}
-	
+
 	header li a {
 		padding: 15px 30px;
 	}
@@ -934,7 +934,7 @@ progress::-moz-progress-bar {
 	    padding: 0px 15px;
     	width: calc(100% - 30px)
 	}
-	
+
 	.dashboard, .dashboardfull {
 		width: calc(100% - 50px);
     	margin-left: 0px;
@@ -1065,7 +1065,7 @@ progress::-moz-progress-bar {
 	.inlineProgress{
 		margin: 7px 0px 0px 0px;
 	}
-	
+
 	.connection {
 		left: 0px;
 	}

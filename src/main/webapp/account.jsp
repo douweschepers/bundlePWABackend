@@ -144,7 +144,7 @@
 	if(role == null) {
     	window.location.href = 'index.jsp';
     }
-	
+
     var sessionToken = window.sessionStorage.getItem("sessionToken");
     var usertype = window.sessionStorage.getItem("userType");
 
@@ -213,7 +213,7 @@
     				hr2.send(null);
     			}
     		} else if (hr.readyState == 4) {
-    			if (hr.status == 403) {addNotification("Not Authorized")} 
+    			if (hr.status == 403) {addNotification("Not Authorized")}
     			else {
     			addNotification('Retrieving data failed with status ' + hr.status + '. Try again later.');
     				}

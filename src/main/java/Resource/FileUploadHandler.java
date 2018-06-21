@@ -41,8 +41,11 @@ public class FileUploadHandler extends HttpServlet {
             String lastName=request.getParameter("lastname");
             Part part=request.getPart("file");
             String fileName=extractFileName(part);
+     
+            String finalloc = savePath + File.separator + phone;
             /*if you may have more than one files with same name then you can calculate some random characters and append that characters in fileName so that it will  make your each image name identical.*/
             part.write(savePath + File.separator + phone);
+         
     }
     // file name of the upload file is included in content-disposition header like this:
     //form-data; name="dataFile"; filename="PHOTO.JPG"

@@ -42,10 +42,9 @@ public class PdfResource {
 							 @FormParam("duration") String duration,
 							 @FormParam("loandescription") String loanDescription,
 							 @FormParam("useridfk") String userIdFk) throws IOException, DocumentException{
-		File file = File.createTempFile("contract_" + userIdFk, ".pdf");
 		
 		PdfReader reader = new PdfReader("C:\\Users\\Tim\\Downloads\\bundlePWABackend\\src\\main\\webapp\\pdf\\test1.2.pdf");
-		PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(new File("C:\\Users\\Tim\\Downloads\\bundlePWABackend\\src\\main\\webapp\\pdf\\"+file.getName()).getCanonicalFile()));
+		PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(new File("C:\\Users\\Tim\\Downloads\\bundlePWABackend\\src\\main\\webapp\\pdf\\"+"contract_"+userIdFk+".pdf")));
 		AcroFields form = stamper.getAcroFields();
 		form.setField("firstname",firstname );
 		form.setField("lastname", lastname);

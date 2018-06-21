@@ -209,7 +209,7 @@ public class UserDAO extends baseDAO {
             pstmt.setString(6, user.getSalt());
             pstmt.setString(7, user.getStatus());
             pstmt.setDate(8, user.getDateOfBirth());
-            pstmt.setString(9, (user.getPhonenumber() + user.getPhoto()));
+            pstmt.setString(9, (user.getPhoto()));
             pstmt.setInt(10, user.getAddressIdFk());
             pstmt.setString(11, user.getUsername());
 
