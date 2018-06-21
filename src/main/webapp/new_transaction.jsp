@@ -26,7 +26,7 @@
                             <label for="timestamp">Timestamp</label>
                             <input name="timestamp" type="date" id="timestamp">
                         </li>
-                        
+
                         <li>
                             <label for="sender">Sender</label>
                             <input name="sender" id="sender" placeholder="Enter the sender here"></input>
@@ -70,8 +70,8 @@
 
                     success: function (response) {
                         addNotification('Transaction saved', "green", 6000);
-
-                        console.log(response);
+                          window.location.href="loan.jsp";
+                        
                     },
                     error: function (response, textStatus, errorThrown) {
 
