@@ -61,11 +61,11 @@
 		if(role == null || role == "applicant") {
 	    	window.location.href = 'index.jsp';
 	    }
-		
+
 		if(role == "admin") {
 			$('#loanSatusItem').removeClass('hide');
 		}
-		
+
 		//if (getParameterByName('id') == null)
         //retrieve data to fill form
         $(document).ready(function() {
@@ -99,6 +99,7 @@
 
 					success : function(response) {
 						addNotification("Loan updated succesfully", "green");
+              window.location.href="loan.jsp?id="+getParameterByName('id');
 					},
 					error : function(response, textStatus, errorThrown) {
 						addNotification("Loan could not be updated.");

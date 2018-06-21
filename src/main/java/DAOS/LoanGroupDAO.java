@@ -129,7 +129,7 @@ public class LoanGroupDAO extends baseDAO{
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, groupId);
 			pstmt.setInt(2, loanId);
-
+			
 			dbResultSet = pstmt.executeQuery();
 			con.close();
 		} catch (SQLException e){
