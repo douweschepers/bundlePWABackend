@@ -213,10 +213,11 @@ public class loanDAO extends baseDAO {
 	}
 
 	public List<Loan> getAllLoansByOfficer(int officerId) {
-		String query = "SELECT public.loan.* FROM public.loan INNER JOIN public.grouploan ON public.loan.loanid=public.grouploan.loanidfk where groupidfk IN (SELECT id FROM public.group WHERE loanofficeridfk = "+ officerId +");";
+		String query = "SELECT public.loan.* FROM public.loan INNER JOIN public.grouploan ON public.loan.loanid=public.grouploan.loanidfk where groupidfk IN (SELECT id FROM public.group WHERE loanofficeridfk = ? );";
 		
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, officerId);
 			dbResultSet = pstmt.executeQuery();
 			
 			con.close();

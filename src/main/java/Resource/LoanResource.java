@@ -50,7 +50,11 @@ public class LoanResource {
 			job.add("closingdate", "");
 		}
 		job.add("paidamount", loan.getPaidAmount());
-		job.add("contractpdf", loan.getContractPdf());
+		if (loan.getContractPdf() != null){
+			job.add("contractpdf", loan.getContractPdf());
+		}else{
+			job.add("contractpdf", "");
+		}
 		job.add("description", loan.getDescription());
 		job.add("useridfk", loan.getUserIdFk());
 		return job;
