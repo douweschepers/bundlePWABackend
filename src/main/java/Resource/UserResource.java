@@ -129,8 +129,6 @@ public class UserResource {
     
     @POST
     @Produces("application/json")
-    public Response addUser(@FormParam("usertype") String userType,
-    						@FormParam("firstname") String firstname,
     public Response addUser(@FormParam("firstname") String firstname,
                             @FormParam("lastname") String lastname,
                             @FormParam("phonenumber") int phonenumber,
@@ -140,14 +138,11 @@ public class UserResource {
 
     						@FormParam("dateofbirth") String dateOfBirth) throws ParseException
     {
-
-
     	Response r =Response.status(Response.Status.BAD_REQUEST).build();
     	if(bs.checkIfFilledString(firstname) && bs.checkIfFilledString(lastname) && bs.checkIfFilledString(password)
     			&& bs.checkIfFilledInt(phonenumber) && bs.checkIfFilledInt(addressIdFk)){
     	java.util.Date utilDateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(dateOfBirth);
 		java.sql.Date sqlDateOfBirth = new java.sql.Date(utilDateOfBirth.getTime());
-		
 		String userType = "applicant"; 
 		GeneratePasswordAndSalt generator = new GeneratePasswordAndSalt();
 		String[] result = null;
@@ -164,16 +159,13 @@ public class UserResource {
 		password = result[0];
 		
 		String username = firstname + " " + lastname;
-        User newUser = new User(userType, firstname, lastname, phonenumber, password, salt, status, addressIdFk,photo, sqlDateOfBirth, username);
 
         User newUser = new User(userType, firstname, lastname, phonenumber, password, salt, status, addressIdFk, photo, sqlDateOfBirth, username);
         UserWithAddress returnUser = service.newUser(newUser);
         if (returnUser != null) {
         	String a = buildJSON(returnUser).build().toString();
-            return Response.ok(a).build();
             r = Response.ok(a).build();
         } else {
-            return Response.status(Response.Status.BAD_REQUEST).build();
             r =  Response.status(Response.Status.BAD_REQUEST).build();
         }
     	}
