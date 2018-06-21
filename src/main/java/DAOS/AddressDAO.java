@@ -130,6 +130,8 @@ public class AddressDAO extends baseDAO {
 	            pstmt.setInt(7, address.getAdressId());
 
 	            ResultSet dbResultSet = pstmt.executeQuery();
+	            con.close();
+	            
 	            if(dbResultSet.next()) {
 	                return findById(dbResultSet.getInt(1));
 	            }
@@ -153,6 +155,7 @@ public class AddressDAO extends baseDAO {
                 if (pstmt.executeUpdate() == 1) {
                     result = true;
                 }
+                con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -172,6 +175,7 @@ public class AddressDAO extends baseDAO {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			
 			dbResultSet = pstmt.executeQuery();
+			con.close();
 			
 			while(dbResultSet.next()){
 				JsonObjectBuilder job = Json.createObjectBuilder();

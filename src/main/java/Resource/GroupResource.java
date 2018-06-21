@@ -5,6 +5,7 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -70,6 +71,16 @@ public class GroupResource {
 		int groupId = service.newGroup(loanOfficerId);
 		if (groupId != 0){
 			return Integer.toString(groupId);
+		} else {
+			return Response.status(Response.Status.BAD_REQUEST).build().toString();
+		}
+	}
+	
+	@DELETE
+	@Path("/{id}")
+	public String deleteGroup(@PathParam("id") int groupId){
+		if (service.deleteGroup(groupId)){
+			return Response.status(Response.Status.ACCEPTED).build().toString();
 		} else {
 			return Response.status(Response.Status.BAD_REQUEST).build().toString();
 		}

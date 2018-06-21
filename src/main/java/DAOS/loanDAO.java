@@ -45,7 +45,7 @@ public class loanDAO extends baseDAO {
 	}
 	
 	public List<Loan> getAllLoans() {
-		String query = "select * from " + tablename;
+		String query = "select * from " + tablename + " order by (case status when 'pending' then 1 end);";
 		
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
@@ -160,7 +160,8 @@ public class loanDAO extends baseDAO {
     }
 	
 	public JsonArrayBuilder getGrouplessLoans(){
-		String query = "SELECT l.loanid, u.firstname || ' ' || u.lastname as name FROM public.user u, public.loan l LEFT JOIN grouploan gl on l.loanid = gl.loanidfk where gl.loanidfk is NULL and l.useridfk = u.userid and l.status='active';";
+
+		String query = "SELECT l.loanid, u.firstname || ' ' || u.lastname as name FROM public.user u, public.loan l LEFT JOIN grouploan gl on l.loanid = gl.loanidfk where gl.loanidfk is NULL and l.useridfk = u.userid and l.status = 'active';";
 		JsonArrayBuilder jab = Json.createArrayBuilder();
 		
 		try (Connection con = super.getConnection()) {
