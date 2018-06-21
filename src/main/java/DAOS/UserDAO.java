@@ -79,6 +79,7 @@ public class UserDAO extends baseDAO {
 
         return results;
     }
+    
     public List<UserWithAddress> findAllUsers() {
     	String query = 	"select u.*, a.* " +
     					"from public.user u, public.address a " +
@@ -118,6 +119,29 @@ public class UserDAO extends baseDAO {
         } else {
             return resultlist.get(0);
         }
+    }
+    
+    public int getGroupByUserId(int userid){
+    	int groupId = 0;
+    	String query = 	"select g.groupidfk " + 
+    					"from public.grouploan g, public.loan l " +
+    					"where g.loanidfk = l.loanid and l.useridfk = ?;";
+    	
+    	try (Connection con = super.getConnection()) {
+    		PreparedStatement pstmt = con.prepareStatement(query);
+    		
+    		pstmt.setInt(1, userid);
+    		
+    		dbResultSet = pstmt.executeQuery();
+    		
+    		while(dbResultSet.next()){
+    			groupId = dbResultSet.getInt("groupidfk");
+    		}
+    	} catch(SQLException e){
+    		e.printStackTrace();
+    	}
+    	
+    	return groupId;
     }
 
     public UserWithAddress update(UserWithAddress user) {
@@ -159,6 +183,7 @@ public class UserDAO extends baseDAO {
                 if (pstmt.executeUpdate() == 1) {
                     result = true;
                 }
+                con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -181,7 +206,7 @@ public class UserDAO extends baseDAO {
             pstmt.setString(6, user.getSalt());
             pstmt.setString(7, user.getStatus());
             pstmt.setDate(8, user.getDateOfBirth());
-            pstmt.setString(9, user.getPhoto());
+            pstmt.setString(9, (user.getPhonenumber() + user.getPhoto()));
             pstmt.setInt(10, user.getAddressIdFk());
             pstmt.setString(11, user.getUsername());
 
@@ -230,13 +255,13 @@ public class UserDAO extends baseDAO {
     		pstmt.setInt(1, userId);
     		
     		ResultSet dbResultSet = pstmt.executeQuery();
-    		
+    		con.close();
     		while (dbResultSet.next()) {
     			int loanOfficerId = dbResultSet.getInt("loanofficeridfk");
     			int groupId = dbResultSet.getInt("groupid");
     			int loanId = dbResultSet.getInt("loanid");
     			
-    			UserLoanInformation userLoanInformation = new UserLoanInformation(loanOfficerId, groupId, loanId);
+    			UserLoanInformation userLoanInformation = new UserLoanInformation(loanOfficerId, loanId, groupId);
     			result.add(userLoanInformation);
     		}
     	}catch (SQLException e){

@@ -16,18 +16,15 @@ import Objects.LoanGroupInformation;
 public class LoanGroupDAO extends baseDAO{
 	private ResultSet dbResultSet;
 	
-	public List<LoanGroup> selectLoanGroup(String query){
+	public List<LoanGroup> selectLoanGroup(ResultSet dbResultList){
 		List<LoanGroup> resultslist = new ArrayList<LoanGroup>();
-		try(Connection con = super.getConnection()){
-			Statement stmt = con.createStatement();
-			ResultSet dbResultSet = stmt.executeQuery(query);
+		try{
 			while (dbResultSet.next()) {
 				int groupId = dbResultSet.getInt("groupidfk");
 				int loanId = dbResultSet.getInt("loanidfk");
 				LoanGroup loanGroup= new LoanGroup(groupId, loanId);
 				resultslist.add(loanGroup);
 			}
-			stmt.getConnection().close();
 		}
 		catch(SQLException sqle){
 			sqle.printStackTrace();
@@ -36,7 +33,17 @@ public class LoanGroupDAO extends baseDAO{
 	}
 	
 	public List<LoanGroup> getAllLoanGroups() {
-		return selectLoanGroup("select * FROM public.grouploan;");
+		String query = "select * FROM public.grouploan;";
+		
+		try (Connection con = super.getConnection()) {
+			PreparedStatement pstmt = con.prepareStatement(query);
+			dbResultSet = pstmt.executeQuery();
+			
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return selectLoanGroup(dbResultSet);
 	}
 	
 	public List<LoanGroupInformation> getAllApplicantsByLoanGroupId(int groupId){
@@ -50,7 +57,7 @@ public class LoanGroupDAO extends baseDAO{
 			pstmt.setInt(1, groupId);
 
 			ResultSet dbResultSet = pstmt.executeQuery();
-			
+			con.close();
 			while (dbResultSet.next()) {
 				String firstname = dbResultSet.getString("firstname");
 				String lastname = dbResultSet.getString("lastname");
@@ -81,7 +88,7 @@ public class LoanGroupDAO extends baseDAO{
 				pstmt.setInt(1, loanOfficerId);
 
 				dbResultSet = pstmt.executeQuery();
-				
+				con.close();
 				while (dbResultSet.next()) {
 					int groupId = dbResultSet.getInt("groupid");
 					
@@ -99,8 +106,21 @@ public class LoanGroupDAO extends baseDAO{
 	}
 
 	public List<LoanGroup> getLoanGroupById(int groupId) {
-		return selectLoanGroup("Select * FROM public.grouploan where groupidfk = " + groupId);
+		
+		String query = "Select * FROM public.grouploan where groupidfk = ?";
+		
+		try (Connection con = super.getConnection()) {
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setInt(1,groupId);
+			dbResultSet = pstmt.executeQuery();
+			
+			con.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return selectLoanGroup(dbResultSet);
 	}
+	
 	
 	public boolean addLoanToGroup(int groupId, int loanId){
 		String query = "insert into grouploan(groupidfk, loanidfk) values (?,?) returning groupidfk;";
@@ -112,6 +132,7 @@ public class LoanGroupDAO extends baseDAO{
 			pstmt.setInt(2, loanId);
 
 			dbResultSet = pstmt.executeQuery();
+			con.close();
 		} catch (SQLException e){
 			e.printStackTrace();
 		}

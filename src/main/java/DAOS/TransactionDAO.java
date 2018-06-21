@@ -40,8 +40,8 @@ public class TransactionDAO extends baseDAO{
 		String query = "Select * from " + tablename;
 		
 		try (Connection con = super.getConnection()) {
-			Statement stmt = con.createStatement();
-			dbResultSet = stmt.executeQuery(query);
+			PreparedStatement pstmt = con.prepareStatement(query);
+			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
 		}catch (SQLException e){
@@ -57,6 +57,7 @@ public class TransactionDAO extends baseDAO{
 		try(Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, transactionId);
+			
 			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
@@ -72,6 +73,7 @@ public class TransactionDAO extends baseDAO{
 		try(Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, loanId);
+			
 			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
@@ -87,6 +89,7 @@ public class TransactionDAO extends baseDAO{
 		try(Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			dbResultSet = pstmt.executeQuery();
+			con.close();
 		}catch (SQLException e){
 			e.printStackTrace();
 		}
@@ -95,9 +98,11 @@ public class TransactionDAO extends baseDAO{
 	
 	public boolean addTransaction(Transaction transaction) {
 		String query = "Insert Into " + tablename + "(amount, sender, receiver, timestamp, loanidfk) Values(?,?,?,?,?)";
+		String query2 = "Update public.loan set paidamount = paidamount + ? where loanid = ?";
 		boolean result = false;
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
+			PreparedStatement pstmt2 = con.prepareStatement(query2);
 			
 			pstmt.setInt(1, transaction.getAmount());
 			pstmt.setString(2, transaction.getSender());
@@ -105,7 +110,10 @@ public class TransactionDAO extends baseDAO{
 			pstmt.setDate(4, transaction.getTimeStamp());
 			pstmt.setInt(5, transaction.getLoanIdFk());
 
-			if (pstmt.executeUpdate() == 1) {
+			pstmt2.setInt(1, transaction.getAmount());
+			pstmt2.setInt(2, transaction.getLoanIdFk());
+			
+			if (pstmt.executeUpdate() == 1 && pstmt2.executeUpdate() == 1) {
 				result = true;
 			}
 			con.close();

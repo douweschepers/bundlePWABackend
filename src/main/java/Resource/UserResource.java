@@ -84,7 +84,6 @@ public class UserResource {
     @Produces("application/json")
     public String getAccounts() {
         JsonArrayBuilder jab = Json.createArrayBuilder();
-
         for (UserWithAddress u : service.getAllUsers()) {
             jab.add(buildJSON(u));
         }
@@ -120,7 +119,13 @@ public class UserResource {
         }
         return Response.status(Response.Status.NOT_FOUND).toString();
     }
-
+    
+    @GET
+    @Path("/getgroupid/{id}")
+    public int getGroupByUserId(@PathParam("id") int userId){
+    	return service.getGroupByUserId(userId);
+    }
+    
     @POST
     @Produces("application/json")
     public Response addUser(@FormParam("firstname") String firstname,

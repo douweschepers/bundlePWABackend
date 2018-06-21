@@ -9,10 +9,10 @@
 
 	<main>
 	<div class="welcomeBlock">
-		<h1>All Accounts</h1>
+		<h1>Accounts</h1>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
-		<button class="buttonRound"
-			onclick="window.location.href='new_contract.jsp'">+</button>
+		<button id="newcontract" class="buttonRound hide"
+			onclick="window.location.href='new_loan.jsp'">+</button>
 	</div>
 
 	<div class="block">
@@ -45,6 +45,12 @@
 
 	<jsp:include page="parts/footer.jsp" />
 	<script type="text/javascript">
+	if (role == null) {
+		window.location.href = 'index.jsp';
+	}
+	if(role == 'officer') {
+    	$('#newcontract').removeClass("hide");
+    }
 		function getAccounts() {
 			var sessionToken = window.sessionStorage.getItem("sessionToken");
 
@@ -57,8 +63,6 @@
 									+ sessionToken);
 						},
 						success : function(result) {
-							addNotification("Authorized, Accounts loaded!",
-									"green");
 							$('#mainLoader').fadeOut('fast');
 							var data = result;
 							var table = document.getElementById('fbody');
@@ -69,13 +73,13 @@
 										tr.innerHTML = '<td class="id hide" id="loanid" data-label="ID">'
 												+ object.userid
 												+ '</td>'
-												+ '<td id ="firstname" data-label="Amount">'
+												+ '<td id ="firstname" data-label="First Name">'
 												+ object.firstName
 												+ '</td>'
-												+ '<td id = "lastname" data-label="Duration">'
+												+ '<td id = "lastname" data-label="Last Name">'
 												+ object.lastName
 												+ '</td>'
-												+ '<td id = "usertype" data-label="End Date">'
+												+ '<td id = "usertype" data-label="UserType">'
 												+ object.userType
 												+ '</td>'
 												+ '<td id="status" data-label="Status">'

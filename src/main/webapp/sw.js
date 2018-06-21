@@ -1,4 +1,4 @@
-var version = 'v2.1';
+var version = 'v2.2';
 
 self.addEventListener('install', function(evt) {
 	  console.log('The service worker is being installed.');
@@ -7,7 +7,7 @@ self.addEventListener('install', function(evt) {
 
 self.addEventListener('fetch', function(evt) {
   console.log('The service worker is serving the asset.');
-  evt.respondWith(fromNetwork(evt.request, 5000).catch(function () {
+  evt.respondWith(fromNetwork(evt.request, 10000).catch(function () {
 	    return fromCache(evt.request);
 	  }));
 	});
@@ -16,19 +16,18 @@ function precache() {
 	  return caches.open(version).then(function (cache) {
 	    return cache.addAll([
         	'index.jsp',
-        	'login.jsp',
         	'account.jsp',
-        	'contract.jsp',
-        	'contracts.jsp',
-        	'allaccounts.jsp',
-        	'new_contract.jsp',
+        	'loans.jsp',
+        	'accounts.jsp',
+        	'new_loan.jsp',
         	'new_group.jsp',
         	'group.jsp',
         	'groups.jsp',
+        	'transactions.jsp',
+        	'new_transaction.jsp',
         	'loan.jsp',
         	'edit_account.jsp',
         	'edit_loan.jsp',
-        	'edit_contract.jsp',
         	'dashboard.jsp',
         	'group.jsp'
 	    ]);
