@@ -1,4 +1,4 @@
-var version = 'v3';
+var version = 'v4';
 
 self.addEventListener('install', function(evt) {
 	  evt.waitUntil(precache());
