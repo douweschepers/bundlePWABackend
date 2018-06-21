@@ -32,6 +32,27 @@ function getCookie(name) {
 	return null;
 }
 
+function hasNumber(myString) {
+  return /\d/.test(myString);
+}
+
+function hasNoSpecialChar(myString) {
+  return /^[a-zA-Z0-9- ]*$/.test(myString);
+}
+
+function meetsMinimumAge(dateofbirth) {
+	var yd, md, dd, now = new Date();
+    yd = now.getUTCFullYear()-dateofbirth.getUTCFullYear();
+    console.log(yd);
+    md = now.getUTCMonth()-dateofbirth.getUTCMonth();
+    console.log(md);
+    dd = now.getUTCDate()-dateofbirth.getUTCDate();
+    console.log(dd);
+    if( yd > 18) return true;
+    if( md > 0) return true;
+    return dd >= 0;
+}
+
 function eraseCookie(name) {
 	document.cookie = name + '=; Max-Age=-99999999;path=/;';
 }

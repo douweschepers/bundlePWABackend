@@ -44,49 +44,62 @@
 
 
     <script type="text/javascript">
-	if(role == null || role == "applicant") {
-    	window.location.href = 'index.jsp';
-    }
+        if (role == null || role == "applicant") {
+            window.location.href = 'index.jsp';
+        }
 
         var loanId = getParameterByName("id");
+        var remainingAmount = parseInt(getParameterByName("remainingAmount"));
 
+        console.log(remainingAmount);
         $(document).ready(function () {
             $("form").submit(function () {
-                var formData = $("#transaction").serializeArray();
-                var date = new Date();
+                var transactionAmount = parseInt(document.getElementById('amount').value);
+                console.log(transactionAmount);
 
-                var datestring = date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2);
-                console.log(datestring);
-                formData.push({
-                    name: "timestamp",
-                    value:  datestring,
-                });
-                formData.push({
-                  name: "loanidfk",
-                  value: loanId,
-                });
+                if (transactionAmount <= remainingAmount) {
+                    var formData = $("#transaction").serializeArray();
+                    var date = new Date();
+
+                    var datestring = date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) +
+                        "-" + ("0" + date.getDate()).slice(-2);
+                    console.log(datestring);
+                    formData.push({
+                        name: "timestamp",
+                        value: datestring,
+                    });
+                    formData.push({
+                        name: "loanidfk",
+                        value: loanId,
+                    });
 
 
-                $.ajax({
-                    url: "/bundlePWABackend/restservices/transaction",
-                    type: "post",
-                    data: formData,
+                    $.ajax({
+                        url: "/bundlePWABackend/restservices/transaction",
+                        type: "post",
+                        data: formData,
 
-                    success: function (response) {
-                        addNotification('Transaction saved', "green", 6000);
-                          window.location.href="loan.jsp?id="+loanId;
+                        success: function (response) {
+                            addNotification('Transaction saved', "green", 6000);
+                            window.location.href = "loan.jsp?id=" + loanId;
 
-                    },
-                    error: function (response, textStatus, errorThrown) {
+                        },
+                        error: function (response, textStatus, errorThrown) {
 
-                        addNotification('Transaction not saved, contact admin', null, 6000);
-                        console.log("textStatus: " + textStatus);
-                        console.log("errorThrown: " + errorThrown);
-                        console.log("status: " + response.status);
+                            addNotification('Transaction not saved, contact admin', null,
+                                6000);
+                            console.log("textStatus: " + textStatus);
+                            console.log("errorThrown: " + errorThrown);
+                            console.log("status: " + response.status);
 
-                    }
-                });
+                        }
+                    });
+                }else{
+                    addNotification('Transaction not saved, transaction amount bigger then loan amount. Contact admin', null,
+                                6000);
+                }
             });
+
         });
     </script>
 
