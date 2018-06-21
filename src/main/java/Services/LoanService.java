@@ -37,4 +37,8 @@ public class LoanService {
 	public JsonArrayBuilder getGrouplessLoans(){
 		return Loan.getGrouplessLoans();
 	}
+
+	public List<Loan> getAllLoansByOfficer(int officerId) {
+		return Loan.getAllLoansByOfficer(officerId);
+	}
 }

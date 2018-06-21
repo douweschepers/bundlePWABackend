@@ -98,9 +98,16 @@
 	
 	function getContracts(){
 		var sessionToken = window.sessionStorage.getItem("sessionToken");
+		var getURL;
+		if (role == 'officer') {			
+			var officerid = getCookie('userid');
+			getURL = "/bundlePWABackend/restservices/loan/officer/" + officerid;
+			} else if (role == 'admin') {
+			getURL = "/bundlePWABackend/restservices/loan";
+			}
 		
 		$.ajax({
-			url: "/bundlePWABackend/restservices/loan",
+			url: getURL,
 			type: "get",
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader("Authorization",  "Bearer " + sessionToken);
