@@ -40,7 +40,7 @@
 		       <li><label>Image Link:</label>
 		               <input style="margin-bottom: 15px" type="file" id="file" name="file">
 		              <input class="hide" id="submitFile" type="submit" name="submit" value="Submit" ></li>
-		       </ul>		        
+		       </ul>
 		</form>
 		<form id="address" onsubmit="return false">
 
@@ -341,18 +341,10 @@
 				</li>
 			</ul>
 
-<<<<<<< HEAD:src/main/webapp/new_loan.jsp
-		</form>	
-=======
+
 		</form>
-		<form id="uploadFile" >
-				<ul class="flex-outer">
-		       <li><label>Image Link:</label>
-		               <input type="file" id="file" name="file">
-		              <input id="submitFile" type="submit" name="submit" value="Submit" ></li>
-		       </ul>		        
-		</form>
->>>>>>> 8c2fd4e19d0bb6234735037a5b341da7d586b481:src/main/webapp/new_contract.jsp
+
+
 
 		</div>
 	</div>
@@ -364,7 +356,7 @@
 	if(role == null || role != "officer") {
     	window.location.href = 'index.jsp';
     }
-	
+
 	 $('#signature-pad').attr('width', $('#signature-pad').width());
 
 		$(window).on('resize', function(){
@@ -382,7 +374,7 @@
 		cancelButton.addEventListener('click', function(event) {
 			signaturePad.clear();
 		});
-		
+
 		var locationInput = document.getElementById("location");
 		function getLocation() {
 			if (navigator.geolocation) {
@@ -416,9 +408,9 @@
 
 		getLocation();
 	</script>
-	<script type="text/javascript">	
+	<script type="text/javascript">
 		$(document).ready(function() {
-			
+
 			$("form").submit(function() {
 				var addressid;
 				var userid;
@@ -517,9 +509,9 @@
 						data : pdfData,
 
 						success : function(response) {
-							
+
 							addNotification('Contract PDF saved', "green", 6000);
-							
+
 						},
 						error : function(response, textStatus, errorThrown) {
 
@@ -535,7 +527,7 @@
 			});
 			$("#submitFile").click(function (event) {
 
-<<<<<<< HEAD:src/main/webapp/new_loan.jsp
+
 		        event.preventDefault();
 		        var form = $('#uploadFile')[0];
 		        var data = new FormData(form);
@@ -544,21 +536,21 @@
 		        data.append("PhoneNumber", document.getElementById("phone").value);
 
 
-=======
+
 		        //stop submit the form, we will post it manually.
 		        event.preventDefault();
 
 		        // Get form
 		        var form = $('#uploadFile')[0];
 
-				// Create an FormData object 
+				// Create an FormData object
 		        var data = new FormData(form);
 
 				// If you want to add an extra field for the FormData
 		        data.append("CustomField", "This is some extra data, testing");
 
 				// disabled the submit button
->>>>>>> 8c2fd4e19d0bb6234735037a5b341da7d586b481:src/main/webapp/new_contract.jsp
+
 		        $("#submitFile").prop("disabled", true);
 
 		        $.ajax({
@@ -571,24 +563,21 @@
 		            cache: false,
 		            timeout: 600000,
 		            success: function (data) {
-<<<<<<< HEAD:src/main/webapp/new_loan.jsp
+
 		            	console.log("Photo saved");
-=======
 
 		            	addNotification('Photo saved', "green", 6000);
->>>>>>> 8c2fd4e19d0bb6234735037a5b341da7d586b481:src/main/webapp/new_contract.jsp
+
 
 		            },
 		            error: function (e) {
 
 		            	addNotification('Photo not saved, contact admin', null, 6000);
-<<<<<<< HEAD:src/main/webapp/new_loan.jsp
+
 						console.log("textStatus: " + e.textStatus);
 						console.log("errorThrown: " + e.errorThrown);
-=======
-						console.log("textStatus: " + textStatus);
-						console.log("errorThrown: " + errorThrown);
->>>>>>> 8c2fd4e19d0bb6234735037a5b341da7d586b481:src/main/webapp/new_contract.jsp
+
+
 						console.log("status: " + response.status);
 		            }
 		        });
