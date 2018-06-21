@@ -84,7 +84,7 @@ public class TransactionDAO extends baseDAO{
 	}
 	
 	public List<Transaction> getTransactionFromLastWeek(){
-		String query = "select * from " + tablename + " where timestamp between NOW()::DATE-EXTRACT(DOW FROM NOW())::INTEGER-7 AND NOW()::DATE-EXTRACT(DOW from NOW())::INTEGER";
+		String query = "select * from " + tablename + " where timestamp between NOW()::DATE-EXTRACT(DOW FROM NOW())::INTEGER-7 AND NOW()::DATE-EXTRACT(DOW from NOW())::INTEGER order by timestamp asc";
 		
 		try(Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
@@ -109,10 +109,10 @@ public class TransactionDAO extends baseDAO{
 			pstmt.setString(3, transaction.getReceiver());
 			pstmt.setDate(4, transaction.getTimeStamp());
 			pstmt.setInt(5, transaction.getLoanIdFk());
-			
+
 			pstmt2.setInt(1, transaction.getAmount());
 			pstmt2.setInt(2, transaction.getLoanIdFk());
-
+			
 			if (pstmt.executeUpdate() == 1 && pstmt2.executeUpdate() == 1) {
 				result = true;
 			}

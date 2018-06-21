@@ -11,7 +11,7 @@
         <div class="welcomeBlock">
             <h1>Account</h1>
             <button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
-			<button class="buttonRound" id="edit">&#9998;</button>
+			<button class="buttonRound hide" id="edit">&#9998;</button>
         </div>
 
         <div class="block">
@@ -33,7 +33,7 @@
 				<div>
 					<label for="username"> <b>Username</b>
 					</label>
-					<h3 id="username" class="call1" loading="true">Loading...</h3>
+					<h3 id="userName" class="call1" loading="true">Loading...</h3>
 				</div>
 
 				<div>
@@ -141,7 +141,16 @@
 
     <jsp:include page="parts/footer.jsp" />
     <script>
+	if(role == null) {
+    	window.location.href = 'index.jsp';
+    }
+	
     var sessionToken = window.sessionStorage.getItem("sessionToken");
+    var usertype = window.sessionStorage.getItem("userType");
+
+   	if(getCookie("userid") == getParameterByName("id") || getParameterByName("id") == null || role == "officer" || role == "admin") {
+   		$('#edit').removeClass('hide');
+   	}
 
     function getUser() {
     	var hr = new XMLHttpRequest();
@@ -152,9 +161,9 @@
     	} else {
     		id = getParameterByName("id")
     	}
-    	
+
     	$('#edit').attr('onclick', "window.location.href='edit_account.jsp?id=" + id + "'");
-    	
+
     	hr.open("GET", "/bundlePWABackend/restservices/user/" + id, true);
     	hr.setRequestHeader("Authorization",  "Bearer " + sessionToken);
 
@@ -165,7 +174,7 @@
     			var addressData = userData[0].addressInformation[0];
     			var loanData = userData[0].loaninformation[0];
 
-    			$('#username').text(checkValue(userData[0].username));
+    			$('#userName').text(checkValue(userData[0].username));
     			$('#name').text(checkValue(userData[0].firstName + " " + userData[0].lastName));
     			$('#phone').text(checkValue(userData[0].phonenumber));
     			$('#birthdate').text(checkValue(userData[0].dateofbirth));
@@ -215,9 +224,9 @@
 
     <div id="helpPopup" class="popup" style="display: none;">
 		<div>
-			<h2>Account explained</h2>
+			<h2>Account info</h2>
 			<button class="buttonRound" onclick="toggleHide('helpPopup', true)">X</button>
-			<p>This page will give you a overview of all your account details.</p>
+			<p>This is where you can fill-in, view and change individual information about customers who apply for a loan or already have a loan. It is important that the information you enter here is correct and inline with the customers data. After you filled in the page you are able to save it. When you come across a place where your device connects to the internet, your system will automatically start uploading the data to the server. If something stops working, please contact +125 5139230.</p>
 		</div>
 	</div>
 

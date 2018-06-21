@@ -54,5 +54,6 @@ public class Transaction {
 	}
 	public void setLoanIdFk(int loanIdFk) {
 		this.loanIdFk = loanIdFk;
-	}	
+	}
+	
 }

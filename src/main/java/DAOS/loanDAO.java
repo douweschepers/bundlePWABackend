@@ -94,7 +94,7 @@ public class loanDAO extends baseDAO {
 		
 	}
     public List<Loan> getAllLoansFromLastWeek(){
-    	String query = "select * from " + tablename + " where startdate between NOW()::DATE-EXTRACT(DOW FROM NOW())::INTEGER-7 AND NOW()::DATE";
+    	String query = "select * from " + tablename + " where startdate between NOW()::DATE-EXTRACT(DOW FROM NOW())::INTEGER-7 AND NOW()::DATE order by startdate asc";
     	
     	try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
@@ -160,6 +160,7 @@ public class loanDAO extends baseDAO {
     }
 	
 	public JsonArrayBuilder getGrouplessLoans(){
+
 		String query = "SELECT l.loanid, u.firstname || ' ' || u.lastname as name FROM public.user u, public.loan l LEFT JOIN grouploan gl on l.loanid = gl.loanidfk where gl.loanidfk is NULL and l.useridfk = u.userid and l.status = 'active';";
 		JsonArrayBuilder jab = Json.createArrayBuilder();
 		

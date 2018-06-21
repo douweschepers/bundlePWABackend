@@ -111,10 +111,7 @@ public class LoanGroupDAO extends baseDAO{
 		
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
-			
-			pstmt.setInt(1, groupId);
-			
-			dbResultSet = pstmt.executeQuery();
+			pstmt.setInt(1,groupId);
 			
 			con.close();
 		}catch(SQLException e){
