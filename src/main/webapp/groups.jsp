@@ -57,9 +57,14 @@
 
 			var hr = new XMLHttpRequest();
 			var loanofficerid = getCookie("userid");
+			if (role == 'officer') {
 			hr.open("GET",
 					"/bundlePWABackend/restservices/loangroup/loanofficer/"
 							+ loanofficerid, true);
+			} else if (role == 'admin') {
+			hr.open("GET",
+					"/bundlePWABackend/restservices/loangroup", true);
+			}
 
 			hr.onreadystatechange = function() {
 				if (hr.readyState == 4 && hr.status == 200) {

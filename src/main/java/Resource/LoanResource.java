@@ -57,12 +57,25 @@ public class LoanResource {
 	}
 	
 	@GET
-//	@RolesAllowed("admin")
+	@RolesAllowed("admin")
 	@Produces("application/json")
 	public String getAllLoans(){
 		
 		JsonArrayBuilder jab = Json.createArrayBuilder();
 		for(Loan l : service.getAllLoans()){
+			jab.add(buildJson(l));
+		}
+		return jab.build().toString();
+	}
+	
+	@GET
+	@Path("/officer/{officerId}")
+	@RolesAllowed("officer")
+	@Produces("application/json")
+	public String getAllLoansByOfficer(@PathParam("officerId") int officerId){
+		
+		JsonArrayBuilder jab = Json.createArrayBuilder();
+		for(Loan l : service.getAllLoansByOfficer(officerId)){
 			jab.add(buildJson(l));
 		}
 		return jab.build().toString();

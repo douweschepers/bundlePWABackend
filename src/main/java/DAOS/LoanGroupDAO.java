@@ -33,7 +33,7 @@ public class LoanGroupDAO extends baseDAO{
 	}
 	
 	public List<LoanGroup> getAllLoanGroups() {
-		String query = "select * FROM public.grouploan;";
+		String query = "SELECT DISTINCT ON (groupidfk) groupidfk, loanidfk FROM public.grouploan ORDER BY groupidfk, loanidfk;";
 		
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
@@ -112,7 +112,6 @@ public class LoanGroupDAO extends baseDAO{
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1,groupId);
-			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
 		}catch(SQLException e){
