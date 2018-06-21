@@ -20,5 +20,9 @@ public class GroupService {
 	public int newGroup(int loanOfficerId){
 		return groupDAO.newGroup(loanOfficerId);
 	}
+	
+	public boolean deleteGroup(int groupId){
+		return groupDAO.deleteGroup(groupId);
+	}
 
 }

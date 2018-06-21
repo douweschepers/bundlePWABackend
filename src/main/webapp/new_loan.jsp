@@ -8,7 +8,7 @@
 
 	<main>
 	<div class="welcomeBlock">
-		<h1>New Contract</h1>
+		<h1>New Loan</h1>
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
 	</div>
 
@@ -34,6 +34,13 @@
 					placeholder="Enter your password here"></li>
 			</ul>
 			<br>
+		</form>
+		<form id="uploadFile" >
+				<ul class="flex-outer">
+		       <li><label>Image Link:</label>
+		               <input style="margin-bottom: 15px" type="file" id="file" name="file">
+		              <input class="hide" id="submitFile" type="submit" name="submit" value="Submit" ></li>
+		       </ul>		        
 		</form>
 		<form id="address" onsubmit="return false">
 
@@ -315,11 +322,11 @@
 						<option value="MT">Mid-term</option>
 						<option value="LT">Long-term</option>
 				</select></li>
-				<li><label for="amount">Amount</label> <input name="amount"
+				<li><label for="amount">Amount ($)</label> <input name="amount"
 					id="amount" placeholder="Enter the loan-amount here"></input></li>
 				<li><label for="startdate">Start date</label> <input
 					name="startdate" type="date" id="start-date"></li>
-				<li><label for="duration">Duration</label> <input
+				<li><label for="duration">Duration (months)</label> <input
 					name="duration" type="number" id="duration" min="1" max="36"
 					placeholder="Enter the loan-duration here"></input></li>
 				<li><label for="loandescription">Loan description</label> <input
@@ -334,7 +341,18 @@
 				</li>
 			</ul>
 
+<<<<<<< HEAD:src/main/webapp/new_loan.jsp
+		</form>	
+=======
 		</form>
+		<form id="uploadFile" >
+				<ul class="flex-outer">
+		       <li><label>Image Link:</label>
+		               <input type="file" id="file" name="file">
+		              <input id="submitFile" type="submit" name="submit" value="Submit" ></li>
+		       </ul>		        
+		</form>
+>>>>>>> 8c2fd4e19d0bb6234735037a5b341da7d586b481:src/main/webapp/new_contract.jsp
 
 		</div>
 	</div>
@@ -343,6 +361,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
 
 	<script type="text/javascript">
+	if(role == null || role != "officer") {
+    	window.location.href = 'index.jsp';
+    }
+	
 	 $('#signature-pad').attr('width', $('#signature-pad').width());
 
 		$(window).on('resize', function(){
@@ -357,16 +379,10 @@
 
 		var cancelButton = document.getElementById('clear');
 
-
-		//saveButton.addEventListener('click', function(event) {
-		//	var data = signaturePad.toDataURL('image/png');
-		//	window.open(data);
-		//});
-
 		cancelButton.addEventListener('click', function(event) {
 			signaturePad.clear();
 		});
-
+		
 		var locationInput = document.getElementById("location");
 		function getLocation() {
 			if (navigator.geolocation) {
@@ -400,8 +416,9 @@
 
 		getLocation();
 	</script>
-	<script type="text/javascript">
+	<script type="text/javascript">	
 		$(document).ready(function() {
+			
 			$("form").submit(function() {
 				var addressid;
 				var userid;
@@ -421,6 +438,10 @@
 				function sendUserData() {
 
 					var formData = $("#user").serializeArray();
+					var res = document.getElementById("file").value.split("\\");
+					formData.push({name : "photo",
+						value : res[2]
+						});
 					formData.push({
 						name : "usertype",
 						value : "applicant"
@@ -447,13 +468,14 @@
 						},
 						error : function(response, textStatus, errorThrown) {
 
-							addNotification('Contract not saved, try again later', null, 6000);
+							addNotification('Loan not saved, try again later', null, 6000);
 							console.log("textStatus: " + textStatus);
 							console.log("errorThrown: " + errorThrown);
 							console.log("status: " + response.status);
 
 						}
 					});
+					document.getElementById("submitFile").click();
 				}	;
 
 				function sendLoanData() {
@@ -470,12 +492,12 @@
 
 						success : function(response) {
 
-							addNotification('Contract created', "green", 6000);
+							addNotification('Loan created', "green", 6000);
 							sendPdfData();
 						},
 						error : function(response, textStatus, errorThrown) {
 
-							addNotification('Contract not saved, try again later', null, 6000);
+							addNotification('Loan not saved, try again later', null, 6000);
 							console.log("textStatus: " + textStatus);
 							console.log("errorThrown: " + errorThrown);
 							console.log("status: " + response.status);
@@ -508,8 +530,70 @@
 
 						}
 					});
+					document.getElementById("submitFile").click();
 				};
 			});
+			$("#submitFile").click(function (event) {
+
+<<<<<<< HEAD:src/main/webapp/new_loan.jsp
+		        event.preventDefault();
+		        var form = $('#uploadFile')[0];
+		        var data = new FormData(form);
+
+
+		        data.append("PhoneNumber", document.getElementById("phone").value);
+
+
+=======
+		        //stop submit the form, we will post it manually.
+		        event.preventDefault();
+
+		        // Get form
+		        var form = $('#uploadFile')[0];
+
+				// Create an FormData object 
+		        var data = new FormData(form);
+
+				// If you want to add an extra field for the FormData
+		        data.append("CustomField", "This is some extra data, testing");
+
+				// disabled the submit button
+>>>>>>> 8c2fd4e19d0bb6234735037a5b341da7d586b481:src/main/webapp/new_contract.jsp
+		        $("#submitFile").prop("disabled", true);
+
+		        $.ajax({
+		            type: "POST",
+		            enctype: 'multipart/form-data',
+		            url: "FileUploadServlet",
+		            data: data,
+		            processData: false,
+		            contentType: false,
+		            cache: false,
+		            timeout: 600000,
+		            success: function (data) {
+<<<<<<< HEAD:src/main/webapp/new_loan.jsp
+		            	console.log("Photo saved");
+=======
+
+		            	addNotification('Photo saved', "green", 6000);
+>>>>>>> 8c2fd4e19d0bb6234735037a5b341da7d586b481:src/main/webapp/new_contract.jsp
+
+		            },
+		            error: function (e) {
+
+		            	addNotification('Photo not saved, contact admin', null, 6000);
+<<<<<<< HEAD:src/main/webapp/new_loan.jsp
+						console.log("textStatus: " + e.textStatus);
+						console.log("errorThrown: " + e.errorThrown);
+=======
+						console.log("textStatus: " + textStatus);
+						console.log("errorThrown: " + errorThrown);
+>>>>>>> 8c2fd4e19d0bb6234735037a5b341da7d586b481:src/main/webapp/new_contract.jsp
+						console.log("status: " + response.status);
+		            }
+		        });
+
+		    });
 		});
 	</script>
 
@@ -517,7 +601,7 @@
 
 	<div id="helpPopup" class="popup" style="display: none;">
 		<div>
-			<h2>New Contract explained</h2>
+			<h2>New Loan explained</h2>
 			<button class="buttonRound" onclick="toggleHide('helpPopup', true)">X</button>
 			<p>Add text here that explains where some of the fields are used for</p>
 		</div>

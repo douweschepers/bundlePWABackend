@@ -1,7 +1,5 @@
 package Resource;
 
-import java.util.Random;
-
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -18,6 +16,7 @@ import javax.ws.rs.core.Response;
 
 import Objects.Address;
 import Objects.User;
+import PdfGenerator.RetrieveAddressData;
 import Services.AddressService;
 import Services.ServiceProvider;
 import Validation.BasicValidation;
@@ -68,6 +67,13 @@ public class AddressResource {
 	        return Response.status(Response.Status.NOT_FOUND).toString();
 	    }
 	    
+	    @GET
+	    @Produces("application/json")
+	    @Path("/loanspercountry")
+	    public String getLoansByCountry(){
+	    	return service.getLoansByCountry().build().toString();
+	    }
+
 	    @POST
 	    @Produces("application/json")
 	    public Response addAddress(
@@ -81,10 +87,10 @@ public class AddressResource {
 	    	if(bs.checkIfFilled(street)&&bs.checkNumber(number)){
 	    	
 	    	
-	        Address newAdress = new Address(street, number, country, postalcode, description, location);
-	        Address returnAdress = service.newAddress(newAdress);
+	        Address newAddress = new Address(street, number, country, postalcode, description, location);
+	        Address returnAdress = service.newAddress(newAddress);
 	        if (returnAdress != null) {
-	        	
+//	        	data.setAddressData(newAddress);	        
 	            String a = buildJSON(returnAdress).build().toString();
 	             r =  Response.ok(a).build();
 	        } else {
@@ -128,4 +134,5 @@ public class AddressResource {
 	    		return Response.status(Response.Status.BAD_REQUEST).build();
 	    	}
 	    }
+	    
 }

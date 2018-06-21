@@ -8,6 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
+
 import Objects.Address;
 
 public class AddressDAO extends baseDAO {
@@ -126,6 +130,8 @@ public class AddressDAO extends baseDAO {
 	            pstmt.setInt(7, address.getAdressId());
 
 	            ResultSet dbResultSet = pstmt.executeQuery();
+	            con.close();
+	            
 	            if(dbResultSet.next()) {
 	                return findById(dbResultSet.getInt(1));
 	            }
@@ -149,6 +155,7 @@ public class AddressDAO extends baseDAO {
                 if (pstmt.executeUpdate() == 1) {
                     result = true;
                 }
+                con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -156,4 +163,31 @@ public class AddressDAO extends baseDAO {
 
         return result;
     }
+	
+	public JsonArrayBuilder getLoansByCountry(){
+		JsonArrayBuilder jab = Json.createArrayBuilder();
+		String query = 	"select count(a.country) as amount, a.country " +
+						"from public.address a, public.loan l, public.user u " +
+						"where u.userid = l.useridfk and u.addressidfk = a.addressid " +
+						"group by country";
+		
+		try(Connection con = super.getConnection()){
+			PreparedStatement pstmt = con.prepareStatement(query);
+			
+			dbResultSet = pstmt.executeQuery();
+			con.close();
+			
+			while(dbResultSet.next()){
+				JsonObjectBuilder job = Json.createObjectBuilder();
+				
+				job.add("country", dbResultSet.getString("country"));
+				job.add("amount", dbResultSet.getInt("amount"));
+				jab.add(job);
+			}
+			
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return jab;
+	}
 }

@@ -26,9 +26,8 @@ public class TransactionDAO extends baseDAO{
 				String receiver = dbResultSet.getString("receiver");
 				Date timeStamp = dbResultSet.getDate("timestamp");
 				int loanIdFk = dbResultSet.getInt("loanidfk");
-				int airtimeIdFk = dbResultSet.getInt("airtimeidfk");
 						
-				Transaction transaction = new Transaction(transactionId, amount, sender, receiver, timeStamp, loanIdFk, airtimeIdFk);
+				Transaction transaction = new Transaction(transactionId, amount, sender, receiver, timeStamp, loanIdFk);
 				resultlist.add(transaction);
 			}
 		}catch(SQLException e){
@@ -41,8 +40,8 @@ public class TransactionDAO extends baseDAO{
 		String query = "Select * from " + tablename;
 		
 		try (Connection con = super.getConnection()) {
-			Statement stmt = con.createStatement();
-			dbResultSet = stmt.executeQuery(query);
+			PreparedStatement pstmt = con.prepareStatement(query);
+			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
 		}catch (SQLException e){
@@ -58,6 +57,7 @@ public class TransactionDAO extends baseDAO{
 		try(Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, transactionId);
+			
 			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
@@ -73,6 +73,7 @@ public class TransactionDAO extends baseDAO{
 		try(Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, loanId);
+			
 			dbResultSet = pstmt.executeQuery();
 			
 			con.close();
@@ -83,11 +84,12 @@ public class TransactionDAO extends baseDAO{
 	}
 	
 	public List<Transaction> getTransactionFromLastWeek(){
-		String query = "select * from " + tablename + " where timestamp between NOW()::DATE-EXTRACT(DOW FROM NOW())::INTEGER-7 AND NOW()::DATE-EXTRACT(DOW from NOW())::INTEGER";
+		String query = "select * from " + tablename + " where timestamp between NOW()::DATE-EXTRACT(DOW FROM NOW())::INTEGER-7 AND NOW()::DATE-EXTRACT(DOW from NOW())::INTEGER order by timestamp asc";
 		
 		try(Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			dbResultSet = pstmt.executeQuery();
+			con.close();
 		}catch (SQLException e){
 			e.printStackTrace();
 		}
@@ -95,19 +97,23 @@ public class TransactionDAO extends baseDAO{
 	}
 	
 	public boolean addTransaction(Transaction transaction) {
-		String query = "Insert Into " + tablename + "(amount, sender, receiver, timestamp, loanidfk, airtimeidfk) Values(?,?,?,?,?,?)";
+		String query = "Insert Into " + tablename + "(amount, sender, receiver, timestamp, loanidfk) Values(?,?,?,?,?)";
+		String query2 = "Update public.loan set paidamount = paidamount + ? where loanid = ?";
 		boolean result = false;
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
+			PreparedStatement pstmt2 = con.prepareStatement(query2);
 			
 			pstmt.setInt(1, transaction.getAmount());
 			pstmt.setString(2, transaction.getSender());
 			pstmt.setString(3, transaction.getReceiver());
 			pstmt.setDate(4, transaction.getTimeStamp());
 			pstmt.setInt(5, transaction.getLoanIdFk());
-			pstmt.setInt(6, transaction.getAirtimeIdFk());
 
-			if (pstmt.executeUpdate() == 1) {
+			pstmt2.setInt(1, transaction.getAmount());
+			pstmt2.setInt(2, transaction.getLoanIdFk());
+			
+			if (pstmt.executeUpdate() == 1 && pstmt2.executeUpdate() == 1) {
 				result = true;
 			}
 			con.close();
