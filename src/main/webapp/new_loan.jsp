@@ -410,7 +410,7 @@
 			$("form").submit(function() {
 				var addressid;
 				var userid;
-				
+
 				if(checkValues()) {
 				$.ajax({
 					url : "/bundlePWABackend/restservices/address",
@@ -428,9 +428,9 @@
 				function sendUserData() {
 
 					var formData = $("#user").serializeArray();
-<<<<<<< HEAD:src/main/webapp/new_contract.jsp
-					
-=======
+
+
+
 					var res = document.getElementById("file").value.split("\\");
 					var datatype = document.getElementById("file").value.split(".")[1];
 					var lephone = document.getElementById("phone").value.toString();
@@ -442,7 +442,7 @@
 						value : "applicant"
 
 					});
->>>>>>> a6652a15e6eca1c92345dc22b71b15c28b176b45:src/main/webapp/new_loan.jsp
+
 					formData.push({
 						name : "addressidfk",
 						value : addressid
@@ -558,14 +558,14 @@
 
 		    });
 		});
-		
+
 		function checkValues() {
 			const firstname = $('#first-name').val();
 			const lastname = $('#last-name').val();
 			const birthdate = $('#date-of-birth').val();
 			const phonenumber = $('#phone').val();
 			const password = $('#password').val();
-			
+
 			if(firstname == ''){
 				addNotification('First name may not be empty');
 				return false;
