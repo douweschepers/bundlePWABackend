@@ -28,7 +28,7 @@ public class FileUploadHandler extends HttpServlet {
 	        response.setContentType("text/html;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 	        
-	        String path = "C:/Users/Cedric Voncken/workspace/bundlePWABackend/src/main/webapp/img";
+	        String path = "C:\\Users\\Tim\\Downloads\\bundlePWABackend\\src\\main\\webapp\\img";
 	        String phone = request.getParameter("PhoneNumber");
 
             String savePath = path + File.separator + SAVE_DIR;
