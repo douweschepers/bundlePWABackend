@@ -13,7 +13,7 @@
 		<button class="buttonRound" onclick="toggleHide('helpPopup', false)">?</button>
 		<button id="edit" class="buttonRound hide">&#9998;</button>
 		<button id="newtrans" class="buttonRound hide"
-			onclick="window.location.href='new_transaction.jsp?id='+getParameterByName('id')">+</button>
+			onclick="newTransaction()">+</button>
 	</div>
 
 	<div class="block">
@@ -179,6 +179,8 @@
     	}
     	hr.send(null);
 	}
+		
+	var remainingAmount;
 
 	function getLoan() {
 		var hr = new XMLHttpRequest();
@@ -204,6 +206,7 @@
     			$('#description').text(UCFirst(checkValue(loanData.description)));
 
 						$('#contract2').attr("href",  location);
+				remainingAmount = parseInt(checkValue(loanData.amount, 0)) - parseInt(checkValue(loanData.paidamount, 0));
 
     			getUser(loanData.useridfk);
 
@@ -213,6 +216,11 @@
     	}
     	hr.send(null);
 	}
+
+	function newTransaction() {
+			window.location.href = 'new_transaction.jsp?id=' + getParameterByName('id') + '&remainingAmount=' + remainingAmount;
+	}
+		
 
 	function getUser(id) {
     	var hr = new XMLHttpRequest();
@@ -235,6 +243,8 @@
     			addNotification('Retrieving data failed with status ' + hr.status + '. Try again later.');
     		}
     	}
+
+
     	hr.send(null);
     }
 
