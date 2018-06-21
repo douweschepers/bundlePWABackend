@@ -84,11 +84,12 @@ public class AddressResource {
 	                               @FormParam("description") String description,
 	                               @FormParam("location") String location){
 	    	Response r =  Response.status(Response.Status.BAD_REQUEST).build();
-	    	if(bs.checkIfFilled(street)&&bs.checkNumber(number)){
+	    	if(bs.checkIfFilledString(street) && bs.checkIfFilledInt(number) && bs.checkIfFilledString(country)
+	    			&& bs.checkIfFilledString(postalcode) && bs.checkIfFilledString(location)){
+	    		
+	        Address newAdress = new Address(street, number, country, postalcode, description, location);
+	        Address returnAdress = service.newAddress(newAdress);
 	    	
-	    	
-	        Address newAddress = new Address(street, number, country, postalcode, description, location);
-	        Address returnAdress = service.newAddress(newAddress);
 	        if (returnAdress != null) {
 //	        	data.setAddressData(newAddress);	        
 	            String a = buildJSON(returnAdress).build().toString();
@@ -97,7 +98,7 @@ public class AddressResource {
 	             r =  Response.status(Response.Status.BAD_REQUEST).build();
 	        }
 	    	}else{
-	    		System.out.println("hij is leeg");
+	    		System.out.println("velden niet correct");
 	    	}
 	    	return r;
 	    }	

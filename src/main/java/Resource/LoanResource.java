@@ -29,11 +29,12 @@ import Objects.Loan;
 import Objects.User;
 import Services.LoanService;
 import Services.ServiceProvider;
+import Validation.BasicValidation;
 
 @Path("/loan")
 public class LoanResource {
 	private LoanService service = ServiceProvider.getLoanService();
-	
+	BasicValidation bs = new BasicValidation();
 	JsonObjectBuilder buildJson(Loan loan) {
 		JsonObjectBuilder job = Json.createObjectBuilder();
 		
@@ -49,7 +50,11 @@ public class LoanResource {
 			job.add("closingdate", "");
 		}
 		job.add("paidamount", loan.getPaidAmount());
-		job.add("contractpdf", loan.getContractPdf());
+		if (loan.getContractPdf() != null){
+			job.add("contractpdf", loan.getContractPdf());
+		}else{
+			job.add("contractpdf", "");
+		}
 		job.add("description", loan.getDescription());
 		job.add("useridfk", loan.getUserIdFk());
 		return job;
@@ -118,6 +123,8 @@ public class LoanResource {
 							@FormParam("pdf") String pdf )
 							throws ParseException{
 
+		Response r =Response.status(Response.Status.FOUND).build();
+		if(bs.checkIfFilledString(amount) && !bs.isLetters(amount)){
 
 		LoanService service = ServiceProvider.getLoanService();
 
@@ -136,10 +143,14 @@ public class LoanResource {
 		Loan newLoan = new Loan(0, loanType, Integer.parseInt(amount), status, sqlStartDate, Integer.parseInt(duration), sqlClosingDate, 0, pdf, description.toString(), Integer.parseInt(userIdFk));
 
 		if (service.newLoan(newLoan)){		
-			return Response.ok().build();
+			r =  Response.ok().build();
 		}else{
-			return Response.status(Response.Status.FOUND).build();
+			r =  Response.status(Response.Status.FOUND).build();
 		}
+		}else{
+			System.out.println("loan velden niet goed");
+		}
+		return r;
 	}
 	
 	@PUT

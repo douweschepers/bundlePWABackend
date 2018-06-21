@@ -72,6 +72,31 @@ public class loanDAO extends baseDAO {
 		}
 		return selectLoan(dbResultSet);
 	}
+	
+	public int getRemainingLoan(int loanId){
+		String query = "select * from " + tablename + " where loanid = ?";
+		int remaining = 0;
+		try(Connection con = super.getConnection()){
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, loanId);
+			dbResultSet = pstmt.executeQuery();
+			
+			con.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		try {
+			while(dbResultSet.next()){
+				int amount = dbResultSet.getInt("amount");
+				int paidAmount = dbResultSet.getInt("paidamount");
+				remaining = amount - paidAmount;
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		
+		return remaining;
+	}
     
 	public Loan findLoanById(int loanId){
 		String query = "select * from " + tablename + " where loanid = ?";
@@ -188,10 +213,11 @@ public class loanDAO extends baseDAO {
 	}
 
 	public List<Loan> getAllLoansByOfficer(int officerId) {
-		String query = "SELECT public.loan.* FROM public.loan INNER JOIN public.grouploan ON public.loan.loanid=public.grouploan.loanidfk where groupidfk IN (SELECT id FROM public.group WHERE loanofficeridfk = "+ officerId +");";
+		String query = "SELECT public.loan.* FROM public.loan INNER JOIN public.grouploan ON public.loan.loanid=public.grouploan.loanidfk where groupidfk IN (SELECT id FROM public.group WHERE loanofficeridfk = ? );";
 		
 		try (Connection con = super.getConnection()) {
 			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, officerId);
 			dbResultSet = pstmt.executeQuery();
 			
 			con.close();

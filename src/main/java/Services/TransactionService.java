@@ -20,8 +20,8 @@ public class TransactionService {
 		return transactionDAO.getTransactionByLoanId(loanId);
 	}
 	
-	public boolean addTransaction(Transaction newTransaction){
-		return transactionDAO.addTransaction(newTransaction);
+	public boolean addTransaction(Transaction newTransaction, boolean paidEnough){
+		return transactionDAO.addTransaction(newTransaction, paidEnough);
 	}
 	
 	public List<Transaction> getTransactionFromLastWeek(){

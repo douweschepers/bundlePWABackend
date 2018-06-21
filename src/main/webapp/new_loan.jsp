@@ -410,7 +410,8 @@
 			$("form").submit(function() {
 				var addressid;
 				var userid;
-
+				
+				if(checkValues()) {
 				$.ajax({
 					url : "/bundlePWABackend/restservices/address",
 					type : "post",
@@ -422,10 +423,14 @@
 							sendUserData();
 					}
 				});
+				}
 
 				function sendUserData() {
 
 					var formData = $("#user").serializeArray();
+<<<<<<< HEAD:src/main/webapp/new_contract.jsp
+					
+=======
 					var res = document.getElementById("file").value.split("\\");
 					var datatype = document.getElementById("file").value.split(".")[1];
 					var lephone = document.getElementById("phone").value.toString();
@@ -437,6 +442,7 @@
 						value : "applicant"
 
 					});
+>>>>>>> a6652a15e6eca1c92345dc22b71b15c28b176b45:src/main/webapp/new_loan.jsp
 					formData.push({
 						name : "addressidfk",
 						value : addressid
@@ -452,16 +458,12 @@
 							if (userid == null) {
 								userid = response["userid"];
 							}
-							console.log(userid);
 							sendLoanData();
 
 						},
 						error : function(response, textStatus, errorThrown) {
 
 							addNotification('Loan not saved, try again later', null, 6000);
-							console.log("textStatus: " + textStatus);
-							console.log("errorThrown: " + errorThrown);
-							console.log("status: " + response.status);
 
 						}
 					});
@@ -493,9 +495,6 @@
 						error : function(response, textStatus, errorThrown) {
 
 							addNotification('Loan not saved, try again later', null, 6000);
-							console.log("textStatus: " + textStatus);
-							console.log("errorThrown: " + errorThrown);
-							console.log("status: " + response.status);
 
 						}
 					});
@@ -519,9 +518,6 @@
 						error : function(response, textStatus, errorThrown) {
 
 							addNotification('Contract PDF not saved, contact admin', null, 6000);
-							console.log("textStatus: " + textStatus);
-							console.log("errorThrown: " + errorThrown);
-							console.log("status: " + response.status);
 
 						}
 					});
@@ -556,14 +552,66 @@
 		            error: function (e) {
 
 		            	addNotification('Photo not saved, contact admin', null, 6000);
-						console.log("textStatus: " + e.textStatus);
-						console.log("errorThrown: " + e.errorThrown);
-						console.log("status: " + response.status);
+
 		            }
 		        });
 
 		    });
 		});
+		
+		function checkValues() {
+			const firstname = $('#first-name').val();
+			const lastname = $('#last-name').val();
+			const birthdate = $('#date-of-birth').val();
+			const phonenumber = $('#phone').val();
+			const password = $('#password').val();
+			
+			if(firstname == ''){
+				addNotification('First name may not be empty');
+				return false;
+			}
+			if(hasNumber(firstname)){
+				addNotification('First name may not contain numbers');
+				return false;
+			}
+			if(!hasNoSpecialChar(firstname)){
+				addNotification('First name may not contain special chars');
+				return false;
+			}
+			if(lastname == ''){
+				addNotification('Last name may not be empty');
+				return false;
+			}
+			if(hasNumber(lastname)){
+				addNotification('Last name may not contain numbers');
+				return false;
+			}
+			if(!hasNoSpecialChar(lastname)){
+				addNotification('Last name may not contain special chars');
+				return false;
+			}
+			if(isNaN(Date.parse(birthdate))){
+				addNotification('Date of birth must be a valid date');
+				return false;
+			}
+			if(phonenumber == '') {
+				addNotification('Phone may not be empty');
+				return false;
+			}
+			if(!hasNumber(phonenumber)) {
+				addNotification('Phone must be a number');
+				return false;
+			}
+			if(password == '') {
+				addNotification('Password may not be empty');
+				return false;
+			}
+			if(document.getElementById("file").files.length == 0 ){
+				addNotification("Image may not be empty");
+				return false;
+			}
+			return true;
+		}
 	</script>
 
 	<jsp:include page="parts/footer.jsp" />

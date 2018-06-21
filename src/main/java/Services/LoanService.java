@@ -41,4 +41,8 @@ public class LoanService {
 	public List<Loan> getAllLoansByOfficer(int officerId) {
 		return Loan.getAllLoansByOfficer(officerId);
 	}
+	
+	public int getRemaining(int loanId){
+		return Loan.getRemainingLoan(loanId);
+	}
 }
