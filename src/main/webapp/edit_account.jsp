@@ -420,7 +420,7 @@
                     success: function (response) {
 
                         addNotification('Account updated succesfully', 'green');
-                        window.location.href="account.jsp?id="+id;
+                        window.location.href="account.jsp?id="+getParameterByName('id');
 
                     },
                     error: function (response, textStatus, errorThrown) {
