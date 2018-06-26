@@ -129,7 +129,7 @@ public class LoanResource {
 		LoanService service = ServiceProvider.getLoanService();
 
 		
-		String status = "pending";
+		String status = "active";
 		Date utilStartDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
 		Date utilClosingDate = new Date();
 		Calendar myCal = Calendar.getInstance();
