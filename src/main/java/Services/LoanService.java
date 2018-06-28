@@ -3,6 +3,7 @@ package Services;
 import java.util.List;
 
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonValue;
 
 import DAOS.loanDAO;
 import Objects.Loan;
@@ -44,5 +45,9 @@ public class LoanService {
 	
 	public int getRemaining(int loanId){
 		return Loan.getRemainingLoan(loanId);
+	}
+
+	public int getLoanByUserId(int userId) {
+		return Loan.getLoanByUserId(userId);
 	}
 }

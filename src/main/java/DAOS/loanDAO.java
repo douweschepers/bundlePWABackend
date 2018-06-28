@@ -225,5 +225,23 @@ public class loanDAO extends baseDAO {
 			e.printStackTrace();
 		}
 		return selectLoan(dbResultSet);
+	}
+
+	public int getLoanByUserId(int userId) {
+		String query = "Select loanid from public.loan where useridfk = ?";
+		int loanId = 0;
+		try (Connection con = super.getConnection()) {
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userId);
+			
+			dbResultSet = pstmt.executeQuery();
+			con.close();
+			while (dbResultSet.next()){
+				loanId = dbResultSet.getInt("loanid");
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		return loanId;
 	}	
 }

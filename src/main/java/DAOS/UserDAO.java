@@ -258,7 +258,7 @@ public class UserDAO extends baseDAO {
     		PreparedStatement pstmt = con.prepareStatement(query);
     		pstmt.setInt(1, userId);
     		
-    		ResultSet dbResultSet = pstmt.executeQuery();
+    		dbResultSet = pstmt.executeQuery();
     		con.close();
     		while (dbResultSet.next()) {
     			int loanOfficerId = dbResultSet.getInt("loanofficeridfk");

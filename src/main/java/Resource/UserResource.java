@@ -4,6 +4,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
+
 import javax.annotation.security.RolesAllowed;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -21,6 +23,7 @@ import javax.ws.rs.core.Response;
 import Objects.User;
 import Objects.UserLoanInformation;
 import Objects.UserWithAddress;
+import Services.LoanService;
 import Services.ServiceProvider;
 import Services.UserService;
 import Validation.BasicValidation;
@@ -54,7 +57,6 @@ public class UserResource {
         job.add("photo", user.getPhoto());
         job.add("dateofbirth", user.getDateOfBirth().toString());
         job.add("username", user.getUsername());
-        job.add("loanInformation", secondJab);
         
         return job;
     }
@@ -99,20 +101,29 @@ public class UserResource {
     @Produces("application/json")
     public String getAccountByID(@PathParam("id") int id) {
         UserWithAddress user = service.getUserByID(id);
+        LoanService loanService = ServiceProvider.getLoanService();
         if(user != null) {
         	JsonObjectBuilder job = Json.createObjectBuilder();
             JsonArrayBuilder jab = Json.createArrayBuilder();
             JsonArrayBuilder secondJab = Json.createArrayBuilder();
             
             job = buildJSON(user);
-            for (UserLoanInformation u : service.getUserLoanInformation(user.getUserId())) {
-             	JsonObjectBuilder secondJob = Json.createObjectBuilder();
-             	secondJob.add("loanofficerid", u.getLoanOfficerId());
-             	secondJob.add("groupid", u.getGroupId());
-             	secondJob.add("loanid", u.getLoanId());
+            List<UserLoanInformation> userList = service.getUserLoanInformation(user.getUserId());
+            if (userList.isEmpty()){
+            	JsonObjectBuilder secondJob = Json.createObjectBuilder();
+            	secondJob.add("loanid", loanService.getLoanByUserId(id));
+            	
+            	secondJab.add(secondJob);
+            } else{
+            	for (UserLoanInformation u : userList) {
+            		JsonObjectBuilder secondJob = Json.createObjectBuilder();
+            		secondJob.add("loanofficerid", u.getLoanOfficerId());
+            		secondJob.add("groupid", u.getGroupId());
+            		secondJob.add("loanid", u.getLoanId());
              	
-             	secondJab.add(secondJob);
-             }
+            		secondJab.add(secondJob);
+            	}
+            }
             job.add("loaninformation", secondJab);
             
             jab.add(job);
